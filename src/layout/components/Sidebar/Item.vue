@@ -1,3 +1,10 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2020-12-04 13:50:23
+ * @LastEditTime: 2021-07-28 22:13:04
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <script>
 export default {
   name: 'MenuItem',
@@ -17,6 +24,7 @@ export default {
     const vnodes = []
 
     if (icon) {
+      // vnodes.push(<i class={['el-icon-menu']} />)
       if (icon.includes('el-icon')) {
         vnodes.push(<i class={[icon, 'sub-el-icon']} />)
       } else {
