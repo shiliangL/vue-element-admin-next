@@ -278,15 +278,15 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     margin-right: -16px;
-    transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: padding 0.23s cubic-bezier(0.645, 0.045, 0.355, 1);
     &.is-focus {
       border: 0;
       outline: none;
     }
     &:hover {
       color: #515a6e;
-      background: $menuHover;
-      border-color: $menuHover;
+      background: $tagsActiveHoverBg;
+      border-color: $tagsActiveHoverBg;
       mask: url("~@/assets/layout/tags-view-mark.png");
       padding-left: 30px !important;
       padding-right: 30px !important;

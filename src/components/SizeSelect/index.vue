@@ -1,3 +1,10 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2020-12-04 13:50:23
+ * @LastEditTime: 2021-07-28 21:45:36
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <template>
   <el-dropdown trigger="click" @command="handleSetSize">
     <div>
@@ -5,8 +12,7 @@
     </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item v-for="item of sizeOptions" :key="item.value" :disabled="size===item.value" :command="item.value">
-        {{
-          item.label }}
+        {{ item.label }}
       </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>

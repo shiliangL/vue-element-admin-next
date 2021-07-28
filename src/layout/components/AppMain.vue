@@ -1,20 +1,26 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 17:16:12
+ * @LastEditTime: 2021-07-28 21:22:34
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
-  <el-scrollbar wrap-class="scrollbar-wrapper">
-    <section class="app-main">
-      <transition name="fade-transform" mode="out-in">
-        <keep-alive :include="cachedViews">
-          <router-view :key="key" />
-        </keep-alive>
-      </transition>
-    </section>
-  </el-scrollbar>
+  <section class="app-main">
+    <transition
+      name="fade-transform"
+      mode="out-in"
+    >
+      <keep-alive :include="cachedViews">
+        <el-scrollbar class="router-scrollbar-wrapper">
+          <router-view
+            :key="key"
+            class="router-view-page"
+          />
+        </el-scrollbar>
+      </keep-alive>
+    </transition>
+  </section>
 </template>
 
 <script>
@@ -33,25 +39,41 @@ export default {
 
 <style lang="scss" scoped>
 .app-main {
-  /* 50= navbar  50  */
-  min-height: calc(100vh - 50px);
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.fixed-header+.app-main {
-  padding-top: 50px;
+.fixed-header + .app-main {
+  // padding-top: 100px;
 }
 
 .hasTagsView {
   .app-main {
-    /* 84 = navbar + tags-view = 50 + 40 */
-    min-height: calc(100vh - 90px);
+    top: 100px;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    position: absolute;
+    position: relative;
+    background: #f1f8ff;
+    height: calc(100vh - 100px);
+    .router-view-page {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      margin: 0 !important;
+      padding: 10px !important;
+      overflow: auto;
+    }
+    // 内容区块无滚动条
+    .router-scrollbar-wrapper {
+      width: 100%;
+      height: 100%;
+    }
   }
-
-  .fixed-header+.app-main {
-    padding-top: 90px;
+  .fixed-header + .app-main {
+    // padding-top: 100px;
   }
 }
 </style>

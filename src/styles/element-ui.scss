@@ -85,6 +85,6 @@
 
 // 滚动条
 .el-scrollbar__bar.is-vertical {
-  width: 0px;
+  width: $scrollbarwidth;
   top: 0px;
 }

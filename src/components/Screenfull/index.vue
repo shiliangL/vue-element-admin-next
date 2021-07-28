@@ -1,6 +1,17 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2020-12-04 13:50:23
+ * @LastEditTime: 2021-07-28 21:52:51
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <template>
   <div>
-    <svg-icon :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'" @click="click" />
+    <svg-icon
+      class="screenfull-svg"
+      :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'"
+      @click="click"
+    />
   </div>
 </template>
 
@@ -47,14 +58,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.screenfull-svg {
-  display: inline-block;
-  cursor: pointer;
-  fill: #5a5e66;;
-  width: 20px;
-  height: 20px;
-  vertical-align: 10px;
-}
-</style>

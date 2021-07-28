@@ -144,6 +144,7 @@ export default {
   font-size: 0 !important;
 
   .search-icon {
+    fill: #fff;
     cursor: pointer;
     font-size: 18px;
     vertical-align: middle;

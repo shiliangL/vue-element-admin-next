@@ -45,10 +45,9 @@
       >
         <div class="avatar-wrapper">
           <img
-            :src="avatar+'?imageView2/1/w/80/h/80'"
             class="user-avatar"
+            :src="avatar+'?imageView2/1/w/80/h/80'"
           >
-          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
@@ -82,6 +81,7 @@
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
@@ -125,6 +125,11 @@ export default {
   position: relative;
   background: $theme;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+  .svg-icon {
+    fill: #fff;
+  }
+
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -162,37 +167,30 @@ export default {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: #fff;
       vertical-align: text-bottom;
-
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
-
         &:hover {
           background: rgba(0, 0, 0, 0.025);
         }
       }
-      .svg-icon {
-        fill: #fff;
-      }
     }
 
     .avatar-container {
-      margin-right: 30px;
-
+      margin-right: 10px;
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 50%;
         }
-
         .el-icon-caret-bottom {
+          color: #fff;
           cursor: pointer;
           position: absolute;
           right: -20px;

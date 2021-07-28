@@ -1,3 +1,10 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2020-12-04 13:50:23
+ * @LastEditTime: 2021-07-28 21:11:00
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <template>
   <div class="app-container documentation-container">
     <a class="document-btn" target="_blank" href="https://store.akveo.com/products/vue-java-admin-dashboard-spring?utm_campaign=akveo_store-Vue-Vue_demo%2Fgithub&utm_source=vue_admin&utm_medium=referral&utm_content=demo_English_button">Java backend integration</a>
@@ -35,11 +42,9 @@ export default {
 
 <style lang="scss" scoped>
 .documentation-container {
-  margin: 50px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-
   .document-btn {
     flex-shrink: 0;
     display: block;
