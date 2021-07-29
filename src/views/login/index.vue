@@ -1,9 +1,16 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">  欢迎登录  </h3>
       </div>
 
       <el-form-item prop="username">
@@ -21,7 +28,12 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock is On"
+        placement="right"
+        manual
+      >
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -39,12 +51,22 @@
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
       </el-tooltip>
-      <el-button size="small" :loading="loading" type="primary" class="login-button" style="width:100%;" @click.native.prevent="handleLogin"> Login </el-button>
+      <el-button
+        size="small"
+        :loading="loading"
+        type="primary"
+        class="login-button"
+        style="width:100%;"
+        @click.native.prevent="handleLogin"
+      > 登 录 </el-button>
     </el-form>
   </div>
 </template>
@@ -161,8 +183,8 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#fff;
-$light_gray:#fff;
+$bg: #fff;
+$light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -204,22 +226,30 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#000;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #000;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 .login-container {
-  min-height: 100%;
+  height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-image: url('https://file.iviewui.com/admin-dist/img/login-bg.0899ffa6.jpg');
+  background-size: cover;
+  background-position: 50%;
   .login-form {
+    margin-right: 10%;
+    padding: 20px;
     position: relative;
-    width: 520px;
+    width: 320px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
     overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.66);
   }
   .svg-container {
     padding: 6px 5px 6px 15px;
@@ -253,7 +283,7 @@ $light_gray:#eee;
     bottom: 6px;
   }
 
-  .login-button{
+  .login-button {
     padding: 14px;
   }
 
