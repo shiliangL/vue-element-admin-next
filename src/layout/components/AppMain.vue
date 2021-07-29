@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 21:22:34
+ * @LastEditTime: 2021-07-29 14:36:25
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -64,12 +64,8 @@ export default {
       background: #fff;
       margin: 0 !important;
       padding: 10px !important;
+      // overflow: hidden;
       overflow: auto;
-    }
-    // 内容区块无滚动条
-    .router-scrollbar-wrapper {
-      width: 100%;
-      height: 100%;
     }
   }
   .fixed-header + .app-main {

@@ -84,6 +84,18 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/baiduMap',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/baiduMap/index'),
+        name: 'baiduMap',
+        meta: { title: 'baiduMap', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/documentation',
     component: Layout,
     children: [
