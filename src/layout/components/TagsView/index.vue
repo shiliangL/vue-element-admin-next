@@ -5,35 +5,56 @@
   >
     <el-tabs
       ref="scrollPane"
-      class="tags-tab-nav"
+      class="tags-tab-warp"
       :value="selectTab"
       @tab-click="tabClick"
-      @tab-remove="removeTab"
     >
       <el-tab-pane
         v-for="tag in visitedViews"
         ref="tag"
         :key="tag.path"
         :tag="tag"
-        class="tags-view-item"
-        :label="tag.title"
         :name="tag.path"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
-      />
+      >
+        <div
+          slot="label"
+          class="tags-view-label"
+          @contextmenu.prevent.native="openMenu(tag,$event)"
+        >
+          <i class="el-icon-menu tags-icon" />
+          <span v-text="tag.title" />
+          <i
+            class="el-icon-close"
+            @click.stop="closeSelectedTag(tag)"
+          />
+        </div>
+      </el-tab-pane>
     </el-tabs>
-    <div class="el-icon-menu" />
+
+    <el-dropdown
+      class="operation-dropdown"
+    >
+      <div class="el-icon-menu" />
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item @click.native="dropdownClick(1)"> 刷新当前 </el-dropdown-item>
+        <el-dropdown-item @click.native="dropdownClick(2)"> 关闭当前 </el-dropdown-item>
+        <el-dropdown-item @click.native="dropdownClick(3)"> 关闭其他 </el-dropdown-item>
+        <el-dropdown-item @click.native="dropdownClick(4)"> 关闭所有 </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+
     <ul
       v-show="visible"
-      :style="{left:left+'px',top:top+'px'}"
+      :style="{ left:left+'px',top:top+'px' }"
       class="contextmenu"
     >
-      <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
+      <li @click="refreshSelectedTag(selectedTag)"> 刷新当前 </li>
       <li
         v-if="!isAffix(selectedTag)"
         @click="closeSelectedTag(selectedTag)"
-      >Close</li>
-      <li @click="closeOthersTags">Close Others</li>
-      <li @click="closeAllTags(selectedTag)">Close All</li>
+      > 关闭当前 </li>
+      <li @click="closeOthersTags(selectedTag)"> 关闭其他 </li>
+      <li @click="closeAllTags(selectedTag)"> 关闭所有 </li>
     </ul>
   </div>
 </template>
@@ -61,6 +82,9 @@ export default {
     },
     selectTab() {
       return this.$route.path
+    },
+    findeTagOnNotSeletc() {
+      return this.visitedViews.find((item) => item.path === this.selectTab) || {}
     }
   },
   watch: {
@@ -79,6 +103,7 @@ export default {
   mounted() {
     this.initTags()
     this.addTags()
+    console.log(this.visitedViews, '-visitedViews-')
   },
   methods: {
     isActive(route) {
@@ -140,6 +165,7 @@ export default {
         }
       })
     },
+    // 刷新当前
     refreshSelectedTag(view) {
       this.$store.dispatch('tagsView/delCachedView', view).then(() => {
         const { fullPath } = view
@@ -150,6 +176,7 @@ export default {
         })
       })
     },
+    // 关闭当前
     closeSelectedTag(view) {
       this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
         if (this.isActive(view)) {
@@ -157,12 +184,15 @@ export default {
         }
       })
     },
-    closeOthersTags() {
-      this.$router.push(this.selectedTag)
-      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
-        this.moveToCurrentTag()
+    // 关闭其他 - bug - TODO
+    closeOthersTags(view) {
+      console.log(view, 'view')
+      this.$router.push(view)
+      this.$store.dispatch('tagsView/delOthersViews', view).then(() => {
+        // this.moveToCurrentTag()
       })
     },
+    // 关闭所有
     closeAllTags(view) {
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
         if (this.affixTags.some(tag => tag.path === view.path)) {
@@ -206,15 +236,32 @@ export default {
     closeMenu() {
       this.visible = false
     },
-    handleScroll() {
-      this.closeMenu()
-    },
-    removeTab(tabVue) {
-      console.log(tabVue, 'tabVue')
-    },
-    tabClick(tabVue) {
-      const tag = tabVue.$attrs.tag
+    tabClick(nodeVue) {
+      const tag = nodeVue.$attrs.tag
       this.$router.push({ path: tag.path, query: tag.query, fullPath: tag.fullPath })
+    },
+    dropdownClick(key) {
+      const { findeTagOnNotSeletc } = this
+      switch (key) {
+        case 1:
+          // 刷新当前
+          this.refreshSelectedTag(findeTagOnNotSeletc)
+          break
+        case 2:
+          // 关闭当前
+          this.closeSelectedTag(findeTagOnNotSeletc)
+          break
+        case 3:
+          // 关闭其他
+          this.closeOthersTags(findeTagOnNotSeletc)
+          break
+        case 4:
+          // 关闭所有
+          this.closeAllTags(findeTagOnNotSeletc)
+          break
+        default:
+          break
+      }
     }
   }
 }
@@ -261,7 +308,7 @@ export default {
 </style>
 
 <style lang="scss">
-.tags-tab-nav {
+.tags-tab-warp {
   width: 100%;
   height: 28px;
   .el-tabs__item {
@@ -279,6 +326,10 @@ export default {
     padding-right: 20px;
     margin-right: -16px;
     transition: padding 0.23s cubic-bezier(0.645, 0.045, 0.355, 1);
+    .el-icon-close {
+      display: none;
+      transition: all 0.23s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
     &.is-focus {
       border: 0;
       outline: none;
@@ -291,6 +342,9 @@ export default {
       padding-left: 30px !important;
       padding-right: 30px !important;
       mask-size: 100% 100%;
+      .el-icon-close {
+        display: inline-block !important;
+      }
     }
     &.is-active {
       color: $tagsActiveText;
@@ -301,8 +355,16 @@ export default {
       padding-right: 30px !important;
       mask-size: 100% 100%;
       mask-repeat: no-repeat;
+      .el-icon-close {
+        display: inline-block !important;
+      }
+    }
+    .tags-icon {
+      padding-right: 6px;
     }
   }
+
+  // 覆盖重置
   .el-tabs__nav-wrap {
     &::after {
       display: none;
@@ -310,6 +372,20 @@ export default {
   }
   .el-tabs__active-bar {
     display: none;
+  }
+}
+
+.operation-dropdown {
+  font-size: 20px;
+  .el-icon-menu {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.3s ease-out;
+  }
+  &:hover {
+    .el-icon-menu {
+      transform: rotate(90deg);
+    }
   }
 }
 </style>

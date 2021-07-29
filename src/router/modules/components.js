@@ -1,3 +1,10 @@
+/*
+ * @Author: shiliangL
+ * @Date: 2021-07-29 08:18:38
+ * @LastEditTime: 2021-07-29 08:24:56
+ * @LastEditors: Do not edit
+ * @Description:
+ */
 /** When your routing table is too long, you can split it into small modules **/
 
 import Layout from '@/layout'
@@ -23,12 +30,6 @@ const componentsRouter = {
       component: () => import('@/views/components-demo/markdown'),
       name: 'MarkdownDemo',
       meta: { title: 'Markdown' }
-    },
-    {
-      path: 'json-editor',
-      component: () => import('@/views/components-demo/json-editor'),
-      name: 'JsonEditorDemo',
-      meta: { title: 'JSON Editor' }
     },
     {
       path: 'split-pane',
