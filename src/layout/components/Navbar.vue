@@ -181,12 +181,12 @@ export default {
     .avatar-container {
       margin-right: 10px;
       .avatar-wrapper {
-        margin-top: 5px;
+        margin-top: 8px;
         position: relative;
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
+          width: 34px;
+          height: 34px;
           border-radius: 50%;
         }
         .el-icon-caret-bottom {

@@ -1,14 +1,14 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 21:37:51
+ * @LastEditTime: 2021-07-29 21:14:31
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
   <el-breadcrumb
     class="app-breadcrumb"
-    separator=">"
+    separator="/"
   >
     <transition-group name="breadcrumb">
       <el-breadcrumb-item

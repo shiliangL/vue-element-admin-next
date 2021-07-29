@@ -16,14 +16,20 @@ $menuText:#303133;
 $menuActiveText:$theme;
 $subMenuActiveText:$theme;
 
+//激活的菜单
+$base-menu-text-active:$theme;;
+$base-menu-active-background: #e8f4ff;
+
 $menuBg:#FFF;
 $subMenuBg:#F8F8F8;
 
 $menuHover:#EAF2FF;
 $subMenuHover:#EAF2FF;
 
+
 $sideBarWidth: 230px;
 
+//  导航标签
 $tagsActiveText: $theme;
 $tagsActiveBg: #e8f4ff;
 $tagsActiveHoverBg: #DCDFE6;

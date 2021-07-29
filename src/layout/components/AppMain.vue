@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-29 14:36:25
+ * @LastEditTime: 2021-07-29 20:53:41
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -12,12 +12,10 @@
       mode="out-in"
     >
       <keep-alive :include="cachedViews">
-        <el-scrollbar class="router-scrollbar-wrapper">
-          <router-view
-            :key="key"
-            class="router-view-page"
-          />
-        </el-scrollbar>
+        <router-view
+          :key="key"
+          class="router-view-page"
+        />
       </keep-alive>
     </transition>
   </section>
@@ -54,18 +52,25 @@ export default {
     bottom: 0;
     right: 0;
     padding: 10px;
-    position: absolute;
     position: relative;
-    background: #f1f8ff;
+    background: #eef1f6;
     height: calc(100vh - 100px);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+
     .router-view-page {
       width: 100%;
       height: 100%;
       background: #fff;
       margin: 0 !important;
       padding: 10px !important;
-      // overflow: hidden;
       overflow: auto;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      &::-ms-overflow-style {
+        display: none;
+      }
     }
   }
   .fixed-header + .app-main {

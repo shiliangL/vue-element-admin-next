@@ -44,42 +44,17 @@
           </span>
         </el-form-item>
       </el-tooltip>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
+      <el-button size="small" :loading="loading" type="primary" class="login-button" style="width:100%;" @click.native.prevent="handleLogin"> Login </el-button>
     </el-form>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
 <script>
+
 import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -178,24 +153,6 @@ export default {
         return acc
       }, {})
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
@@ -204,7 +161,7 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
+$bg:#fff;
 $light_gray:#fff;
 $cursor: #fff;
 
@@ -230,7 +187,6 @@ $cursor: #fff;
       color: $light_gray;
       height: 47px;
       caret-color: $cursor;
-
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-text-fill-color: $cursor !important;
@@ -239,7 +195,7 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.66);
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
@@ -248,7 +204,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#000;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
@@ -257,7 +213,6 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
-
   .login-form {
     position: relative;
     width: 520px;
@@ -266,19 +221,6 @@ $light_gray:#eee;
     margin: 0 auto;
     overflow: hidden;
   }
-
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
-  }
-
   .svg-container {
     padding: 6px 5px 6px 15px;
     color: $dark_gray;
@@ -286,10 +228,8 @@ $light_gray:#eee;
     width: 30px;
     display: inline-block;
   }
-
   .title-container {
     position: relative;
-
     .title {
       font-size: 26px;
       color: $light_gray;
@@ -298,7 +238,6 @@ $light_gray:#eee;
       font-weight: bold;
     }
   }
-
   .show-pwd {
     position: absolute;
     right: 10px;
@@ -308,11 +247,14 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
-
   .thirdparty-button {
     position: absolute;
     right: 0;
     bottom: 6px;
+  }
+
+  .login-button{
+    padding: 14px;
   }
 
   @media only screen and (max-width: 470px) {
