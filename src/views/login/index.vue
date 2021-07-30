@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <SmarkBg />
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -74,9 +75,13 @@
 <script>
 
 import { validUsername } from '@/utils/validate'
+import SmarkBg from './components/SmarkBg.vue'
 
 export default {
   name: 'Login',
+  components: {
+    SmarkBg
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -233,7 +238,6 @@ $light_gray: #eee;
 .login-container {
   height: 100%;
   width: 100%;
-  background-color: $bg;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -241,6 +245,7 @@ $light_gray: #eee;
   background-image: url('https://file.iviewui.com/admin-dist/img/login-bg.0899ffa6.jpg');
   background-size: cover;
   background-position: 50%;
+  background: #051232;
   .login-form {
     margin-right: 10%;
     padding: 20px;
