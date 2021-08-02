@@ -24,11 +24,23 @@ export default {
     height: {
       type: String,
       default: '200px'
+    },
+    option: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      initOption: {
+
+      }
+    }
+  },
+  watch: {
+    option: {
+
     }
   },
   mounted() {

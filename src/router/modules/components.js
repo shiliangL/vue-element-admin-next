@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-07-29 08:24:56
+ * @LastEditTime: 2021-08-02 08:13:33
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -19,18 +19,6 @@ const componentsRouter = {
     icon: 'component'
   },
   children: [
-    {
-      path: 'tinymce',
-      component: () => import('@/views/components-demo/tinymce'),
-      name: 'TinymceDemo',
-      meta: { title: 'Tinymce' }
-    },
-    {
-      path: 'markdown',
-      component: () => import('@/views/components-demo/markdown'),
-      name: 'MarkdownDemo',
-      meta: { title: 'Markdown' }
-    },
     {
       path: 'split-pane',
       component: () => import('@/views/components-demo/split-pane'),
