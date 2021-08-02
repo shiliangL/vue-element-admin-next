@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 22:09:29
+ * @LastEditTime: 2021-08-02 10:24:07
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -21,7 +21,6 @@
           v-if="logo"
           class="el-icon-menu"
         />
-        <!-- <img v-if="logo" :src="logo" class="sidebar-logo"> -->
         <h1
           v-else
           class="sidebar-title"
@@ -37,7 +36,6 @@
           v-if="logo"
           class="el-icon-menu"
         />
-        <!-- <img v-if="logo" :src="logo" class="sidebar-logo"> -->
         <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
     </transition>
@@ -106,7 +104,7 @@ export default {
       margin: 0;
       color: #fff;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 18px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }

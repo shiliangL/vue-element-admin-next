@@ -11,6 +11,8 @@ module.exports = {
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
   globals: {
+    "mapv": true,
+    "mapvgl": true,
     "BMap": true,
     "BMapGL": true,
     "BMAP_NORMAL_MAP": true,

@@ -36,7 +36,18 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    before: require('mock/mock-server.js'),
+    proxy: {
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      '/mapv/': {
+        target: 'http://mapv.baidu.com/examples',
+        changeOrigin: true
+        // pathRewrite: {
+        //   '^/event/': ''
+        // }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -60,10 +71,8 @@ module.exports = {
         include: 'initial'
       }
     ])
-
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
-
     // set svg-sprite-loader
     config.module
       .rule('svg')
@@ -80,7 +89,6 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
-
     config
       .when(process.env.NODE_ENV !== 'development',
         config => {
