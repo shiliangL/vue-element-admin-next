@@ -130,6 +130,18 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/baiduMapDraw',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/baiduMapDraw/index'),
+        name: 'baiduMapDraw',
+        meta: { title: 'baiduMapDraw', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/baiduMapGl',
     component: Layout,
     children: [

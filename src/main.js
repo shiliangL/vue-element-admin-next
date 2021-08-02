@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 14:25:08
+ * @LastEditTime: 2021-08-02 17:39:08
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -20,6 +20,8 @@ import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 
+import lib from '@/lib/index'
+
 import * as filters from './filters' // global filters
 
 if (process.env.NODE_ENV === 'production') {
@@ -30,6 +32,8 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(Element, {
   size: Cookies.get('size') || 'small'
 })
+
+Vue.use(lib)
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
