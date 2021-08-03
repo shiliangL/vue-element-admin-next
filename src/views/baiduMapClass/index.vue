@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-29 14:14:43
- * @LastEditTime: 2021-08-03 17:48:13
+ * @LastEditTime: 2021-08-03 21:37:48
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -24,8 +24,12 @@ export default {
   },
   methods: {
     mapInit() {
-      const bMapUtils = new this.$BMapUtils({ container: 'map', centerName: '深圳市宝安区' })
-      this.map = bMapUtils.bdMap
+      this.bMapClass = new this.$BMapClass({ container: 'map', centerName: '深圳市宝安区' })
+      this.fetchMapLineData()
+    },
+    async fetchMapLineData() {
+      const result = await this.$http({ url: '/mockData/map-line.json', method: 'GET', data: { 'id': '5573FFC1-D4FA-4E09-A60B-D83C72E29B95', 'type': 1, 'dataType': 0, 'workStatus': 0 }})
+      this.bMapClass.darwMapLine(result.lineList || [])
     }
   }
 }
@@ -36,7 +40,7 @@ export default {
   position: relative;
   #map{
     width: 100%;
-    height: 80%;
+    height: 100%;
   }
 }
 </style>
