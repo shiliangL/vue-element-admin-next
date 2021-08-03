@@ -118,6 +118,18 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/baiduMapClass',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/baiduMapClass/index'),
+        name: 'baiduMapClass',
+        meta: { title: 'baiduMapClass', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/baiduMap',
     component: Layout,
     children: [
