@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    <SmarkBg />
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -75,13 +74,9 @@
 <script>
 
 import { validUsername } from '@/utils/validate'
-import SmarkBg from './components/SmarkBg.vue'
 
 export default {
   name: 'Login',
-  components: {
-    SmarkBg
-  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {

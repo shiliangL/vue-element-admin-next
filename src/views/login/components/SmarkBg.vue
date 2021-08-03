@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-30 20:41:02
- * @LastEditTime: 2021-07-30 21:13:49
+ * @LastEditTime: 2021-08-03 10:39:41
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -12,12 +12,7 @@
     muted
     :style="fixStyle"
     class="fillWidth"
-  >
-    <source
-      src="/video/login_bg.mp4"
-      type="video/mp4"
-    >
-  </video>
+  />
 </template>
 
 <script>
