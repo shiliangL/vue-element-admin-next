@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-29 14:14:43
- * @LastEditTime: 2021-08-03 10:23:39
+ * @LastEditTime: 2021-08-03 15:40:25
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -17,6 +17,7 @@
 <script>
 
 import * as mapv from 'mapv'
+const iconMapCar = require('@/assets/iconOnMap/che.png')
 
 export default {
   name: 'BaiduMapGl',
@@ -40,16 +41,22 @@ export default {
       this.map.centerAndZoom(new BMap.Point(113.983201, 22.638147), 12) // 初始化地图,设置中心点坐标和地图级别
       this.fetchMapSectionData()
       this.fetchMapLineData()
+      this.fetchMapPointData()
     },
     async fetchMapLineData() {
-      const { lineList } = await this.$http({ url: 'http://hw-topevery-dev-ui:49210/mapIndex/getMapCarDisplayInfo', method: 'POST', data: { 'id': '5573FFC1-D4FA-4E09-A60B-D83C72E29B95', 'type': 1, 'dataType': 0, 'workStatus': 0 }})
-      // this.darwBDLine(lineList)
-      this.darwMapvLine(lineList)
+      const result = await this.$http({ url: '/mockData/map-line.json', method: 'GET', data: { 'id': '5573FFC1-D4FA-4E09-A60B-D83C72E29B95', 'type': 1, 'dataType': 0, 'workStatus': 0 }})
+      // this.darwBDLine(result)
+      this.darwMapvLine(result.lineList || [])
     },
     async fetchMapSectionData() {
-      const result = await this.$http({ url: 'http://hw-topevery-dev-ui:49210/mapIndex/getMapSectionList', method: 'POST', data: { 'id': '5573FFC1-D4FA-4E09-A60B-D83C72E29B95', 'type': 1 }})
+      const result = await this.$http({ url: '/mockData/map-polygon.json', method: 'GET', data: { 'id': '5573FFC1-D4FA-4E09-A60B-D83C72E29B95', 'type': 1 }})
       // this.darwBDPolygon(result)
       this.darwMapvPolygon(result)
+    },
+    async fetchMapPointData() {
+      const result = await this.$http({ url: '/mockData/map-point.json', method: 'GET', data: { 'id': '5573FFC1-D4FA-4E09-A60B-D83C72E29B95', 'type': 1 }})
+      // this.darwBDPolygon(result)
+      this.darwMapvPoint(result.list || [], iconMapCar)
     },
     darwBDLine(result = []) {
       for (const item of result || []) {
@@ -66,6 +73,9 @@ export default {
         })
         this.map.addOverlay(polyline)
       }
+    },
+    getBmapPoint(result = [], lng = 'lng', lat = 'lat') {
+      return result.map(kk => new BMap.Point(kk[lng], kk[lat])) || []
     },
     darwBDPolygon(result = []) {
       const pointView = []
@@ -131,14 +141,17 @@ export default {
     darwMapvLine(result = []) {
       const mapvDataSet = []
       for (const item of result || []) {
-        const linePoints = item.linePoints[0].map(kk => [kk.lng, kk.lat])
-        mapvDataSet.push({
-          ...item,
-          geometry: {
-            type: 'LineString',
-            coordinates: linePoints
-          }
-        })
+        item.linePoints = item.linePoints ? item.linePoints : []
+        if (item.linePoints.length) {
+          const linePoints = item.linePoints[0].map(kk => [kk.lng, kk.lat])
+          mapvDataSet.push({
+            ...item,
+            geometry: {
+              type: 'LineString',
+              coordinates: linePoints
+            }
+          })
+        }
       }
       const dataSet = new mapv.DataSet(mapvDataSet)
 
@@ -172,7 +185,7 @@ export default {
             if (item) {
               const lineDataSet = new mapv.DataSet(item)
               if (!this.moveLineOverlay) {
-                // eslint-disable-next-line new-cap
+              // eslint-disable-next-line new-cap
                 this.moveLineOverlay = new mapv.baiduMapLayer(this.map, lineDataSet, moveLineOptions)
                 this.moveLineOverlay.workLineId = item.workLineId
               } else if (this.moveLineOverlay && this.moveLineOverlay.workLineId !== item.workLineId) {
@@ -189,6 +202,74 @@ export default {
       }
       // eslint-disable-next-line new-cap
       this.mapvLayerLine = new mapv.baiduMapLayer(this.map, dataSet, options)
+    },
+    // mapv绘制点
+    darwMapvPoint(result = [], icon) {
+      const data = []
+      for (const item of result) {
+        if (item.geoX && item.geoY) {
+          data.push({
+            ...item, geometry: { type: 'Point', coordinates: [item.geoX, item.geoY] }, icon: icon, text: item.personName,
+            iconOptions: {
+              url: [icon],
+              size: 30,
+              width: 30
+            }
+          })
+        }
+      }
+      const dataSet = new mapv.DataSet(data)
+
+      const textOptions = {
+        draw: 'text',
+        avoid: true,
+        size: 14,
+        font: '14px Arial',
+        fillStyle: '#006FFF',
+        offset: {
+          x: 0,
+          y: -24
+        }
+      }
+
+      const options = {
+      // draw: 'icon',
+        draw: 'cluster',
+        size: 30,
+        width: 30,
+        height: 30,
+        zIndex: 4,
+        methods: {
+          click: (point) => {
+            if (point) {
+              if (point.iconOptions) {
+                console.log(point.iconOptions.url)
+              }
+              // 通过children可以拿到被聚合的所有点
+              console.log(point.children)
+            }
+          }
+        },
+        minSize: 8, // 聚合点最小半径
+        maxSize: 31, // 聚合点最大半径
+        clusterRadius: 150, // 聚合像素半径
+        maxClusterZoom: 18, // 最大聚合的级别
+        maxZoom: 19, // 最大显示级别
+        minPoints: 5, // 最少聚合点数，点数多于此值才会被聚合
+        extent: 400, // 聚合的细腻程度，越高聚合后点越密集
+        label: { // 聚合文本样式
+          show: true,
+          fillStyle: 'white',
+          shadowColor: 'yellow'
+        }
+      // gradient: { 0: 'blue', 0.5: 'yellow', 1.0: 'rgb(255,0,0)' } // 聚合图标渐变色
+      }
+      // eslint-disable-next-line new-cap
+      const mapvLayer = new mapv.baiduMapLayer(this.map, dataSet, options)
+      // eslint-disable-next-line new-cap
+      const mapvLayerText = new mapv.baiduMapLayer(this.map, dataSet, textOptions)
+      mapvLayerText.hide()
+      return { mapvLayer, mapvLayerText }
     }
   }
 }
