@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-29 14:14:43
- * @LastEditTime: 2021-08-03 21:37:01
+ * @LastEditTime: 2021-08-04 10:12:44
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -27,7 +27,6 @@ export default {
         this.mapInit()
       }, 0)
     })
-    console.log(window)
   },
   methods: {
     mapInit() {
@@ -122,14 +121,15 @@ export default {
       const dataSet = new mapv.DataSet(mapvDataSet)
       const options = {
         draw: 'simple',
-        zIndex: 1, // 层级
+        zIndex: 0, // 层级
         lineWidth: 1, // 描边宽度
         fillStyle: 'RGB(212, 230, 225,0.33)', // 填充颜色
         strokeStyle: 'RGB(55, 116, 80,0.88)', // 描边颜色
         methods: {
-          click: (itemData) => {
-            if (itemData) {
-              console.log(itemData, 'itemData')
+          click: (item, overLay) => {
+            if (item) {
+              overLay.domEvent.stopPropagation()
+              console.log(item, '点击了面')
             }
           }
         }
@@ -158,13 +158,14 @@ export default {
       // eslint-disable-next-line no-unused-vars
       const moveLineOptions = {
         draw: 'simple',
-        zIndex: 3,
-        lineWidth: 4,
+        zIndex: 30,
+        lineWidth: 5,
         strokeStyle: '#00FF99',
         methods: {
-          click: (item) => {
+          click: (item, overLay) => {
             if (item) {
-              console.log(item)
+              console.log(item, '点击了当前激活线条')
+              overLay.domEvent.stopPropagation()
             }
           },
           mousemove: (item) => {
@@ -238,15 +239,16 @@ export default {
         size: 30,
         width: 30,
         height: 30,
-        zIndex: 4,
+        zIndex: 40,
         methods: {
-          click: (point) => {
+          click: (point, overLay) => {
             if (point) {
               if (point.iconOptions) {
-                console.log(point.iconOptions.url)
+                console.log(point.iconOptions)
               }
               // 通过children可以拿到被聚合的所有点
               console.log(point.children)
+              overLay.domEvent.stopPropagation()
             }
           }
         },
@@ -262,7 +264,6 @@ export default {
           fillStyle: 'white',
           shadowColor: 'yellow'
         }
-      // gradient: { 0: 'blue', 0.5: 'yellow', 1.0: 'rgb(255,0,0)' } // 聚合图标渐变色
       }
       // eslint-disable-next-line new-cap
       const mapvLayer = new mapv.baiduMapLayer(this.map, dataSet, options)
