@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-08-02 11:00:27
- * @LastEditTime: 2021-08-03 21:44:55
+ * @LastEditTime: 2021-08-03 22:09:17
  * @LastEditors: Do not edit
  * @Description: 百度地图常用工具类
  */
@@ -76,7 +76,7 @@ export default class BMapClass {
     return this.baiduMap && this.baiduMap.setViewport(viewPoint)
   }
 
-  darwMapLine(result) {
+  darwMapLine(result, clickRow) {
     for (const item of result || []) {
       const linePoints = item.linePoints[0].map(kk => new BMap.Point(kk.lng, kk.lat))
       const polyline = new BMap.Polyline(linePoints, {
@@ -88,6 +88,9 @@ export default class BMapClass {
       })
       polyline.addEventListener('mouseout', function() {
         this.setStrokeWeight(2)
+      })
+      polyline.addEventListener('click', function() {
+        clickRow(item)
       })
       this.baiduMap.addOverlay(polyline)
     }
