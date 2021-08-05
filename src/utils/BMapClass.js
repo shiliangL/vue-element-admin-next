@@ -1,17 +1,15 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-08-02 11:00:27
- * @LastEditTime: 2021-08-03 22:09:17
+ * @LastEditTime: 2021-08-05 19:46:22
  * @LastEditors: Do not edit
  * @Description: 百度地图常用工具类
  */
 
 export default class BMapClass {
   constructor(options) {
-    this.baiduMap = BMapClass.initBaiduMap(options)
-    if (options.centerName) {
-      this.getBoundaryPoint(options.centerName)
-    }
+    this.baiduMap = options.baiduMap || BMapClass.initBaiduMap(options)
+    if (options.centerName) this.getBoundaryPoint(options.centerName)
   }
 
   static initBaiduMap(option) {
@@ -22,6 +20,7 @@ export default class BMapClass {
       minZoom: 12
     })
     baiduMap.centerAndZoom(options.centerName, 12)
+    baiduMap.enableScrollWheelZoom()
     return baiduMap
   }
 
@@ -76,7 +75,11 @@ export default class BMapClass {
     return this.baiduMap && this.baiduMap.setViewport(viewPoint)
   }
 
-  darwMapLine(result, clickRow) {
+  handlerPoint(result = [], lng = 'lng', lat = 'lat') {
+    return result.map(kk => new BMap.Point(kk[lng], kk[lat])) || []
+  }
+
+  drawMapLine(result, clickRow) {
     for (const item of result || []) {
       const linePoints = item.linePoints[0].map(kk => new BMap.Point(kk.lng, kk.lat))
       const polyline = new BMap.Polyline(linePoints, {
