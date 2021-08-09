@@ -77,12 +77,45 @@
       }
     }
 
+    .submenu-title-noDropdown {
+      height: 50px!important;
+      line-height: 50px!important;
+      &.is-active {
+        color: $base-menu-text-active !important;
+        background-color: $base-menu-active-background !important;
+        &:after {
+          transform: scaleY(1);
+          opacity: 1;
+        }
+      }
+
+      &:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        border-right: 3px solid $base-menu-text-active;
+        transform: scaleY(0.0001);
+        opacity: 0;
+        transition: opacity 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          -webkit-transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          opacity 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          opacity 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          -webkit-transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+        content: "";
+      }
+    }
+
     .is-active>.el-submenu__title {
       color: $subMenuActiveText !important;
     }
 
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
+      position: relative;
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg !important;
 
@@ -90,13 +123,37 @@
         background-color: $subMenuHover !important;
       }
 
-      &.is-active{
-        color:$base-menu-text-active !important;
+      &.is-active {
+        color: $base-menu-text-active !important;
         background-color: $base-menu-active-background !important;
+
+        &:after {
+          transform: scaleY(1);
+          opacity: 1;
+        }
+      }
+
+      &:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        border-right: 3px solid $base-menu-text-active;
+        transform: scaleY(0.0001);
+        opacity: 0;
+        transition: opacity 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          -webkit-transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          opacity 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          opacity 0.25s cubic-bezier(0.215, 0.61, 0.355, 1),
+          -webkit-transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+        content: "";
       }
     }
 
-    & is-active{
+    & is-active {
       color: $base-menu-text-active !important;
       background-color: $base-menu-active-background !important;
     }
