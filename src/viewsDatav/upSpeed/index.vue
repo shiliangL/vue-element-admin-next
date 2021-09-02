@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-09-02 09:07:21
- * @LastEditTime: 2021-09-02 10:48:22
+ * @LastEditTime: 2021-09-02 17:59:07
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -29,9 +29,7 @@ export default {
       loader.load('/model/gundam/scene.gltf', (gltf) => {
         this.ThreeApp = new ThreeApp({ canvas: this.$refs['canvas'] })
         const model = gltf.scene
-
-        model.scale.set(0.8, 0.8, 0.8)
-        // model.position.y = -6
+        model.scale.set(0.05, 0.05, 0.05)
 
         const { controls, scene } = this.ThreeApp
         // 模型

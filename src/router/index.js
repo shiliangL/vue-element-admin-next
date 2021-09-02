@@ -125,6 +125,18 @@ export const asyncRoutes = [
   nestedRouter,
   componentsRouter,
   {
+    path: '/baiduMapEditor',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/baiduMapEditor/index'),
+        name: 'baiduMapEditor',
+        meta: { title: 'baiduMapEditor', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/baiduMapClass',
     component: Layout,
     children: [

@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-09-02 09:20:43
- * @LastEditTime: 2021-09-02 10:46:09
+ * @LastEditTime: 2021-09-02 17:57:57
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -29,7 +29,7 @@ class ThreeApp {
   static createCamera(canvas) {
     const innerWidth = canvas.offsetWidth || window.innerWidth
     const innerHeight = canvas.offsetHeight || window.innerHeight
-    return new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.25, 1000)
+    return new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.25, 5000)
   }
 
   // 渲染器
