@@ -7,10 +7,11 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
+import datavRouter from './modules/datav'
 import tableRouter from './modules/table'
+import chartsRouter from './modules/charts'
 import nestedRouter from './modules/nested'
+import componentsRouter from './modules/components'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -117,6 +118,12 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  /** when your routing map is too long, you can split it into small modules **/
+  datavRouter,
+  tableRouter,
+  chartsRouter,
+  nestedRouter,
+  componentsRouter,
   {
     path: '/baiduMapClass',
     component: Layout,
@@ -206,11 +213,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
-  nestedRouter,
-  tableRouter,
   {
     path: '/tab',
     component: Layout,
