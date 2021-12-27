@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 14:27:54
+ * @LastEditTime: 2021-12-27 16:29:49
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -11,5 +11,6 @@ module.exports = {
   tagsView: true,
   fixedHeader: true,
   sidebarLogo: true,
-  errorLog: 'production'
+  errorLog: 'production',
+  menuUnique: true // 菜单是否唯一展开
 }

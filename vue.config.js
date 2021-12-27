@@ -41,8 +41,8 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      '/mapv/': {
-        target: 'http://mapv.baidu.com/examples',
+      '/REST/': {
+        target: 'http://192.168.1.192',
         changeOrigin: true
         // pathRewrite: {
         //   '^/event/': ''

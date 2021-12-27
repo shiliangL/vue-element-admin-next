@@ -38,7 +38,7 @@
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item @click.native="dropdownClick(1)"> 刷新当前 </el-dropdown-item>
         <el-dropdown-item @click.native="dropdownClick(2)"> 关闭当前 </el-dropdown-item>
-        <el-dropdown-item @click.native="dropdownClick(3)"> 关闭其他 </el-dropdown-item>
+        <!-- <el-dropdown-item @click.native="dropdownClick(3)"> 关闭其他 </el-dropdown-item> -->
         <el-dropdown-item @click.native="dropdownClick(4)"> 关闭所有 </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -53,7 +53,7 @@
         v-if="!isAffix(selectedTag)"
         @click="closeSelectedTag(selectedTag)"
       > 关闭当前 </li>
-      <li @click="closeOthersTags(selectedTag)"> 关闭其他 </li>
+      <!-- <li @click="closeOthersTags(selectedTag)"> 关闭其他 </li> -->
       <li @click="closeAllTags(selectedTag)"> 关闭所有 </li>
     </ul>
   </div>

@@ -1,13 +1,20 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2021-11-22 13:46:35
+ * @LastEditTime: 2021-12-27 16:28:37
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <template>
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
+        :unique-opened="menuUnique"
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
-        :unique-opened="false"
         :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
@@ -19,13 +26,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+
 import Logo from './Logo'
+import { mapGetters } from 'vuex'
+import { menuUnique } from '@/settings'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      menuUnique
+    }
+  },
   computed: {
     ...mapGetters([
       'permission_routes',

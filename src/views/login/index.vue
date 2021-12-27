@@ -10,7 +10,7 @@
     >
 
       <div class="title-container">
-        <h3 class="title">  欢迎登录  </h3>
+        <h3 class="title"> 欢迎登录 </h3>
       </div>
 
       <el-form-item prop="username">
@@ -68,6 +68,13 @@
         @click.native.prevent="handleLogin"
       > 登 录 </el-button>
     </el-form>
+
+    <ul class="bg-bubbles">
+      <li
+        v-for="item in 10"
+        :key="item"
+      />
+    </ul>
   </div>
 </template>
 
@@ -111,7 +118,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler(route) {
         const query = route.query
         if (query) {
           this.redirect = query.redirect
@@ -230,6 +237,10 @@ $bg: #000;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+@function fade($args, $args1) {
+  @return rgba(255, 255, 255, $args1);
+}
+
 .login-container {
   height: 100%;
   width: 100%;
@@ -239,11 +250,20 @@ $light_gray: #eee;
   background-size: cover;
   background-position: 50%;
   justify-content: flex-end;
-  background-image: url("~@/assets/layout/login_bg.jpg");
+  position: relative;
+  background: -webkit-linear-gradient(top left, #50a3a2 0%, #3e7ba7 100%);
+  background: -moz-linear-gradient(top left, #50a3a2 0%, #3e7ba7 100%);
+  background: -o-linear-gradient(top left, #50a3a2 0%, #3e7ba7 100%);
+  background: linear-gradient(to bottom right, #50a3a2 0%, #3e7ba7 100%);
+
+  background-image: url(https://file.iviewui.com/admin-dist/img/login-bg.0899ffa6.jpg);
+  background-size: cover;
+  background-position: 50%;
   .login-form {
     margin-right: 10%;
     padding: 20px;
     position: relative;
+    z-index: 3;
     width: 320px;
     max-width: 100%;
     overflow: hidden;
@@ -276,19 +296,123 @@ $light_gray: #eee;
     cursor: pointer;
     user-select: none;
   }
-  .thirdparty-button {
-    position: absolute;
-    right: 0;
-    bottom: 6px;
-  }
 
   .login-button {
     padding: 14px;
   }
+}
 
-  @media only screen and (max-width: 470px) {
-    .thirdparty-button {
-      display: none;
+.bg-bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  li {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: #fafafa78;
+    animation: animate 25s linear infinite;
+    bottom: -200px;
+
+    @keyframes animate {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+      }
+
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+      }
+    }
+
+    &:nth-child(1) {
+      left: 15%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      left: 5%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 2s;
+      animation-duration: 12s;
+    }
+
+    &:nth-child(3) {
+      left: 70%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 4s;
+    }
+
+    &:nth-child(4) {
+      left: 40%;
+      width: 60px;
+      height: 60px;
+      animation-delay: 0s;
+      animation-duration: 18s;
+    }
+
+    &:nth-child(5) {
+      left: 65%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(6) {
+      left: 75%;
+      width: 150px;
+      height: 150px;
+      animation-delay: 3s;
+    }
+
+    &:nth-child(7) {
+      left: 35%;
+      width: 200px;
+      height: 200px;
+      animation-delay: 7s;
+    }
+
+    &:nth-child(8) {
+      left: 50%;
+      width: 25px;
+      height: 25px;
+      animation-delay: 15s;
+      animation-duration: 45s;
+    }
+
+    &:nth-child(9) {
+      left: 20%;
+      width: 15px;
+      height: 15px;
+      animation-delay: 2s;
+      animation-duration: 35s;
+    }
+
+    &:nth-child(10) {
+      left: 85%;
+      width: 150px;
+      height: 150px;
+      animation-delay: 0s;
+      animation-duration: 11s;
     }
   }
 }
