@@ -7,7 +7,6 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import datavRouter from './modules/datav'
 import tableRouter from './modules/table'
 import chartsRouter from './modules/charts'
 import nestedRouter from './modules/nested'
@@ -119,71 +118,10 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   /** when your routing map is too long, you can split it into small modules **/
-  datavRouter,
   tableRouter,
   chartsRouter,
   nestedRouter,
   componentsRouter,
-  {
-    path: '/baiduMapEditor',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/baiduMapEditor/index'),
-        name: 'baiduMapEditor',
-        meta: { title: 'baiduMapEditor', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/baiduMapClass',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/baiduMapClass/index'),
-        name: 'baiduMapClass',
-        meta: { title: 'baiduMapClass', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/baiduMap',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/baiduMap/index'),
-        name: 'baiduMap',
-        meta: { title: 'baiduMap', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/baiduMapDraw',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/baiduMapDraw/index'),
-        name: 'baiduMapDraw',
-        meta: { title: 'baiduMapDraw', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/baiduMapGl',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/baiduMapGl/index'),
-        name: 'baiduMapGl',
-        meta: { title: 'baiduMapGl', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
   {
     path: '/permission',
     component: Layout,

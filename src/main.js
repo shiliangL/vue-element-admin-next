@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-09-02 18:09:08
+ * @LastEditTime: 2021-12-27 10:04:19
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -24,10 +24,6 @@ import lib from '@/lib/index'
 
 import * as filters from './filters' // global filters
 
-import BaiduMap from 'vue-baidu-map'
-Vue.use(BaiduMap, {
-  ak: '1XjLLEhZhQNUzd93EjU5nOGQ'
-})
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('mock')
   mockXHR()
