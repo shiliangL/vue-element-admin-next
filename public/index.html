@@ -1,3 +1,10 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2021-11-22 13:46:34
+ * @LastEditTime: 2021-12-29 12:26:22
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,9 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= webpackConfig.name %></title>
-    <script src="//api.map.baidu.com/api?v=3.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
-    <script src="//api.map.baidu.com/api?v=1.0&type=webgl&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
-    <script src="https://code.bdstatic.com/npm/mapvgl@1.0.0-beta.129/dist/mapvgl.min.js"></script>
+    <script>
+      // 设置后台服务器不熟路径
+      window.VUE_APP_BASE_API = 'http://localhost:4632/'
+    </script>
   </head>
   <body>
     <div id="app"></div>

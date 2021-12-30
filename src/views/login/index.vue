@@ -10,7 +10,7 @@
     >
 
       <div class="title-container">
-        <h3 class="title"> 欢迎登录 </h3>
+        <h3 class="title"> 欢迎登录OnMap </h3>
       </div>
 
       <el-form-item prop="username">
@@ -87,7 +87,8 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        // callback(new Error('Please enter the correct user name'))
+        callback()
       } else {
         callback()
       }
@@ -101,8 +102,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'test@smartcity',
+        password: 'test123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -160,7 +161,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store.dispatch('user/login2', this.loginForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false

@@ -1,3 +1,10 @@
+/*
+ * @Author: shiliangL
+ * @Date: 2021-11-22 13:46:35
+ * @LastEditTime: 2021-12-29 12:32:09
+ * @LastEditors: Do not edit
+ * @Description:
+ */
 import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
@@ -34,11 +41,10 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
-
+          const { Roles } = await store.dispatch('user/getInfo')
           // generate accessible routes map based on roles
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
+          const accessRoutes = await store.dispatch('permission/generateRoutes', Roles)
+          console.log(accessRoutes, '--accessRoutes--')
           // dynamically add accessible routes
           router.addRoutes(accessRoutes)
 

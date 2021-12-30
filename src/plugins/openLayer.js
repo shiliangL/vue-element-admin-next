@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-02 20:59:08
- * @LastEditTime: 2021-07-24 22:42:53
+ * @LastEditTime: 2021-12-28 09:33:35
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -13,7 +13,7 @@ const ModalConstructor = Vue.extend(Dialog)
 
 // 配置常用默认设置
 const defaults = {
-  // appendToBody: true,
+  appendToBody: true,
   destroyOnClose: true,
   closeOnClickModal: false,
   closeOnPressEscape: false
@@ -22,9 +22,9 @@ const defaults = {
 let instance
 
 const OpenLayer = function({ store, router }) {
-  return function({ component, methods, props, componentProps }) {
+  return function({ content, methods, modalProps, props }) {
     if (Vue.prototype.$isServer) return
-    const modalOptions = merge({}, defaults, props)
+    const modalOptions = merge({}, defaults, modalProps)
     const dom = document.createElement('div')
     document.body.appendChild(dom)
     instance = new ModalConstructor({
@@ -38,12 +38,12 @@ const OpenLayer = function({ store, router }) {
       },
       components: {
         Dialog: Dialog,
-        Plugin: component
+        Plugin: content
       },
       render(createElement) {
         const Plugin = this.showModal ? () => createElement('Plugin', {
           props: {
-            ...componentProps
+            ...props
           },
           on: {
             close: (e) => this.close(e),

@@ -24,7 +24,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: '', // 发布onMap平台需要相对路径
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -42,6 +42,13 @@ module.exports = {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       '/REST/': {
+        target: 'http://192.168.1.192',
+        changeOrigin: true
+        // pathRewrite: {
+        //   '^/event/': ''
+        // }
+      },
+      '/Auth/': {
         target: 'http://192.168.1.192',
         changeOrigin: true
         // pathRewrite: {

@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-12-27 17:49:23
+ * @LastEditTime: 2021-12-30 10:20:21
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -20,6 +20,7 @@ import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 import * as filters from './filters' // global filters
+import openLayer from '@/plugins/openLayer'
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
@@ -33,7 +34,7 @@ import components from './components/export'
 Vue.use(lib)
 Vue.use(components)
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'dev') {
   const { mockXHR } = require('mock')
   mockXHR()
 }
@@ -43,6 +44,13 @@ Vue.use(Element, {
 })
 
 Vue.config.productionTip = false
+
+Vue.prototype.$openLayer = openLayer({ router, store })
+
+// 设置一些全局变量
+// 设置后台服务器不熟路径
+window.VUE_APP_BASE_API = 'http://localhost:4632/'
+window.VUE_APP_BASE_API_PREFIX = 'REST/System/TenantBase/SMARTCITY/V1.0/APPSERVICE/EntityService/Data/AICIMTESTSERVICE/Telecom'
 
 new Vue({
   el: '#app',

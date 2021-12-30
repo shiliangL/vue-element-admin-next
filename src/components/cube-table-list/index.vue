@@ -122,7 +122,7 @@ export default {
         },
         pagination: {
           pageSizes: [10, 30, 50, 70, 100], // 默认分页可选择的每页显示的页数
-          size: 10, // 分页每页默认显示50条
+          size: 50, // 分页每页默认显示50条
           currentPage: 1, // 当前默认第一页
           total: 0 // 总条数
         }
@@ -183,57 +183,54 @@ export default {
       const { loadType, rowKey, tableDataType } = this.initConfig.table
       page ? this.initConfig.pagination.currentPage = page : this.initConfig.pagination.currentPage = 1
       const { currentPage, size } = this.initConfig.pagination
-      const params = { pageIndex: currentPage, pageSize: size, ...searchParams, ...this.extraParam }
+      const params = { Ex_CurrentPage: currentPage, Ex_PageSize: size, ...searchParams, ...this.extraParam, Ex_ReturnDataAndCount: true }
       // this.createLoadingFn()
       if (loadType === 'page') this.initConfig.table.data = []
       if (!page && loadType === 'list') {
         this.initConfig.table.data = []
       }
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data'
-      const { data, success, pageList, totalList } = this.$FETCH
       request({ url, method: method, [paramsKey]: params }).then((response) => {
-        console.log(response, 'data')
-        if (this.createLoading) {
-          this.createLoading.close()
-        }
-        if (response[success]) {
+        console.log(response, 'sbsbsbs')
+
+        if (response['Success']) {
           // 判断标识 数据结构是否是分页数据结构
           if (!['list', 'page'].includes(tableDataType)) {
             console.error('表格数据类型传入错误 tableDataType 可选值page、list')
             return
           }
           if (tableDataType === 'page') {
-            const result = response[data]
-            if (Array.isArray(result[pageList]) && result[pageList].length) {
+            const result = response['Message'].Data || []
+            if (Array.isArray(result) && result.length) {
               if (loadType === 'page') {
-                this.initConfig.table.data = result[pageList] || []
-                this.initConfig.pagination.total = result[totalList] || 0
+                this.initConfig.table.data = result || []
+                this.initConfig.pagination.total = response['Message'] ? response['Message']['TotalCount'] : 0
               } else {
                 // 判断rowKey是否在数据中存在
-                if (!result[pageList][0][rowKey]) {
+                if (!result[0][rowKey]) {
                   console.error('请核实是否传入rowKey唯一值')
                   return
                 }
                 const list = this.initConfig.table.data.map((item) => item[rowKey]) || []
-                for (const item of result[pageList]) {
+                for (const item of result) {
                   if (!list.includes(item[rowKey])) {
                     this.initConfig.table.data.push(item)
                   }
                 }
-                this.initConfig.pagination.total = result[totalList] || 0
+                this.initConfig.pagination.total = response['Message'] ? response['Message']['TotalCount'] : 0
               }
             }
           } else {
-            const result = response[data]
+            const result = response['Message'].Data || []
             if (Array.isArray(result) && result.length) {
               this.initConfig.table.data = result || []
             }
           }
         }
       }).catch(e => {
-        if (this.createLoading) {
-          this.createLoading.close()
-        }
+        // if (this.createLoading) {
+        //   this.createLoading.close()
+        // }
       })
     },
     handlerReset() {
