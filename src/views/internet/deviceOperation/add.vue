@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 16:48:46
+ * @LastEditTime: 2021-12-30 10:30:03
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -18,36 +18,36 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="设备名称" prop="name" :rules="rules.input">
-            <el-input v-model="form.name" placeholder="请输入" />
+            <el-input v-model="form.name" placeholder="请输入内容" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="设备类型" prop="type" :rules="rules.input">
-            <el-input v-model="form.type" placeholder="请输入" />
+            <el-input v-model="form.type" placeholder="请输入内容" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
           <el-form-item label="设备编号" prop="code">
-            <el-input v-model="form.code" placeholder="请输入" />
+            <el-input v-model="form.code" placeholder="请输入内容" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="采购时间" prop="order_time">
-            <el-date-picker v-model="form.order_time" class="w100p" value-format="yyyy-MM-dd" placeholder="请输入" />
+            <el-date-picker v-model="form.order_time" class="w100p" value-format="yyyy-MM-dd" placeholder="请输入内容" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
           <el-form-item label="使用区域" prop="region">
-            <el-input v-model="form.region" placeholder="请输入" />
+            <el-input v-model="form.region" placeholder="请输入内容" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="生产商" prop="manufacturer">
-            <el-input v-model="form.manufacturer" placeholder="请输入" />
+            <el-input v-model="form.manufacturer" placeholder="请输入内容" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -56,7 +56,7 @@
           <el-form-item label="设备参数" prop="parameter">
             <el-input
               v-model="form.parameter"
-              placeholder="请输入"
+              placeholder="请输入内容"
               maxlength="550"
               show-word-limit
               type="textarea"
@@ -108,6 +108,7 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
+        'id': null,
         'name': '',
         'type': '',
         'code': '',
@@ -153,24 +154,26 @@ export default {
         if (valid) {
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(this.form))
-          const { type } = this // 如果 type 为true 则为编辑
-          const { stringify } = this.$qs
           this.$request({
-            method: type ? 'PUT' : 'POST',
-            url: type ? `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${this.id}` : `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE`,
-            data: stringify({ ...params })
-          }).then((res) => {
-            const { Success } = res
-            if (Success) {
-              this.submitLoading = false
-              this.$emit('refresh')
-              this.$emit('close')
-              this.$message.success('操作成功')
-            } else {
-              this.$message.error('操作失败')
-              this.submitLoading = false
+            method: 'PUT',
+            url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${this.id}`,
+            data: {
+              ...params
             }
+          }).then((res) => {
+            console.log(res, '-res-')
           })
+          // const param = JSON.parse(JSON.stringify(this.form))
+          // saveCollectionPlanning(param).then(res => {
+          //   this.submitLoading = false
+          //   if (res.data.success) {
+          //     this.$emit('input', false)
+          //     this.$emit('refresh')
+          //     this.$message.success('提交成功')
+          //   }
+          // }).catch(() => {
+          //   this.submitLoading = false
+          // })
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })
         }

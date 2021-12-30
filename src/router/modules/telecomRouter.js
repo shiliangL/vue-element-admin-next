@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-12-27 16:26:10
+ * @LastEditTime: 2021-12-30 16:04:09
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -13,31 +13,31 @@ const chartsRouter = [
   {
     path: '/permission',
     component: Layout,
-    redirect: '/permission/page',
+    redirect: '/permission/menuConfig',
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
       title: '权限管理',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      icon: 'lock'
+      // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
+        path: 'menuConfig',
+        component: () => import('@/views/permission/menuConfig'),
+        name: 'MenuConfig',
         meta: {
-          title: '菜单配置',
-          roles: ['admin'] // or you can only set roles in sub nav
+          title: '菜单配置'
+          // roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
+        path: 'userConfig',
+        component: () => import('@/views/permission/userConfig'),
+        name: 'UserConfig',
         meta: {
-          title: '用户管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+          title: '用户管理'
+          // roles: ['admin'] // or you can only set roles in sub nav
         }
       }
     ]
@@ -60,6 +60,24 @@ const chartsRouter = [
         meta: { title: '设备管理', noCache: false }
       },
       {
+        path: 'devicemhfix',
+        component: () => import('@/views/internet/devicemhfix'),
+        name: 'devicemhfix',
+        meta: { title: '设备维修记录', noCache: false }
+      },
+      {
+        path: 'deviceOperation',
+        component: () => import('@/views/internet/deviceOperation'),
+        name: 'deviceOperation',
+        meta: { title: ' 设备运行状态', noCache: false }
+      },
+      {
+        path: 'peoplemh',
+        component: () => import('@/views/internet/peoplemh'),
+        name: 'Peoplemh',
+        meta: { title: '人员管理', noCache: false }
+      },
+      {
         path: 'unionmh',
         component: () => import('@/views/internet/unionmh'),
         name: 'Unionmh',
@@ -70,12 +88,6 @@ const chartsRouter = [
         component: () => import('@/views/internet/safetymh'),
         name: 'Safetymh',
         meta: { title: '安全管理', noCache: false }
-      },
-      {
-        path: 'peoplemh',
-        component: () => import('@/views/internet/peoplemh'),
-        name: 'Peoplemh',
-        meta: { title: '人员管理', noCache: false }
       }
     ]
   },

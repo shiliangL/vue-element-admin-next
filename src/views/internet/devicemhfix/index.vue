@@ -1,9 +1,9 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-30 17:19:29
+ * @LastEditTime: 2021-12-30 16:55:08
  * @LastEditors: Do not edit
- * @Description: 设备管理
+ * @Description: 设备管理维修记录
 -->
 <template>
   <cube-table-list ref="CubeTableList" :config="config" />
@@ -16,7 +16,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE`,
+        url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
         search: {
           data: [
             [
@@ -39,17 +39,19 @@ export default {
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
             { label: '设备名称', key: 'name' },
-            { label: '设备类型', key: 'type' },
             { label: '设备编号', key: 'code' },
-            { label: '使用区域', key: 'region' },
-            { label: '采购时间', key: 'order_time' },
-            { label: '生产商', key: 'manufacturer' },
-            { label: '设备参数', key: 'parameter', width: 320 },
+            { label: '故障时间', key: 'malfunction_date' },
+            { label: '维修时间', key: 'maintenance_date' },
+            { label: '维修工程师', key: 'engineer' },
+            { label: '故障原因', key: 'malfunction_reason' },
+            { label: '配件更换', key: 'parts_replacement' },
+            { label: '维修结论', key: 'maintenance_report' },
             {
               label: '操作',
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
+                  // <div class='btn-text' onClick={() => this.handlerType(0, row)}>详情</div>
                   <div class='flex-table-cell'>
                     <div class='delete-text' onClick={() => this.handlerRemove(row)}>
                       <i class='el-icon-delete'></i>
@@ -87,7 +89,7 @@ export default {
         // 弹窗属性设置
         modalProps: {
           width: '30%',
-          title: type ? '编辑设备' : '新增设备',
+          title: type ? '编辑维修记录' : '新增维修记录',
           maskClosable: false,
           fullscreen: false
         },
@@ -108,7 +110,7 @@ export default {
       }).then(() => {
         this.$request({
           method: 'DELETE',
-          url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`
+          url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`
         }).then((res) => {
           const { Success } = res
           if (Success) {

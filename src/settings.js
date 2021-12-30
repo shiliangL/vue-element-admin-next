@@ -1,13 +1,13 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-12-27 16:29:49
+ * @LastEditTime: 2021-12-30 17:17:16
  * @LastEditors: Do not edit
  * @Description:
  */
 module.exports = {
   title: 'Vue Element Admin Next',
-  showSettings: true,
+  showSettings: false,
   tagsView: true,
   fixedHeader: true,
   sidebarLogo: true,

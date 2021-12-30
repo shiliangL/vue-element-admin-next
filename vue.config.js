@@ -33,6 +33,8 @@ module.exports = {
     port: port,
     open: true,
     disableHostCheck: true,
+    https: false,
+    historyApiFallback: true,
     overlay: {
       warnings: false,
       errors: true
@@ -49,6 +51,13 @@ module.exports = {
         // }
       },
       '/Auth/': {
+        target: 'http://192.168.1.192',
+        changeOrigin: true
+        // pathRewrite: {
+        //   '^/event/': ''
+        // }
+      },
+      '/': {
         target: 'http://192.168.1.192',
         changeOrigin: true
         // pathRewrite: {

@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-12-30 10:20:21
+ * @LastEditTime: 2021-12-30 14:51:04
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -11,6 +11,7 @@ import './styles/index.scss' // global css
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import Element from 'element-ui'
+import qs from 'qs'
 
 import App from './App'
 import store from './store'
@@ -45,6 +46,7 @@ Vue.use(Element, {
 
 Vue.config.productionTip = false
 
+Vue.prototype.$qs = qs
 Vue.prototype.$openLayer = openLayer({ router, store })
 
 // 设置一些全局变量

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 16:48:46
+ * @LastEditTime: 2021-12-30 16:53:58
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -17,50 +17,104 @@
     <div class="base-info">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="设备名称" prop="name" :rules="rules.input">
-            <el-input v-model="form.name" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="设备类型" prop="type" :rules="rules.input">
-            <el-input v-model="form.type" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="设备编号" prop="code">
-            <el-input v-model="form.code" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="采购时间" prop="order_time">
-            <el-date-picker v-model="form.order_time" class="w100p" value-format="yyyy-MM-dd" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="使用区域" prop="region">
-            <el-input v-model="form.region" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="生产商" prop="manufacturer">
-            <el-input v-model="form.manufacturer" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24">
-          <el-form-item label="设备参数" prop="parameter">
+          <el-form-item
+            label="设备名称"
+            prop="name"
+            :rules="rules.input"
+          >
             <el-input
-              v-model="form.parameter"
+              v-model="form.name"
               placeholder="请输入"
-              maxlength="550"
-              show-word-limit
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="设备编码"
+            prop="code"
+          >
+            <el-input
+              v-model="form.code"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item
+            label="故障时间"
+            prop="malfunction_date"
+          >
+            <el-date-picker
+              v-model="form.malfunction_date"
+              class="w100p"
+              value-format="yyyy-MM-dd"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="维修工程师"
+            prop="engineer"
+          >
+            <el-input
+              v-model="form.engineer"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item
+            label="维修时间"
+            prop="maintenance_date"
+          >
+            <el-input
+              v-model="form.maintenance_date"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="故障原因"
+            prop="malfunction_reason"
+          >
+            <el-input
+              v-model="form.malfunction_reason"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item
+            label="配件更换"
+            prop="parts_replacement"
+          >
+            <el-input
+              v-model="form.parts_replacement"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="维修结论"
+            prop="manufacturer"
+          >
+            <el-input
+              v-model="form.maintenance_report"
+              placeholder="请输入"
+              maxlength="150"
               type="textarea"
-              :autosize="{ minRows: 3, maxRows: 10}"
+              :autosize="{ minRows: 1, maxRows: 10}"
             />
           </el-form-item>
         </el-col>
@@ -109,13 +163,14 @@ export default {
       visible: false,
       form: {
         'name': '',
-        'type': '',
         'code': '',
-        'c_code': '',
-        'region': '',
-        'order_time': '',
-        'manufacturer': '',
-        'parameter': ''
+        'malfunction_date': '',
+        'maintenance_date': '',
+        'malfunction_reason': '',
+        'maintenance_result': '',
+        'maintenance_report': '',
+        'parts_replacement': '',
+        'engineer': ''
       }
     }
   },
@@ -135,7 +190,7 @@ export default {
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`,
+        url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`,
         params: {
         }
       }).then((res) => {
@@ -157,7 +212,7 @@ export default {
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
-            url: type ? `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${this.id}` : `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE`,
+            url: type ? `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${this.id}` : `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
             data: stringify({ ...params })
           }).then((res) => {
             const { Success } = res

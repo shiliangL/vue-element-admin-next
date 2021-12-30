@@ -1,13 +1,13 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-27 16:13:48
+ * @LastEditTime: 2021-12-30 11:02:51
  * @LastEditors: Do not edit
  * @Description:  安全管理
 -->
 <template>
   <div>
-    安全管理
+    <PlaceholderBock />
   </div>
 </template>
 

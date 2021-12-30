@@ -1,13 +1,14 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-27 16:22:41
+ * @LastEditTime: 2021-12-30 11:11:00
  * @LastEditors: Do not edit
  * @Description: 合作伙伴
 -->
 <template>
   <div>
-    合作伙伴
+    <!-- 合作伙伴 -->
+    <PlaceholderBock />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-12-30 09:25:17
+ * @LastEditTime: 2021-12-30 14:57:40
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -17,13 +17,14 @@ const nonStandardApi = ['Auth/userinfo'] // 不规范的接口返回数据结构
 const service = axios.create({
   baseURL: dev ? '' : (VUE_APP_BASE_API || process.env.VUE_APP_BASE_API), // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 12000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     if (store.getters.token) {
       config.headers['X-Token'] = getToken()
     }

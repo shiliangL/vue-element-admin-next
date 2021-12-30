@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-08-02 17:31:44
- * @LastEditTime: 2021-12-29 19:26:28
+ * @LastEditTime: 2021-12-30 14:49:52
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -9,7 +9,6 @@ import openLayer from '@/plugins/openLayer'
 import request from '@/utils/request'
 
 export default Vue => {
-  // 事件中心
   Vue.prototype.$EventBus = new Vue()
   Vue.prototype.$request = request
   Vue.prototype.$http = request

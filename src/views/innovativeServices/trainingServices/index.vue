@@ -1,13 +1,14 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-27 16:19:32
+ * @LastEditTime: 2021-12-30 11:10:36
  * @LastEditors: Do not edit
  * @Description: 培训赋能
 -->
 <template>
   <div>
-    培训赋能
+    <!-- 培训赋能 -->
+    <PlaceholderBock />
   </div>
 </template>
 
