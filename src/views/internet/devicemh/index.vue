@@ -1,16 +1,24 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-30 17:19:29
+ * @LastEditTime: 2021-12-30 20:15:09
  * @LastEditors: Do not edit
  * @Description: 设备管理
 -->
 <template>
-  <cube-table-list ref="CubeTableList" :config="config" />
+  <cube-table-list
+    ref="CubeTableList"
+    :config="config"
+  />
 </template>
 
 <script>
+
+// import vclamp from 'vue-clamp'
 export default {
+  components: {
+    // vclamp
+  },
   data() {
     return {
       centerDialogVisible: false,
@@ -44,7 +52,15 @@ export default {
             { label: '使用区域', key: 'region' },
             { label: '采购时间', key: 'order_time' },
             { label: '生产商', key: 'manufacturer' },
-            { label: '设备参数', key: 'parameter', width: 320 },
+            {
+              label: '设备参数',
+              key: 'parameter',
+              width: 450
+              // render: (h, parmas) => {
+              //   const { row } = parmas
+              //   return <vclamp autoresize max-lines={3}>{row.parameter}</vclamp>
+              // }
+            },
             {
               label: '操作',
               render: (h, parmas) => {

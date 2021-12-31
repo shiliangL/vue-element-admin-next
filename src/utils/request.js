@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-12-30 14:57:40
+ * @LastEditTime: 2021-12-30 19:57:27
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -45,7 +45,6 @@ service.interceptors.response.use(
     const url = response.config.url
     // if the custom code is not 20000, it is judged as an error.
     if (!nonStandardApi.includes(url) && !res.Success) {
-      const { Message } = res.ErrorInfo || {}
       const msg = (res.ErrorInfo && res.ErrorInfo.Message) ? res.ErrorInfo.Message : ''
       Message({ message: msg || 'Error', type: 'error', duration: 5 * 1000 })
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;

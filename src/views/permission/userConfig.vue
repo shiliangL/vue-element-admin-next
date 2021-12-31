@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-30 12:37:07
- * @LastEditTime: 2021-12-30 12:51:38
+ * @LastEditTime: 2021-12-31 09:31:27
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -16,7 +16,7 @@ export default {
   name: 'MenuConfig',
   data() {
     return {
-      VUE_APP_BASE_API: window.VUE_APP_BASE_API
+      VUE_APP_BASE_API: process.env.NODE_ENV === 'development' ? '' : window.VUE_APP_BASE_API
     }
   }
 }

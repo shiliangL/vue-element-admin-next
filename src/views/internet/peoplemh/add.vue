@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 19:42:03
+ * @LastEditTime: 2021-12-30 19:56:40
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -287,28 +287,28 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        'name': '',
-        'idcard': '',
-        'nationality': '',
-        'nation': '',
-        'gender': '',
-        'birthday': '',
-        'property': '',
-        'local': '',
-        'status': '',
-        'marriage': '',
-        'edu_degree': '',
-        'school': '',
-        'major': '',
-        'industry': '',
-        'title': '',
-        'native_address': '',
-        'work_unit': '',
-        'work_position': '',
-        'bld_name': '',
-        'bld_code': '',
-        'live_address': '',
-        'work_address': ''
+        'name': null,
+        'idcard': null,
+        'nationality': null,
+        'nation': null,
+        'gender': null,
+        'birthday': null,
+        'property': null,
+        'local': null,
+        'status': null,
+        'marriage': null,
+        'edu_degree': null,
+        'school': null,
+        'major': null,
+        'industry': null,
+        'title': null,
+        'native_address': null,
+        'work_unit': null,
+        'work_position': null,
+        'bld_name': null,
+        'bld_code': null,
+        'live_address': null,
+        'work_address': null
       }
     }
   },

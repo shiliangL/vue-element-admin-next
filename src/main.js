@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-12-30 14:51:04
+ * @LastEditTime: 2021-12-30 21:05:10
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -35,10 +35,10 @@ import components from './components/export'
 Vue.use(lib)
 Vue.use(components)
 
-if (process.env.NODE_ENV === 'dev') {
-  const { mockXHR } = require('mock')
-  mockXHR()
-}
+// if (process.env.NODE_ENV === 'dev') {
+//   const { mockXHR } = require('mock')
+//   mockXHR()
+// }
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'small'

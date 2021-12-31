@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-12-30 16:04:09
+ * @LastEditTime: 2021-12-31 09:57:42
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -23,20 +23,32 @@ const chartsRouter = [
     },
     children: [
       {
-        path: 'menuConfig',
-        component: () => import('@/views/permission/menuConfig'),
-        name: 'MenuConfig',
-        meta: {
-          title: '菜单配置'
-          // roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
         path: 'userConfig',
         component: () => import('@/views/permission/userConfig'),
         name: 'UserConfig',
         meta: {
-          title: '用户管理'
+          title: '用户管理',
+          noCache: false
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'menuConfig',
+        component: () => import('@/views/permission/menuConfig'),
+        name: 'MenuConfig',
+        meta: {
+          title: '菜单配置',
+          noCache: false
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'roleConfig',
+        component: () => import('@/views/permission/roleConfig'),
+        name: 'RoleConfig',
+        meta: {
+          title: '角色配置',
+          noCache: false
           // roles: ['admin'] // or you can only set roles in sub nav
         }
       }

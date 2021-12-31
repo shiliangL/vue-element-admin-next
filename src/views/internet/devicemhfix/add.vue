@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 16:53:58
+ * @LastEditTime: 2021-12-30 19:59:09
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -73,8 +73,10 @@
             label="维修时间"
             prop="maintenance_date"
           >
-            <el-input
+            <el-date-picker
               v-model="form.maintenance_date"
+              class="w100p"
+              value-format="yyyy-MM-dd"
               placeholder="请输入"
             />
           </el-form-item>
@@ -162,15 +164,15 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        'name': '',
-        'code': '',
-        'malfunction_date': '',
-        'maintenance_date': '',
-        'malfunction_reason': '',
-        'maintenance_result': '',
-        'maintenance_report': '',
-        'parts_replacement': '',
-        'engineer': ''
+        'name': null,
+        'code': null,
+        'malfunction_date': null,
+        'maintenance_date': null,
+        'malfunction_reason': null,
+        'maintenance_result': null,
+        'maintenance_report': null,
+        'parts_replacement': null,
+        'engineer': null
       }
     }
   },

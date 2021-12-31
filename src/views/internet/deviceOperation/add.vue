@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 10:30:03
+ * @LastEditTime: 2021-12-30 19:53:39
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -108,7 +108,6 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        'id': null,
         'name': '',
         'type': '',
         'code': '',

@@ -1,16 +1,15 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-30 12:37:07
- * @LastEditTime: 2021-12-31 10:27:25
+ * @LastEditTime: 2021-12-31 09:55:11
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
   <div clas="iframe">
-    <!-- :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/App.AppConfigManager.html?GroupCatalog=PROJECT`" -->
     <iframe
-      :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/App.MenuManager.html`"
       class="iframe"
+      :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/RoleManager.html`"
       frameborder="0"
     />
   </div>
