@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-12-31 09:57:42
+ * @LastEditTime: 2022-01-04 11:42:38
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -115,10 +115,16 @@ const chartsRouter = [
     },
     children: [
       {
-        path: 'productServices',
-        component: () => import('@/views/innovativeServices/productServices'),
-        name: 'ProductServices',
-        meta: { title: '产业服务', noCache: false }
+        path: 'galleryApply',
+        component: () => import('@/views/innovativeServices/galleryApply'),
+        name: 'GalleryApply',
+        meta: { title: '展厅服务', noCache: false }
+      },
+      {
+        path: 'crdcGalleryApply',
+        component: () => import('@/views/innovativeServices/crdcGalleryApply'),
+        name: 'CrdcGalleryApply',
+        meta: { title: '研发服务', noCache: false }
       },
       {
         path: 'trainingServices',
@@ -127,10 +133,10 @@ const chartsRouter = [
         meta: { title: '培训赋能', noCache: false }
       },
       {
-        path: 'supportServices',
-        component: () => import('@/views/innovativeServices/supportServices'),
-        name: 'SupportServices',
-        meta: { title: '赋能支撑', noCache: false }
+        path: 'productServices',
+        component: () => import('@/views/innovativeServices/productServices'),
+        name: 'ProductServices',
+        meta: { title: '项目支撑', noCache: false }
       }
     ]
   },
