@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-04 14:41:04
+ * @LastEditTime: 2022-01-05 11:41:27
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -14,8 +14,9 @@
           <el-form-item label="来访时间" prop="visiting_date" :rules="rules.select">
             <el-date-picker
               v-model="form.visiting_date"
+              type="datetime"
               class="w100p"
-              value-format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd HH:mm:ss"
               placeholder="请输入"
             />
           </el-form-item>

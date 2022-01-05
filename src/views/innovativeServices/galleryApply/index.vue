@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-04 14:37:55
+ * @LastEditTime: 2022-01-05 11:39:26
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -58,7 +58,7 @@ export default {
               render: (h, parmas) => {
                 const { row } = parmas
                 const visiting_date = row.visiting_date
-                  ? this.$dayjs(row.visiting_date).format('YYYY-MM-DD')
+                  ? this.$dayjs(row.visiting_date).format('YYYY-MM-DD HH:mm:ss')
                   : ''
                 return <span>{visiting_date}</span>
               }
