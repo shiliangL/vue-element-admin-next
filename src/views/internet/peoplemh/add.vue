@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 19:56:40
+ * @LastEditTime: 2022-01-06 16:31:09
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -292,7 +292,7 @@ export default {
         'nationality': null,
         'nation': null,
         'gender': null,
-        'birthday': null,
+        // 'birthday': '',
         'property': null,
         'local': null,
         'status': null,
