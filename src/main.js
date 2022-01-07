@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-12-30 21:05:10
+ * @LastEditTime: 2022-01-07 15:50:32
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -39,7 +39,6 @@ Vue.use(components)
 //   const { mockXHR } = require('mock')
 //   mockXHR()
 // }
-
 Vue.use(Element, {
   size: Cookies.get('size') || 'small'
 })
@@ -48,11 +47,6 @@ Vue.config.productionTip = false
 
 Vue.prototype.$qs = qs
 Vue.prototype.$openLayer = openLayer({ router, store })
-
-// 设置一些全局变量
-// 设置后台服务器不熟路径
-window.VUE_APP_BASE_API = 'http://localhost:4632/'
-window.VUE_APP_BASE_API_PREFIX = 'REST/System/TenantBase/SMARTCITY/V1.0/APPSERVICE/EntityService/Data/AICIMTESTSERVICE/Telecom'
 
 new Vue({
   el: '#app',

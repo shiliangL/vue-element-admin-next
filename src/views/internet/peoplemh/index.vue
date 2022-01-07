@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-30 19:33:59
+ * @LastEditTime: 2022-01-07 15:55:54
  * @LastEditors: Do not edit
  * @Description: 人员管理
 -->
@@ -26,7 +26,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION`,
         search: {
           data: [
             [
@@ -128,7 +128,7 @@ export default {
       }).then(() => {
         this.$request({
           method: 'DELETE',
-          url: `${window.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${id}`
+          url: `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${id}`
         }).then((res) => {
           const { Success } = res
           if (Success) {

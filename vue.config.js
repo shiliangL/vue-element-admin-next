@@ -45,7 +45,7 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       '/f': {
         target: 'http://localhost:4632',
-        changeOrigin: true,
+        changeOrigin: true
         // pathRewrite: {
         //   '^/event/': ''
         // }

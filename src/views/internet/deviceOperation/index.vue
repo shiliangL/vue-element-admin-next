@@ -16,7 +16,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_STATUS_MONITOR`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_STATUS_MONITOR`,
         search: {
           data: [
             [

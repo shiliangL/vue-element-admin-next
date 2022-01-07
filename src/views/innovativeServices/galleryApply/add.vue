@@ -183,7 +183,7 @@ export default {
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT/${id}`,
         params: {}
       }).then(res => {
         const { Success, Message } = res
@@ -205,8 +205,8 @@ export default {
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT/${this.id}`
-              : `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT`,
+              ? `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT`,
             data: stringify({ ...params })
           }).then(res => {
             const { Success } = res

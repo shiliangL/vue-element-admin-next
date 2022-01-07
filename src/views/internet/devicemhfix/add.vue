@@ -192,7 +192,7 @@ export default {
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`,
         params: {
         }
       }).then((res) => {
@@ -214,7 +214,7 @@ export default {
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
-            url: type ? `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${this.id}` : `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
+            url: type ? `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${this.id}` : `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
             data: stringify({ ...params })
           }).then((res) => {
             const { Success } = res

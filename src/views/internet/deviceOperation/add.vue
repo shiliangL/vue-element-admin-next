@@ -135,7 +135,7 @@ export default {
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`,
         params: {
         }
       }).then((res) => {
@@ -155,7 +155,7 @@ export default {
           const params = JSON.parse(JSON.stringify(this.form))
           this.$request({
             method: 'PUT',
-            url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${this.id}`,
+            url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${this.id}`,
             data: {
               ...params
             }

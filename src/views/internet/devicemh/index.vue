@@ -24,7 +24,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE`,
         search: {
           data: [
             [
@@ -124,7 +124,7 @@ export default {
       }).then(() => {
         this.$request({
           method: 'DELETE',
-          url: `${window.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`
+          url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`
         }).then((res) => {
           const { Success } = res
           if (Success) {

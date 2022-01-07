@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-04 14:12:12
+ * @LastEditTime: 2022-01-07 15:52:57
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -135,7 +135,7 @@ export default {
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${id}`,
         params: {}
       }).then(res => {
         const { Success, Message } = res
@@ -170,8 +170,8 @@ export default {
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${window.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${this.id}`
-              : `${window.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT`,
+              ? `${window.process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${this.id}`
+              : `${window.process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT`,
             data: stringify({ ...params })
           }).then(res => {
             const { Success } = res

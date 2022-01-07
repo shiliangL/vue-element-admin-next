@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2021-12-30 19:57:27
+ * @LastEditTime: 2022-01-07 15:49:33
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -9,13 +9,12 @@ import store from '@/store'
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import { getToken } from '@/utils/auth'
-const { VUE_APP_BASE_API } = window
 const dev = process.env.NODE_ENV === 'development'
 // eslint-disable-next-line no-unused-vars
 const nonStandardApi = ['Auth/userinfo'] // 不规范的接口返回数据结构的接口直接return
 // create an axios instance
 const service = axios.create({
-  baseURL: dev ? '' : (VUE_APP_BASE_API || process.env.VUE_APP_BASE_API), // url = base url + request url
+  baseURL: dev ? '' : process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 12000 // request timeout
 })

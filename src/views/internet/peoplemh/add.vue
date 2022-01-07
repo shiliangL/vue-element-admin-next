@@ -328,7 +328,7 @@ export default {
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${id}`,
         params: {
         }
       }).then((res) => {
@@ -350,7 +350,7 @@ export default {
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
-            url: type ? `${window.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${this.id}` : `${window.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION`,
+            url: type ? `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${this.id}` : `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION`,
             data: stringify({ ...params })
           }).then((res) => {
             const { Success } = res

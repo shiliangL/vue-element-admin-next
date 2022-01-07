@@ -16,7 +16,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
         search: {
           data: [
             [
@@ -110,7 +110,7 @@ export default {
       }).then(() => {
         this.$request({
           method: 'DELETE',
-          url: `${window.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`
+          url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`
         }).then((res) => {
           const { Success } = res
           if (Success) {
