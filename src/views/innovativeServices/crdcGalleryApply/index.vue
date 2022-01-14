@@ -118,7 +118,7 @@ export default {
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '30%',
+          width: '45%',
           title: type ? '编辑设备' : '新增设备',
           maskClosable: false,
           fullscreen: false

@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-07 15:49:33
+ * @LastEditTime: 2022-01-14 11:15:01
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -39,7 +39,6 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    console.log('response', response)
     const res = response.data
     const url = response.config.url
     // if the custom code is not 20000, it is judged as an error.

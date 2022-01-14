@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-05 11:39:26
+ * @LastEditTime: 2022-01-14 10:25:16
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -75,6 +75,7 @@ export default {
             { label: '备注', key: 'others' },
             {
               label: '操作',
+              width: 220,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -92,6 +93,13 @@ export default {
                     >
                       <i class='el-icon-edit'></i>
                       编辑
+                    </div>
+                    <div
+                      class='btn-text'
+                      onClick={() => this.openMoreLayer({ type: 1, ...row })}
+                    >
+                      <i class='el-icon-edit'></i>
+                      资料补充
                     </div>
                   </div>
                 )
@@ -119,8 +127,34 @@ export default {
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '30%',
-          title: type ? '编辑设备' : '新增设备',
+          width: '45%',
+          title: type ? '编辑展厅预约' : '新增展厅预约',
+          maskClosable: false,
+          fullscreen: false
+        },
+        // 事件回调
+        methods: {
+          refresh: () => {
+            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
+          }
+        }
+      })
+    },
+    openMoreLayer(row = {}) {
+      const { type, id } = row
+      // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
+      this.$openLayer({
+        props: {
+          type,
+          id
+        },
+        // 弹窗内嵌套组件
+        content: () => import('./addMore.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          width: '50%',
+          title: '补充展厅预约资料信息',
           maskClosable: false,
           fullscreen: false
         },

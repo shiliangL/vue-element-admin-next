@@ -88,7 +88,7 @@ export default {
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '30%',
+          width: '45%',
           title: type ? '编辑维修记录' : '新增维修记录',
           maskClosable: false,
           fullscreen: false
