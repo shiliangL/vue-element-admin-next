@@ -1,22 +1,17 @@
-<!--
- * @Author: shiliangL
- * @Date: 2022-01-06 21:00:38
- * @LastEditTime: 2022-01-17 16:25:06
- * @LastEditors: Do not edit
- * @Description:
--->
 <template>
-  <div class="dashboard">
-    欢迎光临
+  <div class="dashboard-container">
+    <component :is="currentRole" />
   </div>
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex'
+import adminDashboard from './admin'
+import editorDashboard from './editor'
 
 export default {
   name: 'Dashboard',
+  components: { adminDashboard, editorDashboard },
   data() {
     return {
       currentRole: 'adminDashboard'
