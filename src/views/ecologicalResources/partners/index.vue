@@ -1,160 +1,164 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-13 12:03:22
+ * @LastEditTime: 2022-01-17 14:02:30
  * @LastEditors: Do not edit
- * @Description: 合作伙伴
+ * @Description: 设备管理
 -->
 <template>
-  <div class="drawBMapGL">
-    <!-- 合作伙伴 -->
-    <!-- <PlaceholderBock /> -->
-    <div class="tools">
-      <el-link :underline="false" type="primary" @click.stop="draw(1)">
-        <i class="el-icon-full-screen" /> 视角
-      </el-link>
-
-      <template>
-        <el-link :underline="false" type="info" @click.stop="draw(0)">
-          <i class="el-icon-thumb" /> 停止绘制
-        </el-link>
-        <el-link :underline="false" type="primary" @click.stop="draw(2)">
-          <i class="el-icon-s-flag" /> 标点
-        </el-link>
-        <el-link :underline="false" type="danger" @click.stop="draw(5)">
-          清空所有绘制
-        </el-link>
-      </template>
-    </div>
-    <div id="BMapGL" />
-  </div>
+  <cube-table-list ref="CubeTableList" :config="config" />
 </template>
 
 <script>
+// import vclamp from 'vue-clamp'
 export default {
-  mounted() {
-    this.initBMap()
+  components: {
+    // vclamp
   },
+  data() {
+    return {
+      centerDialogVisible: false,
+      config: {
+        method: 'get',
+        url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY`,
+        search: {
+          data: [
+            [
+              {
+                type: 'input',
+                value: null,
+                initValue: '',
+                key: 'name',
+                placeholder: '名称检索'
+              },
+              { type: 'search', name: '查询' },
+              { type: 'reset', name: '重置' }
+            ],
+            [
+              {
+                type: 'add',
+                name: '新增',
+                action: () => this.openLayer({ type: 0 })
+              }
+            ]
+          ]
+        },
+        table: {
+          // rowKey: 'id',
+          // loadType: 'page',
+          prefixHeight: 0,
+          tableHeight: 250,
+          calcTableHeight: true, // 是否开启表格自动高度计算
+          columns: [
+            // { label: '选择', type: 'selection' },
+            { label: '序号', type: 'index' },
+            { label: '合作伙伴名称', key: 'name' },
+            { label: '企业类型', key: 'enterprise_type' },
+            { label: '法人代表', key: 'legal_person' },
+            { label: '注册资本', key: 'regi_capital' },
+            { label: '工商注册号', key: 'regis_No' },
+            { label: '组织机构代码', key: 'organization_code' },
+            { label: '联系方式', key: 'phone' },
+            { label: '地址', key: 'address' },
+            {
+              label: '官方网址',
+              key: 'website',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return row.website ? (
+                  <el-link href={row.website} target='_blank'>
+                    {row.website}
+                  </el-link>
+                ) : null
+              }
+            },
+            { label: '员工人数', key: 'employees' },
+            { label: '经营业务', key: 'business' },
+            {
+              label: '操作',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return (
+                  <div class='flex-table-cell'>
+                    <div
+                      class='delete-text'
+                      onClick={() => this.handlerRemove(row)}
+                    >
+                      <i class='el-icon-delete'></i>
+                      删除
+                    </div>
+                    <div
+                      class='btn-text'
+                      onClick={() => this.openLayer({ type: 1, ...row })}
+                    >
+                      <i class='el-icon-edit'></i>
+                      编辑
+                    </div>
+                  </div>
+                )
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  created() {},
   methods: {
-    initBMap() {
-      this.map = new BMapGL.Map('BMapGL', { enableMapClick: false })
-      this.map.centerAndZoom(new BMapGL.Point(116.28019, 40.049191), 19) // 初始化地图,设置中心点坐标和地图级别
-      this.map.enableScrollWheelZoom(true) // 开启鼠标滚轮缩放
-      this.map.setHeading(64.5)
-      this.map.setTilt(73)
-      this.initDrawingManager(this.map)
+    refresh() {
+      this.$refs['CubeTableList'] && this.$refs['CubeTableList'].fetchList()
     },
-    initDrawingManager(map) {
-      const { BMapGLLib } = window
-      this.drawingManager = new BMapGLLib.DrawingManager(map, {
-        isOpen: false, // 是否开启绘制模式
-        // eslint-disable-next-line no-undef
-        drawingType: BMAP_DRAWING_MARKER,
-        enableDrawingTool: false, // 是否显示工具栏
-        drawingModes: [
-          // eslint-disable-next-line no-undef
-          BMAP_DRAWING_MARKER
-          // BMAP_DRAWING_CIRCLE,
-          // BMAP_DRAWING_POLYLINE,
-          // BMAP_DRAWING_POLYGON,
-          // BMAP_DRAWING_RECTANGLE
-        ],
-        drawingToolOptions: {
-          anchor: BMAP_ANCHOR_TOP_RIGHT, // 位置
-          offset: new BMapGL.Size(5, 5) // 偏离值
+    openLayer(row = {}) {
+      const { type, id } = row
+      // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
+      this.$openLayer({
+        props: {
+          type,
+          id
+        },
+        // 弹窗内嵌套组件
+        content: () => import('./add.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          customClass: 'fullscreen-flex',
+          title: type ? '编辑合作伙伴' : '新增合作伙伴',
+          maskClosable: false,
+          fullscreen: true
+        },
+        // 事件回调
+        methods: {
+          refresh: () => {
+            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
+          }
         }
       })
-      // 添加鼠标绘制工具监听事件，用于获取绘制结果
-      this.drawingManager.addEventListener(
-        'overlaycomplete',
-        this.overlaycomplete
-      )
     },
-    // 选择绘图方式
-    draw(type) {
-      switch (type) {
-        case 0:
-          this.drawingManager && this.drawingManager.close()
-          break
-        case 1:
-          this.drawingManager && this.drawingManager.close()
-          this.getBetterViewByOverlays()
-          break
-        case 2:
-          this.drawingManager.open()
-          // eslint-disable-next-line no-undef
-          this.drawingManager.setDrawingMode(BMAP_DRAWING_MARKER)
-          break
-        case 5:
-          this.drawingManager && this.drawingManager.close()
-          this.$confirm('是否确定删除地图上所有的绘制, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
+    handlerRemove({ id }) {
+      this.$confirm('此操作将永久删除数据, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.$request({
+            method: 'DELETE',
+            url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${id}`
+          }).then(res => {
+            const { Success } = res
+            if (Success) {
+              this.$message.success('操作成功')
+              this.refresh()
+            } else {
+              this.$message.error('操作失败')
+              this.submitLoading = false
+            }
           })
-            .then(() => {
-              this.map && this.map.clearOverlays()
-              setTimeout(_ => {
-                this.getBetterViewByOverlays()
-              }, 200)
-            })
-            .catch(() => {})
-          break
-        case 8:
-        default:
-          break
-      }
-    },
-    overlaycomplete(e) {
-      console.log(e)
-    },
-    getBetterViewByOverlays() {
-      if (this.map) {
-        // console.log(this.map.getOverlays()) 获取地图覆盖物
-        const pointsListOverLay = this.map.getOverlays().filter(item => (item._type && item._type === 'overlay')) || []
-        const pointArray = []
-        for (const item of pointsListOverLay) {
-          console.log(item.latLng, 'latLng')
-          console.log(item.point, 'point')
-          // if (item.__overLayoutKey__ !== 'marker') {
-          //   const itmeList = item.getPath()
-          //   if (itmeList.length) itmeList.map(k => pointArray.push(k))
-          // } else {
-          //   if (item.point) pointArray.push(item.point)
-          // }
-        }
-        const b = pointArray.map((item) => new BMapGL.Point(item.lng, item.lat)) || []
-        const list = b.length ? b : this.boundaryLoadedpoints || []
-        this.map.setViewport(list)
-      }
+        })
+        .catch(() => {})
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.drawBMapGL {
-  position: relative;
-  .tools {
-    top: 20px;
-    right: 20px;
-    z-index: 99999;
-    position: absolute;
-    user-select: none;
-    height: 36px;
-    line-height: 36px;
-    background: #ffffff;
-    margin: 10px;
-    padding: 0 10px;
-    box-shadow: 0px 0px 10px rgba(10, 41, 59, 0.1);
-    .el-link {
-      display: inline-block;
-      margin: 0 4px;
-    }
-  }
-  #BMapGL {
-    width: 100%;
-    height: 100%;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

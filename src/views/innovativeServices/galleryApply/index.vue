@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-14 10:25:16
+ * @LastEditTime: 2022-01-17 15:42:13
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -67,7 +67,7 @@ export default {
             { label: '人员情况', key: 'people_detail', width: 450 },
             { label: '行业/领域', key: 'industry' },
             { label: '部门名称', key: 'department', width: 320 },
-            // { label: '交流材料', key: 'isdoc' },
+            { label: '所属区划', key: 'xxxxxxxx' },
             { label: '客户经理', key: 'CM' },
             { label: '项目经理', key: 'PM' },
             { label: '邮箱', key: 'email' },

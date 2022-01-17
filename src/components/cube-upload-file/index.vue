@@ -16,6 +16,7 @@
       :limit="limit"
       :size="size"
       :headers="headers"
+      :file-list="fileList"
       :show-file-list="false"
       list-type="picture"
     >
@@ -46,7 +47,7 @@
           >
           <li
             v-for="(item, index) in fileList"
-            :key="index + guid"
+            :key="index + guid()"
             class="upload-li"
           >
             <i
@@ -80,7 +81,11 @@
                   class="el-icon-zoom-in"
                   @click="zoomImgs(index)"
                 />
-                <i v-if="0" class="el-icon-download" @click="handleDownload(item)" />
+                <i
+                  v-if="0"
+                  class="el-icon-download"
+                  @click="handleDownload(item)"
+                />
               </div>
             </div>
             <div class="files-name" :title="item.name">
@@ -108,7 +113,9 @@ export default {
     actionUrl: {
       type: String,
       default: () =>
-        'REST/System/TENANTBASE/spatial/V1.0/SpatialManager/DataDirectoryManager/UploadFile?DataName=appointmenFolder'
+        'REST/System/SERVICES/Public/V1/Upload/UploadUserFile?Folder=appointmenFolder'
+      // '/REST/System/SERVICES/Public/V1/UploadUserFile?Folder=appointmenFolder'
+      // 'REST/System/TENANTBASE/spatial/V1.0/SpatialManager/DataDirectoryManager/UploadFile?DataName=appointmenFolder'
     },
     // 图片预览url
     previewUrl: {
@@ -127,7 +134,7 @@ export default {
     },
     limit: {
       type: Number,
-      default: () => 100
+      default: () => 10
     },
     size: {
       type: Number,
@@ -264,11 +271,7 @@ export default {
       }
     },
     uploadHandleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 ${this.limit} 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      )
+      this.$message.warning(`当前限制选择 ${this.limit} 个文件。`)
     },
     // 以下是多文件上传 Add 2021年08月02日
     initTimeLock(fn, time) {
@@ -308,12 +311,9 @@ export default {
           const { CustomData, Success } = res
           if (Success) {
             const row = {}
-            row.url = CustomData.Url
-            const nameIndex = CustomData.Url.lastIndexOf('/')
-            const name = CustomData.Url.substring(
-              nameIndex + 1,
-              CustomData.Url.length
-            )
+            row.url = CustomData
+            const nameIndex = CustomData.lastIndexOf('/')
+            const name = CustomData.substring(nameIndex + 1, CustomData.length)
             row.name = name || '附件'
             this.fileList.push(row)
             this.$emit('input', this.fileList)

@@ -1,13 +1,13 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-05 11:41:27
+ * @LastEditTime: 2022-01-17 15:12:08
  * @LastEditors: Do not edit
  * @Description:
 -->
 
 <template>
-  <el-form ref="form" :model="form" class="form" label-width="96px">
+  <el-form ref="form" :model="form" class="form" label-width="120px">
     <div class="base-info">
       <el-row>
         <el-col :span="24">
@@ -77,6 +77,14 @@
         <el-col :span="12">
           <el-form-item label="备注" prop="others">
             <el-input v-model="form.others" placeholder="请输入" maxlength="550" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="" prop="department">
+            <el-checkbox v-model="form.department">是否参观圳·智慧</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>

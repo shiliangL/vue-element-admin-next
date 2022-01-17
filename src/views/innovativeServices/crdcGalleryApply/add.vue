@@ -170,8 +170,8 @@ export default {
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${window.process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${this.id}`
-              : `${window.process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT`,
+              ? `${process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT`,
             data: stringify({ ...params })
           }).then(res => {
             const { Success } = res

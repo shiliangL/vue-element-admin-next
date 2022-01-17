@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-04 14:17:35
+ * @LastEditTime: 2022-01-17 15:01:53
  * @LastEditors: Do not edit
  * @Description: 研发服务-实验室预约
 -->
@@ -53,6 +53,8 @@ export default {
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
             { label: '预约单位', key: 'department' },
+            { label: '所属行业', key: 'xxxxxx' },
+            { label: '所在区域', key: 'xxxxxx' },
             {
               label: '预约时间',
               key: 'start_time',

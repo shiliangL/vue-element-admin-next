@@ -1,12 +1,12 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-30 17:15:11
+ * @LastEditTime: 2022-01-17 15:41:47
  * @LastEditors: Do not edit
  * @Description: 实时运行信息
 -->
 <template>
-  <cube-table-list :config="config" />
+  <cube-table-list ref="CubeTableList" :config="config" />
 </template>
 
 <script>
@@ -20,7 +20,13 @@ export default {
         search: {
           data: [
             [
-              { type: 'input', value: null, initValue: '', key: 'name', placeholder: '名称检索' },
+              {
+                type: 'input',
+                value: null,
+                initValue: '',
+                key: 'name',
+                placeholder: '名称检索'
+              },
               { type: 'search', name: '查询' },
               { type: 'reset', name: '重置' }
             ],
@@ -42,58 +48,67 @@ export default {
             { label: '设备编号', key: 'code' },
             { label: '运行时间', key: 'run_time' },
             {
-              label: '状态', key: 'state',
+              label: '运行状态',
+              key: 'state',
               render: (h, parmas) => {
                 const { row } = parmas
                 const map = {
-                  '在线': '',
-                  '离线': 'warning',
-                  '故障': 'danger'
+                  在线: '',
+                  离线: 'warning',
+                  故障: 'danger'
                 }
-                return <el-tag size='small' type={ map[row.state] }>{row.state} </el-tag>
+                return (
+                  <el-tag size='small' type={map[row.state]}>
+                    {row.state}{' '}
+                  </el-tag>
+                )
+              }
+            },
+            {
+              label: '操作',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return (
+                  // <div class='delete-text' onClick={() => this.handlerType(0, row)}>
+                  //   <i class='el-icon-delete'></i>
+                  //   删除
+                  // </div>
+                  <div class='flex-table-cell'>
+                    <div
+                      class='btn-text'
+                      onClick={() => this.openLayer({ type: 1, ...row })}
+                    >
+                      <i class='el-icon-edit'></i>
+                      编辑
+                    </div>
+                  </div>
+                )
               }
             }
-            // {
-            //   label: '操作',
-            //   render: (h, parmas) => {
-            //     const { row } = parmas
-            //     return (
-            //       // <div class='btn-text' onClick={() => this.handlerType(0, row)}>详情</div>
-            //       <div class='flex-table-cell'>
-            //         <div class='delete-text' onClick={() => this.handlerType(0, row)}>
-            //           <i class='el-icon-delete'></i>
-            //           删除
-            //         </div>
-            //         <div class='btn-text' onClick={() => this.openLayer({ type: 1, ...row })}>
-            //           <i class='el-icon-edit'></i>
-            //           编辑
-            //         </div>
-            //       </div>
-            //     )
-            //   }
-            // }
           ]
         }
       }
     }
   },
-  created() {
-
-  },
+  created() {},
   methods: {
+    refresh() {
+      this.$refs['CubeTableList'] && this.$refs['CubeTableList'].fetchList()
+    },
     openLayer(row = {}) {
       const { type, id } = row
       // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
       this.$openLayer({
         props: {
-          type, id
+          type,
+          id
         },
         // 弹窗内嵌套组件
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '45%',
-          title: type ? '编辑设备' : '新增设备',
+          width: '30%',
+          title: type ? '编辑设备运行状态' : '新增设备运行状态',
           maskClosable: false,
           fullscreen: false
         },
@@ -101,17 +116,20 @@ export default {
         methods: {
           refresh: () => {
             // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
           }
         }
       })
     },
     handlerType(type, row) {
       console.log(type, row)
-      this.$message({ message: type ? '数据编辑' : '数据详情', type: 'success' })
+      this.$message({
+        message: type ? '数据编辑' : '数据详情',
+        type: 'success'
+      })
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
