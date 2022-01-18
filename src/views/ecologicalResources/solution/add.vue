@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-17 18:39:24
+ * @LastEditTime: 2022-01-18 17:45:57
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -17,14 +17,14 @@
     <div class="dialog-main">
       <div class="dialog-main-left">
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="合作伙伴名称" prop="name" :rules="rules.input">
+          <el-col :span="24">
+            <el-form-item label="解决方案名称" prop="name" :rules="rules.input">
               <el-input v-model="form.name" placeholder="请输入" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item
-              label="法人代表"
+              label="解决方案类型"
               prop="legal_person"
               :rules="rules.input"
             >
@@ -33,58 +33,27 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="注册资本" prop="regi_capital">
-              <el-input v-model="form.regi_capital" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="工商注册号" prop="regis_No">
-              <el-input v-model="form.regis_No" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="组织机构代码" prop="organization_code">
-              <el-input v-model="form.organization_code" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="官方网址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="地址" prop="address">
-              <el-input v-model="form.address" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="官方网址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="公司LOGO" prop="address">
-              {{ fileList }}
-              <cubeUploadFile :limit="1" accept=".pdf" :file-list.sync="fileList" />
-              <!-- <el-input v-model="form.address" placeholder="请输入" /> -->
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="其他信息" prop="website">
-              <el-input v-model="form.website" placeholder="请输入" />
+          <el-col :span="24">
+            <el-form-item label="方法提供方" prop="regi_capital">
+              {{ form.regi_capital }}
+              <CuebSelectList v-model="form.regi_capital" :config="{rowKey:'credit_code'}" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="经营业务" prop="business">
+            <el-form-item label="方案资料" prop="regis_No">
+              <cubeUploadFile
+                :limit="1"
+                accept=".pdf"
+                :file-list.sync="fileList"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="简介" prop="business">
               <el-input
                 v-model="form.business"
                 placeholder="请输入"
@@ -111,10 +80,12 @@
 
 <script>
 import rules from '@/mixProps/rules.js'
+import CuebSelectList from '@/components/cueb-select-list'
 import cubeUploadFile from '@/components/cube-upload-file'
 
 export default {
   components: {
+    CuebSelectList,
     cubeUploadFile
   },
   mixins: [rules],
@@ -141,7 +112,7 @@ export default {
         legal_person: '余明',
         status: '存续（在营、开业、在册）',
         address: '深圳市南山区南头街道大新路198号创新大厦B座1702室',
-        regi_capital: '81353.25354万元人民币',
+        regi_capital: [4],
         paid_in_capital: '-',
         credit_code: '91440300MA5EK4A02K',
         regis_no: '440300201383579',
@@ -171,32 +142,11 @@ export default {
     close() {
       this.$emit('close')
     },
-    guid() {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1)
-      }
-      return (
-        s4() +
-        s4() +
-        '-' +
-        s4() +
-        '-' +
-        s4() +
-        '-' +
-        s4() +
-        '-' +
-        s4() +
-        s4() +
-        s4()
-      )
-    },
     fetchDetail(id) {
       this.fetchLoading = true
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION/${id}`,
         params: {}
       })
         .then(res => {
@@ -224,8 +174,8 @@ export default {
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${this.id}`
-              : `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY`,
+              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION`,
             data: stringify({ ...params })
           }).then(res => {
             const { Success } = res
@@ -243,54 +193,11 @@ export default {
           this.$message({ message: '请核实表单', type: 'warning' })
         }
       })
-    },
-    cubeBmapDrawChange(point) {
-      if (!point) {
-        this.form.address = null
-        return
-      }
-      const gc = new BMapGL.Geocoder()
-      const p = new BMapGL.Point(point.lng, point.lat)
-      gc.getLocation(p, res => {
-        if (!res) return
-        console.log(res)
-        const address =
-          Array.isArray(res.surroundingPois) && res.surroundingPois.length
-            ? res.surroundingPois[0]
-            : res.address
-        this.form.address = address.title
-      })
     }
   }
 }
 </script>
 
 <style lang="scss">
-.fullscreen-flex {
-  display: flex;
-  flex-direction: column;
-  .el-dialog__body {
-    flex: 1;
-    .fullscreen-flex-form {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      .dialog-main {
-        flex: 1;
-        align-items: stretch;
-        display: flex;
-        .dialog-main-left {
-          flex: 1;
-          &.mapbox {
-            margin-left: 10px;
-          }
-        }
-      }
-      .dialog-footer {
-        margin-top: 8px;
-      }
-    }
-  }
-}
+
 </style>

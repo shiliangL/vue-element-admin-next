@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-17 14:25:34
+ * @LastEditTime: 2022-01-18 17:29:18
  * @LastEditors: Do not edit
  * @Description: 合作伙伴
 -->
@@ -104,10 +104,10 @@ export default {
         minZoom: 12,
         maxZoom: 20
       })
-      this.map.centerAndZoom(new BMapGL.Point(116.28019, 40.049191), 19) // 初始化地图,设置中心点坐标和地图级别
+      this.map.centerAndZoom(new BMapGL.Point(113.93922, 22.59411), 12) // 初始化地图,设置中心点坐标和地图级别
       this.map.enableScrollWheelZoom(true) // 开启鼠标滚轮缩放
-      this.map.setHeading(64.5)
-      this.map.setTilt(73)
+      this.map.setHeading(30)
+      this.map.setTilt(30)
       this.initDrawingManager(this.map)
     },
     initDrawingManager(map) {

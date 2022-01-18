@@ -109,6 +109,10 @@ export default {
       type: Array,
       default: () => []
     },
+    fileList: {
+      type: Array,
+      default: () => []
+    },
     // 文件上传url
     actionUrl: {
       type: String,
@@ -160,7 +164,7 @@ export default {
   },
   data() {
     return {
-      fileList: [], // 上传文件
+      // fileList: [], // 上传文件
       rawFileList: [] // 记录多文件
     }
   },
@@ -183,6 +187,7 @@ export default {
               ...item
             })
           }
+          debugger
           this.fileList = arr
         }
       }

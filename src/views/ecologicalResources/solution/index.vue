@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-17 18:39:03
+ * @LastEditTime: 2022-01-18 16:50:23
  * @LastEditors: Do not edit
  * @Description: 解决方案
 -->
@@ -20,7 +20,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION`,
         search: {
           data: [
             [
@@ -52,28 +52,21 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
-            { label: '合作伙伴名称', key: 'name' },
-            { label: '企业类型', key: 'enterprise_type' },
-            { label: '法人代表', key: 'legal_person' },
-            { label: '注册资本', key: 'regi_capital' },
-            { label: '工商注册号', key: 'regis_No' },
-            { label: '组织机构代码', key: 'organization_code' },
-            { label: '联系方式', key: 'phone' },
-            { label: '地址', key: 'address' },
+            { label: '名称', width: 120, key: 'name' },
             {
-              label: '官方网址',
-              key: 'website',
-              render: (h, parmas) => {
-                const { row } = parmas
-                return row.website ? (
-                  <el-link href={row.website} target='_blank'>
-                    {row.website}
-                  </el-link>
-                ) : null
-              }
+              label: '类型',
+              width: 120,
+              key: 'type'
+              // render: (h, parmas) => {
+              //   const { row } = parmas
+              //   return row.website ? (
+              //     <el-link href={row.website} target='_blank'>
+              //       {row.website}
+              //     </el-link>
+              //   ) : null
+              // }
             },
-            { label: '员工人数', key: 'employees' },
-            { label: '经营业务', key: 'business' },
+            { label: '简介', key: 'brief_introduction' },
             {
               label: '操作',
               render: (h, parmas) => {
@@ -120,9 +113,9 @@ export default {
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '45%',
+          width: '640px',
           customClass: 'fullscreen-flex',
-          title: type ? '编辑合作伙伴' : '新增合作伙伴',
+          title: type ? '编辑解决方案' : '新增解决方案',
           maskClosable: false,
           fullscreen: false
         },
@@ -144,7 +137,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

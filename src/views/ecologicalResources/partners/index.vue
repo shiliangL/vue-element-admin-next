@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-17 14:02:30
+ * @LastEditTime: 2022-01-18 15:38:18
  * @LastEditors: Do not edit
  * @Description: 设备管理
 -->
@@ -20,7 +20,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/COOPERATIVE_PARTNER/COOPERATIVE`,
         search: {
           data: [
             [
@@ -143,7 +143,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/COOPERATIVE_PARTNER/COOPERATIVE/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

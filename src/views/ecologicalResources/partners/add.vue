@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-17 14:51:47
+ * @LastEditTime: 2022-01-18 19:39:30
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -18,16 +18,24 @@
       <div class="dialog-main-left">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="合作伙伴名称" prop="name" :rules="rules.input">
+            <el-form-item label="企业名称" prop="name" :rules="rules.input">
               <el-input v-model="form.name" placeholder="请输入" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="法人代表"
-              prop="legal_person"
-              :rules="rules.input"
-            >
+            <el-form-item label="社会信用代码" prop="code" :rules="rules.input">
+              <el-input v-model="form.code" placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="简称" prop="short_name">
+              <el-input v-model="form.short_name" placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="法人" prop="legal_person">
               <el-input v-model="form.legal_person" placeholder="请输入" />
             </el-form-item>
           </el-col>
@@ -39,49 +47,117 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工商注册号" prop="regis_No">
-              <el-input v-model="form.regis_No" placeholder="请输入" />
+            <el-form-item label="实缴资本" prop="paid_in_capital">
+              <el-input v-model="form.paid_in_capital" placeholder="请输入" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="组织机构代码" prop="organization_code">
-              <el-input v-model="form.organization_code" placeholder="请输入" />
+            <el-form-item label="联系方式" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入" />
             </el-form-item>
+            <!-- <el-form-item label="状态" prop="status">
+              <el-input v-model="form.status" placeholder="请输入" />
+            </el-form-item> -->
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="官方网址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="地址" prop="address">
               <el-input v-model="form.address" placeholder="请输入" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="官方网址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="公司LOGO" prop="address">
-              {{ fileList }}
-              <cubeUploadFile :limit="1" accept=".jpg, .jpeg, .png" :file-list.sync="fileList" />
-              <!-- <el-input v-model="form.address" placeholder="请输入" /> -->
+            <el-form-item label="公司logo" prop="enterprise_img_path">
+              <!-- form.enterprise_img_path -->
+              <cubeUploadFile
+                :limit="1"
+                accept=".jpg, .jpeg, .png"
+                :file-list.sync="fileList"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="其他信息" prop="website">
-              <el-input v-model="form.website" placeholder="请输入" />
+            <el-form-item label="企业类型" prop="enterprise_type">
+              <el-input v-model="form.enterprise_type" placeholder="请输入" />
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="官网地址" prop="website">
+              <el-input v-model="form.website" placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="备案日期" prop="filing_date">
+              <el-date-picker
+                v-model="form.filing_date"
+                type="date"
+                class="w100p"
+                value-format="yyyy-MM-dd"
+                placeholder="请输入"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="经营期限" prop="business_term">
+              <!-- <el-date-picker
+                v-model="form.business_term"
+                type="daterange"
+                class="w100p"
+                value-format="yyyy-MM-dd"
+                placeholder="请输入"
+              />
+            </el-form-item> -->
+              <el-input v-model="form.business_term" placeholder="请输入" />
+            </el-form-item></el-col>
+          <el-col :span="12">
+            <el-form-item label="员工人数" prop="employees">
+              <el-input v-model="form.employees" placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="纳税人资质" prop="taxes">
+              <el-input v-model="form.taxes" placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成立日期" prop="establish_date">
+              <el-date-picker
+                v-model="form.establish_date"
+                type="date"
+                class="w100p"
+                value-format="yyyy-MM-dd"
+                placeholder="请输入"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="企业简介" prop="enterprise_profile">
+              <el-input
+                v-model="form.enterprise_profile"
+                placeholder="请输入"
+                maxlength="550"
+                show-word-limit
+                type="textarea"
+                :autosize="{ minRows: 3, maxRows: 10 }"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row>
           <el-col :span="24">
             <el-form-item label="经营业务" prop="business">
@@ -113,9 +189,11 @@
 </template>
 
 <script>
+
 import rules from '@/mixProps/rules.js'
 import cubeUploadFile from '@/components/cube-upload-file'
 import cubeBmapDraw from '@/components/cube-bmap-draw'
+import { bd09towgs84 } from '@/utils/converter'
 
 export default {
   components: {
@@ -136,34 +214,39 @@ export default {
   data() {
     return {
       point: null,
-      fileList: [],
       fetchLoading: false,
       submitLoading: false,
       visible: false,
+      fileList: [],
       form: {
-        name: '深圳日海物联技术有限公司',
-        short_name: '日海物联',
-        legal_person: '余明',
-        status: '存续（在营、开业、在册）',
-        address: '深圳市南山区南头街道大新路198号创新大厦B座1702室',
-        regi_capital: '81353.25354万元人民币',
-        paid_in_capital: '-',
-        credit_code: '91440300MA5EK4A02K',
-        regis_no: '440300201383579',
-        organization_code: 'MA5EK4A0-2',
-        phone: '0755-26918985',
-        enterprise_type: '有限责任公司（法人独资）',
-        industry: '互联网和相关服务',
-        regi_authority: '深圳市市场监督管理局',
+        name: '',
+        c_code: null,
+        code: '',
+        short_name: '',
+        legal_person: ' ',
+        status: '',
+        address: '',
+        regi_capital: '',
+        paid_in_capital: '',
+        credit_code: '',
+        organization_code: '-',
+        phone: '',
+        enterprise_type: '',
+        industry: '',
+        regi_authority: null,
         taxes: '一般纳税人',
-        establish_date: '2017-06-08',
-        website: 'www.sunseaiot.cn',
-        filing_date: '2021-11-10',
-        business_term: '2017-06-08 至 2037-06-07',
-        employees: '50-99人',
-        business: '',
-        x: '114.077287',
-        y: '22.69236'
+        establish_date: '',
+        website: '',
+        filing_date: null,
+        business_term: null,
+        employees: '',
+        business: null,
+        enterprise_img_path: null,
+        enterprise_label: null,
+        enterprise_profile: null,
+        core_competence: null,
+        x: null,
+        y: null
       }
     }
   },
@@ -176,32 +259,11 @@ export default {
     close() {
       this.$emit('close')
     },
-    guid() {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1)
-      }
-      return (
-        s4() +
-        s4() +
-        '-' +
-        s4() +
-        '-' +
-        s4() +
-        '-' +
-        s4() +
-        '-' +
-        s4() +
-        s4() +
-        s4()
-      )
-    },
     fetchDetail(id) {
       this.fetchLoading = true
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/COOPERATIVE_PARTNER/COOPERATIVE?id=${id}`,
         params: {}
       })
         .then(res => {
@@ -212,6 +274,10 @@ export default {
             if (Array.isArray(Data) && Data.length) {
               Object.assign(this.form, Data[0])
               this.point = { lat: this.form.y, lng: this.form.x }
+              // this.point = { lat: this.form.lat, lng: this.form.lng }
+              if (this.form.enterprise_img_path) {
+                this.fileList = [{ url: this.form.enterprise_img_path, name: '企業logo.png' }]
+              }
             }
           }
         })
@@ -220,18 +286,38 @@ export default {
         })
     },
     submit(formName) {
+      // 图片和坐标必须
+      if (!this.point) {
+        this.$message({ message: '请在地图上标出位置信息', type: 'warning' })
+        return
+      }
+      if (!this.fileList.length) {
+        this.$message({ message: '请上传企业LOGO', type: 'warning' })
+        return
+      }
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          const { fileList, point } = this
+          const logo = fileList[0]
+          this.form.enterprise_img_path = logo.url
+          this.form.x = point.lng
+          this.form.y = point.lat
+          // 百度转ws84
+          const ws84 = bd09towgs84(point.lng, point.lat)
+          this.form.lat = ws84[0]
+          this.form.lng = ws84[1]
           const params = JSON.parse(JSON.stringify(this.form))
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY/${this.id}`
-              : `${process.env.VUE_APP_BASE_API_PREFIX}/COOPERATIVE_COMPANY`,
-            data: stringify({ ...params })
+              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/COOPERATIVE_PARTNER/COOPERATIVE/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/COOPERATIVE_PARTNER/COOPERATIVE?isdebugger=true`,
+            data: stringify({
+              ...params
+            })
           }).then(res => {
             const { Success } = res
             if (Success) {
@@ -243,6 +329,8 @@ export default {
               this.$message.error('操作失败')
               this.submitLoading = false
             }
+          }).catch(() => {
+            this.submitLoading = false
           })
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })
