@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-18 17:45:57
+ * @LastEditTime: 2022-01-18 20:09:36
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -25,18 +25,32 @@
           <el-col :span="24">
             <el-form-item
               label="解决方案类型"
-              prop="legal_person"
-              :rules="rules.input"
+              prop="type"
+              :rules="rules.select"
             >
-              <el-input v-model="form.legal_person" placeholder="请输入" />
+              <!-- <el-input v-model="form.type" placeholder="请输入" /> -->
+              <CuebSelectList
+                v-model="form.type"
+                :config="{
+                  keyCode: 'dict_value',
+                  keyName: 'dict_name',
+                  url: '/ShenZhenTelecom/ENUM?id=9'
+                }"
+              />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row v-if="0">
           <el-col :span="24">
             <el-form-item label="方法提供方" prop="regi_capital">
               {{ form.regi_capital }}
-              <CuebSelectList v-model="form.regi_capital" :config="{rowKey:'credit_code'}" />
+              <CuebSelectList
+                v-model="form.regi_capital"
+                :config="{
+                  rowKey: 'credit_code',
+                  url: '/ShenZhenTelecom/ENUM?id=9'
+                }"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -53,14 +67,14 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="简介" prop="business">
+            <el-form-item label="简介" prop="brief_introduction">
               <el-input
-                v-model="form.business"
+                v-model="form.brief_introduction"
                 placeholder="请输入"
-                maxlength="550"
+                maxlength="1550"
                 show-word-limit
                 type="textarea"
-                :autosize="{ minRows: 3, maxRows: 10 }"
+                :autosize="{ minRows: 5, maxRows: 10 }"
               />
             </el-form-item>
           </el-col>
@@ -107,29 +121,11 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        name: '深圳日海物联技术有限公司',
-        short_name: '日海物联',
-        legal_person: '余明',
-        status: '存续（在营、开业、在册）',
-        address: '深圳市南山区南头街道大新路198号创新大厦B座1702室',
-        regi_capital: [4],
-        paid_in_capital: '-',
-        credit_code: '91440300MA5EK4A02K',
-        regis_no: '440300201383579',
-        organization_code: 'MA5EK4A0-2',
-        phone: '0755-26918985',
-        enterprise_type: '有限责任公司（法人独资）',
-        industry: '互联网和相关服务',
-        regi_authority: '深圳市市场监督管理局',
-        taxes: '一般纳税人',
-        establish_date: '2017-06-08',
-        website: 'www.sunseaiot.cn',
-        filing_date: '2021-11-10',
-        business_term: '2017-06-08 至 2037-06-07',
-        employees: '50-99人',
-        business: '',
-        x: '114.077287',
-        y: '22.69236'
+        name: '',
+        type: null,
+        accessory_path: null, // 附件路径
+        photo_path: null, // 附件路径
+        brief_introduction: '' // 简介
       }
     }
   },
@@ -155,8 +151,12 @@ export default {
           if (Success) {
             const { Data } = Message || {}
             if (Array.isArray(Data) && Data.length) {
-              Object.assign(this.form, Data[0])
-              this.point = { lat: this.form.y, lng: this.form.x }
+              const form = Data[0] || {}
+              form.type = form.type ? form.type.toString() : ''
+              Object.assign(this.form, form)
+              if (this.form.accessory_path) {
+                this.fileList = [{ url: this.form.accessory_path, name: '附件.pdf' }]
+              }
             }
           }
         })
@@ -165,9 +165,16 @@ export default {
         })
     },
     submit(formName) {
+      if (!this.fileList.length) {
+        this.$message({ message: '请上传附件资料', type: 'warning' })
+        return
+      }
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.submitLoading = true
+          const { fileList } = this
+          const file = fileList[0]
+          this.form.accessory_path = file.url
           const params = JSON.parse(JSON.stringify(this.form))
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
@@ -198,6 +205,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

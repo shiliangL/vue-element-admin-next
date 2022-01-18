@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-18 16:50:23
+ * @LastEditTime: 2022-01-18 20:08:45
  * @LastEditors: Do not edit
  * @Description: 解决方案
 -->
@@ -52,10 +52,9 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
-            { label: '名称', width: 120, key: 'name' },
+            { label: '名称', key: 'name' },
             {
               label: '类型',
-              width: 120,
               key: 'type'
               // render: (h, parmas) => {
               //   const { row } = parmas

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-01-18 16:51:25
- * @LastEditTime: 2022-01-18 17:50:00
+ * @LastEditTime: 2022-01-18 19:48:28
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -53,7 +53,7 @@ export default {
       options: [],
       initConfig: {
         limit: 50,
-        multiple: true,
+        multiple: false,
         collapse: false,
         clearable: true,
         filterable: true,

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-18 19:39:30
+ * @LastEditTime: 2022-01-18 20:00:35
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -299,8 +299,8 @@ export default {
         if (valid) {
           this.submitLoading = true
           const { fileList, point } = this
-          const logo = fileList[0]
-          this.form.enterprise_img_path = logo.url
+          const file = fileList[0]
+          this.form.enterprise_img_path = file.url
           this.form.x = point.lng
           this.form.y = point.lat
           // 百度转ws84
