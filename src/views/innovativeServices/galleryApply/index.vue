@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-17 15:42:13
+ * @LastEditTime: 2022-01-19 17:02:37
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -20,7 +20,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/FIND_APPOINTMENT`,
         search: {
           data: [
             [
@@ -53,26 +53,31 @@ export default {
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
             {
-              label: '来访时间',
-              key: 'visiting_date',
+              label: '预约时间',
+              key: 'appointment_time',
               render: (h, parmas) => {
                 const { row } = parmas
-                const visiting_date = row.visiting_date
-                  ? this.$dayjs(row.visiting_date).format('YYYY-MM-DD HH:mm:ss')
+                const appointment_time = row.appointment_time
+                  ? this.$dayjs(row.appointment_time).format('YYYY-MM-DD HH:mm:ss')
                   : ''
-                return <span>{visiting_date}</span>
+                return <span>{appointment_time}</span>
               }
             },
-            { label: '来访客户', key: 'visiting_people' },
-            { label: '人员情况', key: 'people_detail', width: 450 },
-            { label: '行业/领域', key: 'industry' },
-            { label: '部门名称', key: 'department', width: 320 },
+            { label: '来访企业', key: 'enterprise_name' },
+            { label: '来访人员', key: 'visitors' },
+            { label: '人员情况', key: 'staff_profile' },
+            { label: '行业/领域', key: 'domain' },
+            { label: '部门名称', key: 'department' },
             { label: '所属区划', key: 'xxxxxxxx' },
-            { label: '客户经理', key: 'CM' },
-            { label: '项目经理', key: 'PM' },
+            { label: '部门名称', key: 'department_name' },
+            { label: '客户经理', key: 'customer_manager' },
+            { label: '项目经理', key: 'project_manager' },
             { label: '邮箱', key: 'email' },
-            { label: '主要了解方面', key: 'manufacturer' },
-            { label: '备注', key: 'others' },
+            { label: '主要了解方面', key: 'know_content' },
+            { label: '交流材料', key: 'communication_materials' },
+            // { label: '交流材料路径', key: 'communication_materials_path' },
+            { label: '商机情况', key: 'business_situation' },
+            { label: '备注', key: 'remark' },
             {
               label: '操作',
               width: 220,
@@ -176,7 +181,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_APPOINTMENT/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_APPOINTMENT/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

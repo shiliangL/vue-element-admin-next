@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-19 13:58:34
+ * @LastEditTime: 2022-01-19 15:29:38
  * @LastEditors: Do not edit
  * @Description: 人员管理
 -->
@@ -49,7 +49,7 @@ export default {
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index', fixed: 'left' },
             { label: '人员名称', key: 'name' },
-            { label: '照片', key: 'photo_path' },
+            // { label: '照片', key: 'photo_path' },
             { label: '身份证', key: 'code' },
             { label: '性别', key: 'gender' },
             { label: '出生日期', key: 'birthday' },
@@ -77,7 +77,7 @@ export default {
             { label: '车辆信息', key: 'vehicle_info' },
             {
               label: '操作',
-              width: 180,
+              width: 140,
               fixed: 'right',
               render: (h, parmas) => {
                 const { row } = parmas

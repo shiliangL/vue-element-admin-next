@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-19 15:18:58
+ * @LastEditTime: 2022-01-19 17:26:55
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -56,7 +56,7 @@
         <el-col :span="12">
           <el-form-item label="组织机构" prop="org" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.org"
+              v-model="form.org"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
@@ -105,7 +105,7 @@
         <el-col :span="12">
           <el-form-item label="户籍类型" prop="register_type" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.register_type"
+              v-model="form.register_type"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
@@ -126,7 +126,7 @@
         <el-col :span="12">
           <el-form-item label="政治面貌" prop="politics_status" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.politics_status"
+              v-model="form.politics_status"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
@@ -139,7 +139,7 @@
         <el-col :span="12">
           <el-form-item label="婚姻状况" prop="marital_status" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.marital_status"
+              v-model="form.marital_status"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
@@ -155,7 +155,7 @@
         <el-col :span="12">
           <el-form-item label="文化程度" prop="standard_culture" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.standard_culture"
+              v-model="form.standard_culture"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
@@ -199,7 +199,7 @@
         <el-col :span="12">
           <el-form-item label="工作岗位" prop="operating_post" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.operating_post"
+              v-model="form.operating_post"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
@@ -220,7 +220,7 @@
         <el-col :span="12">
           <el-form-item label="职称" prop="technical_post" :rules="rules.select">
             <CuebSelectList
-              v-model.trim="form.technical_post"
+              v-model="form.technical_post"
               class="w100p"
               :config="{
                 keyCode: 'dict_value',
