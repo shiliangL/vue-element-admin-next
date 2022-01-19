@@ -1,16 +1,15 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-14 15:32:24
+ * @LastEditTime: 2022-01-19 19:18:50
  * @LastEditors: Do not edit
  * @Description:
 -->
 
 <template>
-  <el-form ref="form" :model="form" class="form" label-width="96px">
+  <el-form ref="form" :model="form" class="form" label-width="0">
     <div class="base-info">
-      <div class="content-text-bock">
-        <el-alert title="人员登记" class="title-bar" />
+      <div v-if="showType===1" class="content-text-bock">
         <div class="flex-bar-right">
           <el-dropdown @command="command">
             <el-button type="primary">
@@ -22,16 +21,131 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <CubeTable :config="peopleTable" />
+
+        <el-table
+          :data="form.peopleTable"
+          border
+          style="width: 100%"
+          height="80vh"
+        >
+          <el-table-column prop="name" label="名称" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.name' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.name'"
+                :rules="{ required: true, message: '请输入', trigger: 'change' }"
+              >
+                <el-input v-model.trim="scope.row.name" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="code" label="身份证号码" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.code' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.code' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.code" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="phone_number" label="电话号码" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.phone_number' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.phone_number' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.phone_number" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="work_unit" label="公司名称" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.work_unit' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.work_unit' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.work_unit" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="work_address" label="工作地址" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.work_address' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.work_address' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.work_address" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="create_time" label="入场时间" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.create_time' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.create_time' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.create_time" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="operating_post" label="职位" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.operating_post' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.operating_post' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.operating_post" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="movement" label="14天内行动轨迹" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="'peopleTable.' + scope.$index+'.movement' + scope.row.webid"
+                label=""
+                :prop="'peopleTable.' + scope.$index+'.movement' "
+                :rules="{ required: true, message: '请输入', trigger: 'change'}"
+              >
+                <el-input v-model.trim="scope.row.movement" placeholder="请输入内容" />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="time" label="操作" align="center" width="90">
+            <template slot-scope="scope">
+              <el-button size="mini" style="margin-bottom: 18px;" type="danger" @click="removeList(scope.$index,scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+
+        </el-table>
       </div>
 
-      <div class="content-text-bock">
-        <el-alert title="参观资料" class="title-bar" />
+      <div v-if="showType===2" class="content-text-bock">
         <CubeUploadFile />
       </div>
 
-      <div class="content-text-bock">
-        <el-alert title="持续跟踪" class="title-bar" />
+      <div v-if="showType===3" class="content-text-bock">
         <div class="flex-bar-right">
           <el-dropdown @command="command">
             <el-button type="primary">
@@ -71,7 +185,11 @@ export default {
       default: () => ''
     },
     type: {
-      type: [String, Number],
+      type: Number,
+      default: () => ''
+    },
+    showType: {
+      type: Number,
       default: () => ''
     }
   },
@@ -102,19 +220,8 @@ export default {
         ]
       },
       form: {
-        visiting_date: null,
-        department: '',
-        industry: '',
-        visiting_people: '',
-        people_detail: '',
-        people_department: '',
-        cm: '',
-        pm: '',
-        email: '',
-        purpose: '',
-        isdoc: '',
-        detail: null,
-        others: ''
+        peopleTable: [],
+        followTable: []
       }
     }
   },
@@ -142,6 +249,18 @@ export default {
     }
     this.peopleTable.columns.push(action)
     this.followTable.columns.push(action)
+
+    this.peopleTableRow = {
+      exhibition_hall_id: id,
+      name: '',
+      code: '',
+      phone_number: '',
+      work_unit: '',
+      work_address: '',
+      operating_post: '',
+      movement: '',
+      create_time: ''
+    }
   },
   methods: {
     close() {
@@ -150,7 +269,7 @@ export default {
     command(keyName) {
       switch (keyName) {
         case '添加人员登记':
-          this.peopleTable.data.push({})
+          this.form.peopleTable.push(this.peopleTableRow)
           break
         case '导入人员登记':
           this.openImportTable({ tplUrl: 'template/展厅预约人员登记模板.xls' })
@@ -229,6 +348,21 @@ export default {
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })
         }
+      })
+    },
+    addPeopleTableRow() {
+      const { id } = this
+      this.form.peopleTable.push({
+        webid: this.guid(),
+        exhibition_hall_id: id,
+        name: '',
+        code: '',
+        phone_number: '',
+        work_unit: '',
+        work_address: '',
+        operating_post: '',
+        movement: '',
+        create_time: ''
       })
     },
     openImportTable({ tplUrl }) {

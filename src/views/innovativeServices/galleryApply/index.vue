@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-19 17:02:37
+ * @LastEditTime: 2022-01-19 19:17:20
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -58,7 +58,9 @@ export default {
               render: (h, parmas) => {
                 const { row } = parmas
                 const appointment_time = row.appointment_time
-                  ? this.$dayjs(row.appointment_time).format('YYYY-MM-DD HH:mm:ss')
+                  ? this.$dayjs(row.appointment_time).format(
+                    'YYYY-MM-DD HH:mm:ss'
+                  )
                   : ''
                 return <span>{appointment_time}</span>
               }
@@ -80,7 +82,7 @@ export default {
             { label: '备注', key: 'remark' },
             {
               label: '操作',
-              width: 220,
+              width: 240,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -99,13 +101,20 @@ export default {
                       <i class='el-icon-edit'></i>
                       编辑
                     </div>
-                    <div
-                      class='btn-text'
-                      onClick={() => this.openMoreLayer({ type: 1, ...row })}
+                    <el-dropdown
+                      trigger='click'
+                      onCommand={(e, v) => this.handlerClickDropdown(e, v, row)}
                     >
-                      <i class='el-icon-edit'></i>
-                      资料补充
-                    </div>
+                      <span class='btn-text' style='font-size: 12px;'>
+                        更多操作
+                        <i class='el-icon-arrow-down el-icon--right'></i>
+                      </span>
+                      <el-dropdown-menu slot='dropdown'>
+                        <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
+                        <el-dropdown-item type='2'> 补充参观资料 </el-dropdown-item>
+                        <el-dropdown-item type='3'> 补充持续跟踪 </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
                   </div>
                 )
               }
@@ -119,6 +128,38 @@ export default {
   methods: {
     refresh() {
       this.$refs['CubeTableList'] && this.$refs['CubeTableList'].fetchList()
+    },
+    handlerClickDropdown(e, v, row) {
+      const { id } = row
+      const { type } = v.$attrs
+      const title = {
+        1: '补充展厅预约人员登记',
+        2: '补充展厅预约参观资料',
+        3: '补充展厅预约持续跟踪'
+      }
+      this.$openLayer({
+        props: {
+          id,
+          type: (type * 1),
+          showType: (type * 1)
+        },
+        // 弹窗内嵌套组件
+        content: () => import('./addMore.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          width: '80%',
+          title: title[type],
+          maskClosable: false,
+          fullscreen: true
+        },
+        // 事件回调
+        methods: {
+          refresh: () => {
+            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
+          }
+        }
+      })
     },
     openLayer(row = {}) {
       const { type, id } = row
@@ -146,32 +187,6 @@ export default {
         }
       })
     },
-    openMoreLayer(row = {}) {
-      const { type, id } = row
-      // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
-      this.$openLayer({
-        props: {
-          type,
-          id
-        },
-        // 弹窗内嵌套组件
-        content: () => import('./addMore.vue'),
-        // 弹窗属性设置
-        modalProps: {
-          width: '50%',
-          title: '补充展厅预约资料信息',
-          maskClosable: false,
-          fullscreen: false
-        },
-        // 事件回调
-        methods: {
-          refresh: () => {
-            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
-            this.refresh()
-          }
-        }
-      })
-    },
     handlerRemove({ id }) {
       this.$confirm('此操作将永久删除数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -181,7 +196,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_APPOINTMENT/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/APPOINTMENT/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

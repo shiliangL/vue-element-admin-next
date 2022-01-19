@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-19 17:30:43
+ * @LastEditTime: 2022-01-19 17:42:42
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -78,12 +78,12 @@
           </el-form-item>
         </el-col>
         <el-col v-if="form.is_cooperative" :span="12">
-          <el-form-item label="企业名称" prop="enterprise_code" :rules="rules.select">
+          <el-form-item label="企业名称" prop="enterprise_id" :rules="rules.select">
             <CuebSelectList
-              v-model="form.enterprise_code"
+              v-model="form.enterprise_id"
               class="w100p"
               :config="{
-                keyCode: 'code',
+                keyCode: 'id',
                 keyName: 'name',
                 url: '/COOPERATIVE_PARTNER/COOPERATIVE'
               }"
@@ -260,7 +260,7 @@ export default {
         project_manager: '', // 项目经理
         appointment_time: '', // '预约时间'
         enterprise_name: '', // '企业名称'
-        enterprise_code: '', // '企业code'
+        enterprise_id: '', // '企业code'
         visitors: '', // 来访人员
         staff_profile: '', // 人员情况
         domain: '', // 行业/领域；对应字典
@@ -316,9 +316,9 @@ export default {
           const params = JSON.parse(JSON.stringify(this.form))
           params.is_visit_cim = params.is_visit_cim ? 1 : 0
           params.is_cooperative = params.is_cooperative ? 1 : 0
-          params.enterprise_code = !params.is_cooperative
+          params.enterprise_id = !params.is_cooperative
             ? ''
-            : params.enterprise_code
+            : params.enterprise_id
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
