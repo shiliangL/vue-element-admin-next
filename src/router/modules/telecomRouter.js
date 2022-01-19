@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-04 11:42:38
+ * @LastEditTime: 2022-01-19 10:15:46
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -41,17 +41,17 @@ const chartsRouter = [
           noCache: false
           // roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
-      {
-        path: 'roleConfig',
-        component: () => import('@/views/permission/roleConfig'),
-        name: 'RoleConfig',
-        meta: {
-          title: '角色配置',
-          noCache: false
-          // roles: ['admin'] // or you can only set roles in sub nav
-        }
       }
+      // {
+      //   path: 'roleConfig',
+      //   component: () => import('@/views/permission/roleConfig'),
+      //   name: 'RoleConfig',
+      //   meta: {
+      //     title: '角色配置',
+      //     noCache: false
+      //     // roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // }
     ]
   },
   {
@@ -75,14 +75,14 @@ const chartsRouter = [
         path: 'devicemhfix',
         component: () => import('@/views/internet/devicemhfix'),
         name: 'devicemhfix',
-        meta: { title: '设备维修记录', noCache: false }
+        meta: { title: '设备维修', noCache: false }
       },
-      {
-        path: 'deviceOperation',
-        component: () => import('@/views/internet/deviceOperation'),
-        name: 'deviceOperation',
-        meta: { title: ' 设备运行状态', noCache: false }
-      },
+      // {
+      //   path: 'deviceOperation',
+      //   component: () => import('@/views/internet/deviceOperation'),
+      //   name: 'deviceOperation',
+      //   meta: { title: ' 设备运行状态', noCache: false }
+      // },
       {
         path: 'peoplemh',
         component: () => import('@/views/internet/peoplemh'),

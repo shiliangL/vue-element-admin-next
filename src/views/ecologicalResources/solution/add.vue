@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-18 20:09:36
+ * @LastEditTime: 2022-01-18 20:35:15
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -28,7 +28,6 @@
               prop="type"
               :rules="rules.select"
             >
-              <!-- <el-input v-model="form.type" placeholder="请输入" /> -->
               <CuebSelectList
                 v-model="form.type"
                 :config="{
@@ -43,7 +42,6 @@
         <el-row v-if="0">
           <el-col :span="24">
             <el-form-item label="方法提供方" prop="regi_capital">
-              {{ form.regi_capital }}
               <CuebSelectList
                 v-model="form.regi_capital"
                 :config="{
@@ -195,6 +193,8 @@ export default {
               this.$message.error('操作失败')
               this.submitLoading = false
             }
+          }).catch(() => {
+            this.submitLoading = false
           })
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })

@@ -1,169 +1,46 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-06 16:31:09
+ * @LastEditTime: 2022-01-19 15:18:58
  * @LastEditors: Do not edit
  * @Description:
 -->
 
 <template>
-
-  <el-form
-    ref="form"
-    :model="form"
-    class="form"
-    label-width="96px"
-  >
+  <el-form ref="form" :model="form" class="form" label-width="96px">
     <div class="base-info">
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="人员名称"
-            prop="name"
-            :rules="rules.input"
-          >
-            <el-input
-              v-model="form.name"
-              placeholder="请输入"
-            />
+          <el-form-item label="人员名称" prop="name" :rules="rules.input">
+            <el-input v-model.trim="form.name" placeholder="请输入" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="身份证"
-            prop="idcard"
-          >
-            <el-input
-              v-model="form.idcard"
-              placeholder="请输入"
-            />
+          <el-form-item label="身份证" prop="code" :rules="rules.input">
+            <el-input v-model.trim="form.code" placeholder="请输入" :maxlength="18" />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="国籍"
-            prop="nationality"
-          >
-            <el-input
-              v-model="form.nationality"
-              placeholder="请输入"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="民族"
-            prop="nation"
-          >
-            <el-input
-              v-model="form.nation"
-              placeholder="请输入"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item
-            label="性别"
-            prop="gender"
-          >
-            <el-radio-group v-model="form.gender">
-              <el-radio label="男" />
-              <el-radio label="女" />
-            </el-radio-group>
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="户籍类型"
-            prop="property"
-          >
-            <el-input
-              v-model="form.property"
-              placeholder="请输入"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item
-            label="政治面貌"
-            prop="status"
-          >
-            <el-radio-group v-model="form.status">
-              <el-radio label="群众" />
-              <el-radio label="党员" />
-            </el-radio-group>
-
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="教育背景"
-            prop="edu_degree"
-          >
-            <el-select
-              v-model="form.edu_degree"
-              class="w100p"
-              placeholder="请选择活动区域"
-            >
+          <el-form-item label="性别" prop="gender" :rules="rules.input">
+            <el-select v-model.trim="form.gender" placeholder="请选择" class="w100p">
               <el-option
-                label="其他"
-                value="其他"
-              />
-              <el-option
-                label="初中"
-                value="初中"
-              />
-              <el-option
-                label="高中"
-                value="高中"
-              />
-              <el-option
-                label="专科"
-                value="专科"
-              />
-              <el-option
-                label="本科"
-                value="本科"
-              />
-              <el-option
-                label="硕士"
-                value="硕士"
+                v-for="item in options.gender"
+                :key="item.dict_value"
+                :label="item.dict_name"
+                :value="item.dict_value"
               />
             </el-select>
-
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item
-            label="毕业院校"
-            prop="school"
-          >
-            <el-input
-              v-model="form.school"
-              placeholder="请输入"
-            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="教育背景"
-            prop="专业"
-          >
-            <el-input
-              v-model="form.major"
+          <el-form-item label="出生日期" prop="birthday" :rules="rules.select">
+            <el-date-picker
+              v-model.trim="form.birthday"
+              class="w100p"
+              value-format="yyyy-MM-dd"
               placeholder="请输入"
             />
           </el-form-item>
@@ -172,23 +49,128 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="居住地址"
-            prop="live_address"
-          >
-            <el-input
-              v-model="form.live_address"
-              placeholder="请输入"
+          <el-form-item label="手机号码" prop="phone_number">
+            <el-input v-model.trim="form.phone_number" placeholder="请输入" :maxlength="11" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="组织机构" prop="org" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.org"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=6'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="国籍" prop="country">
+            <el-input v-model.trim="form.country" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="民族" prop="nationality">
+            <el-input v-model.trim="form.nationality" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="籍贯" prop="native_place">
+            <el-input v-model.trim="form.native_place" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="本地户籍" prop="is_local_register">
+            <el-select v-model.trim="form.is_local_register" placeholder="请选择" class="w100p">
+              <el-option
+                v-for="item in options.localRegister"
+                :key="item.dict_value"
+                :label="item.dict_name"
+                :value="item.dict_value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="户籍类型" prop="register_type" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.register_type"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=5'
+              }"
             />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="从事行业"
-            prop="industry"
-          >
-            <el-input
-              v-model="form.industry"
+          <el-form-item label="户籍地址" prop="register_address">
+            <el-input v-model.trim="form.register_address" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="政治面貌" prop="politics_status" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.politics_status"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=4'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="婚姻状况" prop="marital_status" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.marital_status"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=1'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="文化程度" prop="standard_culture" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.standard_culture"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=3'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="毕业时间" prop="graduate_time" :rules="rules.select">
+            <el-date-picker
+              v-model.trim="form.graduate_time"
+              class="w100p"
+              value-format="yyyy-MM-dd"
               placeholder="请输入"
             />
           </el-form-item>
@@ -197,23 +179,69 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="职称"
-            prop="title"
-          >
-            <el-input
-              v-model="form.title"
-              placeholder="请输入"
-            />
+          <el-form-item label="毕业院校" prop="graduate_school">
+            <el-input v-model.trim="form.graduate_school" placeholder="请输入" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="工作职位"
-            prop="work_position"
-          >
+          <el-form-item label="从事行业" prop="work_industry">
+            <el-input v-model.trim="form.work_industry" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="工作单位" prop="work_unit">
+            <el-input v-model.trim="form.work_unit" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="工作岗位" prop="operating_post" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.operating_post"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=8'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="工作地址" prop="work_address">
+            <el-input v-model.trim="form.work_address" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="职称" prop="technical_post" :rules="rules.select">
+            <CuebSelectList
+              v-model.trim="form.technical_post"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=7'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="居住地址" prop="residential_address">
+            <el-input v-model.trim="form.residential_address" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="居住建筑" prop="residential_building">
             <el-input
-              v-model="form.work_position"
+              v-model.trim="form.residential_building"
               placeholder="请输入"
             />
           </el-form-item>
@@ -222,33 +250,18 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="工作地址"
-            prop="work_address"
-          >
-            <el-input
-              v-model="form.work_address"
-              placeholder="请输入"
-            />
+          <el-form-item label="家庭成员" prop="family_member">
+            <el-input v-model.trim="form.family_member" placeholder="请输入" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="工作单位"
-            prop="work_unit"
-          >
-            <el-input
-              v-model="form.work_unit"
-              placeholder="请输入"
-            />
+          <el-form-item label="车辆信息" prop="vehicle_info">
+            <el-input v-model.trim="form.vehicle_info" placeholder="请输入" />
           </el-form-item>
         </el-col>
       </el-row>
 
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <el-button @click="close">取 消</el-button>
         <el-button
           :loading="submitLoading"
@@ -257,18 +270,16 @@
         >确 定</el-button>
       </div>
     </div>
-
   </el-form>
-
 </template>
 
 <script>
-
 import rules from '@/mixProps/rules.js'
+import CuebSelectList from '@/components/cueb-select-list'
 
 export default {
   components: {
-
+    CuebSelectList
   },
   mixins: [rules],
   props: {
@@ -286,29 +297,56 @@ export default {
       fetchLoading: false,
       submitLoading: false,
       visible: false,
+      options: {
+        gender: [
+          { dict_name: '未知', dict_value: 0 },
+          { dict_name: '男', dict_value: 1 },
+          { dict_name: '女', dict_value: 2 }
+        ],
+        localRegister: [
+          { dict_name: '是', dict_value: 1 },
+          { dict_name: '否', dict_value: 0 }
+        ]
+      },
       form: {
-        'name': null,
-        'idcard': null,
-        'nationality': null,
-        'nation': null,
-        'gender': null,
-        // 'birthday': '',
-        'property': null,
-        'local': null,
-        'status': null,
-        'marriage': null,
-        'edu_degree': null,
-        'school': null,
-        'major': null,
-        'industry': null,
-        'title': null,
-        'native_address': null,
-        'work_unit': null,
-        'work_position': null,
-        'bld_name': null,
-        'bld_code': null,
-        'live_address': null,
-        'work_address': null
+        name: '', // 人员名称',
+        photo_path: '', // 照片',
+        code: '', // 身份证',
+        gender: 1, // 性别',
+        birthday: '', // 出生日期',
+
+        phone_number: '', // 手机号码',
+        org: '', // 组织机构',
+
+        country: '', // 国籍',
+        nationality: '', // 民族',
+
+        native_place: '', // 籍贯',
+        is_local_register: 1, // 本地户籍',
+
+        register_type: '', // 户籍类型',
+        register_address: '', // 户籍地址',
+
+        politics_status: '', // 政治面貌',
+        marital_status: '', // 婚姻状况',
+
+        standard_culture: '', // 文化程度',
+        graduate_time: '', // 毕业时间',
+
+        graduate_school: '', // 毕业院校',
+        work_industry: '', // 从事行业',
+
+        work_unit: '', // 工作单位 ',
+        operating_post: '', // 工作岗位',
+
+        work_address: '', // 工作地址',
+        technical_post: '', // 职称',
+
+        residential_address: '', // 居住地址',
+        residential_building: '', // 居住建筑',
+
+        family_member: '', // 家庭成员',
+        vehicle_info: '' // 车辆信息',
       }
     }
   },
@@ -321,17 +359,12 @@ export default {
     close() {
       this.$emit('close')
     },
-    guid() {
-      function s4() { return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
-    },
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${id}`,
-        params: {
-        }
-      }).then((res) => {
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/PERSONNEL/${id}`,
+        params: {}
+      }).then(res => {
         const { Success, Message } = res
         if (Success) {
           const { Data } = Message || {}
@@ -346,13 +379,16 @@ export default {
         if (valid) {
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(this.form))
+          // params.is_local_register = params.is_local_register * 1
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
-            url: type ? `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${this.id}` : `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION`,
+            url: type
+              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/PERSONNEL/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/PERSONNEL`,
             data: stringify({ ...params })
-          }).then((res) => {
+          }).then(res => {
             const { Success } = res
             if (Success) {
               this.submitLoading = false
@@ -363,6 +399,8 @@ export default {
               this.$message.error('操作失败')
               this.submitLoading = false
             }
+          }).catch(() => {
+            this.submitLoading = false
           })
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })
@@ -373,5 +411,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

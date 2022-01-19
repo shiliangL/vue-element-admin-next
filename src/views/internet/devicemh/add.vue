@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 16:48:46
+ * @LastEditTime: 2022-01-19 11:58:12
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -12,7 +12,7 @@
     ref="form"
     :model="form"
     class="form"
-    label-width="96px"
+    label-width="110px"
   >
     <div class="base-info">
       <el-row>
@@ -22,27 +22,55 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="设备类型" prop="type" :rules="rules.input">
-            <el-input v-model="form.type" placeholder="请输入" />
+          <el-form-item label="设备类型" prop="type" :rules="rules.select">
+            <CuebSelectList
+              v-model="form.type"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=14'
+              }"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="设备编号" prop="code">
+          <el-form-item label="设备编号" prop="code" :rules="rules.input">
             <el-input v-model="form.code" placeholder="请输入" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="采购时间" prop="order_time">
-            <el-date-picker v-model="form.order_time" class="w100p" value-format="yyyy-MM-dd" placeholder="请输入" />
+          <el-form-item label="采购时间" prop="purchase_time" :rules="rules.select">
+            <el-date-picker v-model="form.purchase_time" class="w100p" value-format="yyyy-MM-dd" placeholder="请输入" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="使用区域" prop="region">
-            <el-input v-model="form.region" placeholder="请输入" />
+          <el-form-item label="设备运行时间" prop="run_time" :rules="rules.input">
+            <el-input v-model="form.run_time" placeholder="请输入">
+              <template slot="append">h</template>
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="运行状态" prop="state" :rules="rules.select">
+            <CuebSelectList
+              v-model="form.state"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=10'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="使用区域" prop="area" :rules="rules.input">
+            <el-input v-model="form.area" placeholder="请输入" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -51,11 +79,25 @@
           </el-form-item>
         </el-col>
       </el-row>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="模型编码" prop="c_code">
+            <el-input v-model="form.c_code" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="模型ID" prop="model_id">
+            <el-input v-model="form.model_id" placeholder="请输入" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-row>
         <el-col :span="24">
-          <el-form-item label="设备参数" prop="parameter">
+          <el-form-item label="设备参数" prop="param">
             <el-input
-              v-model="form.parameter"
+              v-model="form.param"
               placeholder="请输入"
               maxlength="550"
               show-word-limit
@@ -86,10 +128,11 @@
 <script>
 
 import rules from '@/mixProps/rules.js'
+import CuebSelectList from '@/components/cueb-select-list'
 
 export default {
   components: {
-
+    CuebSelectList
   },
   mixins: [rules],
   props: {
@@ -108,14 +151,18 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        'name': '',
-        'type': '',
-        'code': '',
-        'c_code': '',
-        'region': '',
-        'order_time': '',
-        'manufacturer': '',
-        'parameter': ''
+        'name': '', // 设备名称
+        'code': '', // 设备编码
+        'c_code': '', // 模型id
+        'type': null, // 设备类型
+        'model_id': null,
+        'area': '', // 区域
+        'param': '', // 设备运行参数
+        'run_time': 0, // 设备运行时间
+        'manufacturer': '', // 厂商
+        'purchase_time': null, // 采购时间
+        'state': '1', // 状态
+        'statename': '在线'
       }
     }
   },
@@ -128,14 +175,10 @@ export default {
     close() {
       this.$emit('close')
     },
-    guid() {
-      function s4() { return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
-    },
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT?id=${id}`,
         params: {
         }
       }).then((res) => {
@@ -143,7 +186,10 @@ export default {
         if (Success) {
           const { Data } = Message || {}
           if (Array.isArray(Data) && Data.length) {
-            Object.assign(this.form, Data[0])
+            const form = Data[0]
+            form.state = form.state ? form.state.toString() : '1'
+            form.type = form.type ? form.type.toString() : null
+            Object.assign(this.form, form)
           }
         }
       })
@@ -157,7 +203,7 @@ export default {
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
-            url: type ? `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE/${this.id}` : `${process.env.VUE_APP_BASE_API_PREFIX}/EXHIBITION_DEVICE`,
+            url: type ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT/${this.id}` : `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT`,
             data: stringify({ ...params })
           }).then((res) => {
             const { Success } = res
@@ -170,6 +216,8 @@ export default {
               this.$message.error('操作失败')
               this.submitLoading = false
             }
+          }).catch(() => {
+            this.submitLoading = false
           })
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })

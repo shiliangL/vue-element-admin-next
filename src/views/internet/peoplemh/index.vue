@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-07 15:55:54
+ * @LastEditTime: 2022-01-19 13:58:34
  * @LastEditors: Do not edit
  * @Description: 人员管理
 -->
@@ -26,7 +26,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/FIND_PERSONNEL`,
         search: {
           data: [
             [
@@ -47,26 +47,38 @@ export default {
           calcTableHeight: true, // 是否开启表格自动高度计算
           columns: [
             // { label: '选择', type: 'selection' },
-            { label: '序号', type: 'index' },
+            { label: '序号', type: 'index', fixed: 'left' },
             { label: '人员名称', key: 'name' },
-            { label: '身份证', key: 'idcard' },
-            { label: '国籍', key: 'nationality' },
-            { label: '民族', key: 'nation' },
+            { label: '照片', key: 'photo_path' },
+            { label: '身份证', key: 'code' },
             { label: '性别', key: 'gender' },
-            { label: '户籍类型', key: 'property' },
-            { label: '政治面貌', key: 'status' },
-            { label: '教育背景 ', key: 'edu_degree' },
-            { label: '毕业院校', key: 'school' },
-            { label: '专业', key: 'major' },
-            { label: '居住地址', key: 'live_address' },
-            { label: '从事行业', key: 'industry' },
-            { label: '职称', key: 'title' },
-            { label: '工作职位', key: 'work_position' },
+            { label: '出生日期', key: 'birthday' },
+            { label: '手机号码', key: 'phone_number' },
+            { label: '组织机构', key: 'org' },
+            { label: '国籍', key: 'country' },
+            { label: '民族', key: 'nationality' },
+            { label: '籍贯', key: 'native_place' },
+            { label: '本地户籍', key: 'is_local_register' },
+            { label: '户籍类型', key: 'register_type' },
+            { label: '户籍地址', key: 'register_address' },
+            { label: '政治面貌', key: 'politics_status' },
+            { label: '婚姻状况', key: 'marital_status' },
+            { label: '文化程度', key: 'standard_culture' },
+            { label: '毕业时间', key: 'graduate_time' },
+            { label: '毕业院校', key: 'graduate_school' },
+            { label: '从事行业', key: 'work_industry' },
+            { label: '工作单位 ', key: 'work_unit' },
+            { label: '工作岗位', key: 'operating_post' },
             { label: '工作地址', key: 'work_address' },
-            { label: '工作单位', key: 'work_unit' },
-            // { label: '是否本地户籍', key: 'local' },
+            { label: '职称', key: 'technical_post' },
+            { label: '居住地址', key: 'residential_address' },
+            { label: '居住建筑', key: 'residential_building' },
+            { label: '家庭成员', key: 'family_member' },
+            { label: '车辆信息', key: 'vehicle_info' },
             {
               label: '操作',
+              width: 180,
+              fixed: 'right',
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -128,7 +140,7 @@ export default {
       }).then(() => {
         this.$request({
           method: 'DELETE',
-          url: `${process.env.VUE_APP_BASE_API_PREFIX}/PERSONNEL_INFORMATION/${id}`
+          url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/FIND_PERSONNEL/${id}`
         }).then((res) => {
           const { Success } = res
           if (Success) {

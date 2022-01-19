@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-01-18 16:51:25
- * @LastEditTime: 2022-01-18 19:48:28
+ * @LastEditTime: 2022-01-19 10:58:14
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -23,7 +23,12 @@
       :key="initConfig.rowKey ? 'el-select-' +item[initConfig.rowKey]+index : item.value"
       :label="item.label"
       :value="item.value"
-    />
+    >
+      <template>
+        <slot :row="item" />
+      </template>
+    </el-option>
+
   </el-select>
 </template>
 
@@ -99,6 +104,9 @@ export default {
                 list.push(item)
               }
               this.options = list
+              this.$emit('options', list)
+            } else {
+              this.$emit('options', null)
             }
           }
         })
@@ -107,8 +115,15 @@ export default {
         })
     },
     select(value) {
-      this.$emit('input', value)
+      // this.$emit('input', value)
       this.$emit('change', value)
+      if (value) {
+        const { keyCode } = this.initConfig
+        const rom = this.options.find(item => item[keyCode] === value)
+        if (rom) this.$emit('select', rom)
+      } else {
+        this.$emit('select', null)
+      }
     }
   }
 }

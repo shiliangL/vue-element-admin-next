@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2021-12-30 16:55:08
+ * @LastEditTime: 2022-01-19 11:47:57
  * @LastEditors: Do not edit
  * @Description: 设备管理维修记录
 -->
@@ -16,7 +16,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/FIND_EQUIPMENT_LIST`,
         search: {
           data: [
             [
@@ -40,14 +40,22 @@ export default {
             { label: '序号', type: 'index' },
             { label: '设备名称', key: 'name' },
             { label: '设备编号', key: 'code' },
-            { label: '故障时间', key: 'malfunction_date' },
-            { label: '维修时间', key: 'maintenance_date' },
-            { label: '维修工程师', key: 'engineer' },
-            { label: '故障原因', key: 'malfunction_reason' },
-            { label: '配件更换', key: 'parts_replacement' },
-            { label: '维修结论', key: 'maintenance_report' },
+            { label: '故障时间', key: 'fault_cause' },
+            { label: '维修时间', key: 'maintain_time' },
+            { label: '维修工程师', key: 'maintain_engineer_name' },
+            { label: '故障原因', key: 'fault_cause' },
+            { label: '配件更换', key: 'mounting_change' },
+            { label: '维修结论', key: 'maintain_report' },
+            { label: '维修状态', key: 'maintain_state',
+              render: (h, parmas) => {
+                const { row } = parmas
+                // const map = { 1: '已修复', 2: '未修复' }
+                return row.maintain_state === 1 ? <el-tag> 已修复 </el-tag> : <el-tag type='warning'> 未修复 </el-tag>
+              }
+            },
             {
               label: '操作',
+              width: 160,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -110,7 +118,7 @@ export default {
       }).then(() => {
         this.$request({
           method: 'DELETE',
-          url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`
+          url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE/${id}`
         }).then((res) => {
           const { Success } = res
           if (Success) {

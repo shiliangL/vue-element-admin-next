@@ -1,53 +1,56 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2021-12-30 19:59:09
+ * @LastEditTime: 2022-01-19 11:51:22
  * @LastEditors: Do not edit
  * @Description:
 -->
 
 <template>
-
-  <el-form
-    ref="form"
-    :model="form"
-    class="form"
-    label-width="96px"
-  >
+  <el-form ref="form" :model="form" class="form" label-width="96px">
     <div class="base-info">
       <el-row>
         <el-col :span="12">
           <el-form-item
             label="设备名称"
-            prop="name"
+            prop="equipment_id"
             :rules="rules.input"
           >
-            <el-input
-              v-model="form.name"
-              placeholder="请输入"
-            />
+            <CuebSelectList
+              v-model="form.equipment_id"
+              :config="{
+                keyCode: 'id',
+                keyName: 'name',
+                url: '/EQUIPMENT_MANAGEMENT/EQUIPMENT'
+              }"
+            >
+              <template slot-scope="{ row }">
+                <div class="flex-box">
+                  <div class="flex-box-item">
+                    名称：{{ row.name }}
+                  </div>
+                  <div class="flex-box-item">
+                    编码：{{ row.code }}
+                  </div>
+                </div>
+              </template>
+            </CuebSelectList>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="设备编码"
-            prop="code"
-          >
-            <el-input
-              v-model="form.code"
-              placeholder="请输入"
-            />
+          <el-form-item label="维修状态" prop="maintain_state">
+            <el-radio-group v-model="form.maintain_state">
+              <el-radio :label="2">未修复</el-radio>
+              <el-radio :label="1">已修复</el-radio>
+            </el-radio-group>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="故障时间"
-            prop="malfunction_date"
-          >
+          <el-form-item label="故障时间" prop="fault_time">
             <el-date-picker
-              v-model="form.malfunction_date"
+              v-model="form.fault_time"
               class="w100p"
               value-format="yyyy-MM-dd"
               placeholder="请输入"
@@ -55,26 +58,17 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="维修工程师"
-            prop="engineer"
-          >
-            <el-input
-              v-model="form.engineer"
-              placeholder="请输入"
-            />
+          <el-form-item label="维修工程师" prop="maintain_engineer_name">
+            <el-input v-model="form.maintain_engineer_name" placeholder="请输入" />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="维修时间"
-            prop="maintenance_date"
-          >
+          <el-form-item label="维修时间" prop="maintain_time">
             <el-date-picker
-              v-model="form.maintenance_date"
+              v-model="form.maintain_time"
               class="w100p"
               value-format="yyyy-MM-dd"
               placeholder="请输入"
@@ -82,50 +76,38 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
-            label="故障原因"
-            prop="malfunction_reason"
-          >
-            <el-input
-              v-model="form.malfunction_reason"
-              placeholder="请输入"
-            />
+          <el-form-item label="配件更换" prop="mounting_change">
+            <el-input v-model="form.mounting_change" placeholder="请输入" />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item
-            label="配件更换"
-            prop="parts_replacement"
-          >
+          <el-form-item label="故障原因" prop="fault_cause">
             <el-input
-              v-model="form.parts_replacement"
-              placeholder="请输入"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="维修结论"
-            prop="manufacturer"
-          >
-            <el-input
-              v-model="form.maintenance_report"
+              v-model="form.fault_cause"
               placeholder="请输入"
               maxlength="150"
               type="textarea"
-              :autosize="{ minRows: 1, maxRows: 10}"
+              :autosize="{ minRows: 3, maxRows: 10 }"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="维修结论" prop="maintain_report">
+            <el-input
+              v-model="form.maintain_report"
+              placeholder="请输入"
+              maxlength="150"
+              type="textarea"
+              :autosize="{ minRows: 3, maxRows: 10 }"
             />
           </el-form-item>
         </el-col>
       </el-row>
 
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <el-button @click="close">取 消</el-button>
         <el-button
           :loading="submitLoading"
@@ -134,18 +116,16 @@
         >确 定</el-button>
       </div>
     </div>
-
   </el-form>
-
 </template>
 
 <script>
-
 import rules from '@/mixProps/rules.js'
+import CuebSelectList from '@/components/cueb-select-list'
 
 export default {
   components: {
-
+    CuebSelectList
   },
   mixins: [rules],
   props: {
@@ -164,15 +144,14 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        'name': null,
-        'code': null,
-        'malfunction_date': null,
-        'maintenance_date': null,
-        'malfunction_reason': null,
-        'maintenance_result': null,
-        'maintenance_report': null,
-        'parts_replacement': null,
-        'engineer': null
+        equipment_id: '',
+        fault_time: '', // 故障时间
+        fault_cause: '', // 故障原因
+        maintain_time: '', // 维修时间
+        maintain_state: 2, // 维修状态 1:已修复 2：未修复
+        maintain_report: '', // 维修结论
+        mounting_change: '', // 配件更换
+        maintain_engineer_name: '' // 维修工程师
       }
     }
   },
@@ -185,17 +164,16 @@ export default {
     close() {
       this.$emit('close')
     },
-    guid() {
-      function s4() { return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
+    cuebSelectChange(row) {
+      console.log(row)
+      // row ? this.form.code = row.code : this.form.code = null
     },
     fetchDetail(id) {
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${id}`,
-        params: {
-        }
-      }).then((res) => {
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE?id=${id}`,
+        params: {}
+      }).then(res => {
         const { Success, Message } = res
         if (Success) {
           const { Data } = Message || {}
@@ -214,9 +192,11 @@ export default {
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
-            url: type ? `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS/${this.id}` : `${process.env.VUE_APP_BASE_API_PREFIX}/EQUIPMENT_MAINTENANCE_RECORDS`,
+            url: type
+              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE`,
             data: stringify({ ...params })
-          }).then((res) => {
+          }).then(res => {
             const { Success } = res
             if (Success) {
               this.submitLoading = false
@@ -238,4 +218,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.flex-box {
+  display: flex;
+  align-items: center;
+  .flex-box-item {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
 </style>

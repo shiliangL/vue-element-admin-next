@@ -21,7 +21,7 @@ export default {
           {
             required: true,
             message: '请选择',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         validInteger: [{
