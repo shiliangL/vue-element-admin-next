@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-19 10:15:46
+ * @LastEditTime: 2022-01-20 14:57:52
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -52,6 +52,31 @@ const chartsRouter = [
       //     // roles: ['admin'] // or you can only set roles in sub nav
       //   }
       // }
+    ]
+  },
+  {
+    path: '/basicData',
+    component: Layout,
+    alwaysShow: true, // will always show the root menu
+    redirect: 'noRedirect',
+    name: 'BasicData',
+    meta: {
+      title: '基础数据',
+      icon: 'chart'
+    },
+    children: [
+      {
+        path: 'laboratoryBoot',
+        component: () => import('@/views/basicData/laboratoryBoot'),
+        name: 'laboratoryBoot',
+        meta: { title: '实验室仪器管理', noCache: false }
+      },
+      {
+        path: 'solutionCalss',
+        component: () => import('@/views/basicData/solutionCalss'),
+        name: 'solutionCalss',
+        meta: { title: '解决方案分类', noCache: false }
+      }
     ]
   },
   {

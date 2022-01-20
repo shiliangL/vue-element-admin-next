@@ -1,26 +1,22 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-20 14:31:38
+ * @LastEditTime: 2022-01-20 16:13:29
  * @LastEditors: Do not edit
- * @Description: 展厅服务-展厅预约
+ * @Description: 实验室仪器管理
 -->
 <template>
   <cube-table-list ref="CubeTableList" :config="config" />
 </template>
 
 <script>
-// import vclamp from 'vue-clamp'
 export default {
-  components: {
-    // vclamp
-  },
   data() {
     return {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/FIND_APPOINTMENT`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPARATUS`,
         search: {
           data: [
             [
@@ -52,39 +48,44 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
+            { label: '仪器名称', key: 'name' },
+            { label: '仪器编号', key: 'code' },
+            { label: '仪器类型', key: 'type' },
+            { label: '型号参数', key: 'model_param' },
+            { label: '设备厂家', key: 'manufacturer' },
+            { label: '使用时长', key: 'use_time' },
+            { label: '模型ID', key: 'model_id' },
             {
-              label: '预约时间',
-              key: 'appointment_time',
+              label: '是否校准',
+              key: 'is_calibration',
               render: (h, parmas) => {
                 const { row } = parmas
-                const appointment_time = row.appointment_time
-                  ? this.$dayjs(row.appointment_time).format(
-                    'YYYY-MM-DD HH:mm:ss'
-                  )
-                  : ''
-                return <span>{appointment_time}</span>
+                return row.is_calibration ? (
+                  <el-tag> 已校准 </el-tag>
+                ) : (
+                  <el-tag type='warning'> 未校准 </el-tag>
+                )
               }
             },
-            { label: '来访企业', key: 'enterprise_name' },
-            { label: '来访人员', key: 'visitors' },
-            { label: '人员情况', key: 'staff_profile' },
-            { label: '行业/领域', key: 'domain_name' },
-            { label: '部门名称', key: 'department_name' },
-            { label: '所属区划', key: 'city_area_name' },
-            { label: '客户经理', key: 'customer_manager' },
-            { label: '项目经理', key: 'project_manager' },
-            { label: '邮箱', key: 'email' },
-            { label: '主要了解方面', key: 'know_content' },
-            { label: '交流材料', key: 'communication_materials' },
-            // { label: '交流材料路径', key: 'communication_materials_path' },
-            { label: '商机情况', key: 'business_situation' },
-            { label: '备注', key: 'remark' },
+            {
+              label: '是否维修',
+              key: 'is_maintain',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return row.is_maintain ? (
+                  <el-tag> 否 </el-tag>
+                ) : (
+                  <el-tag type='warning'> 是 </el-tag>
+                )
+              }
+            },
             {
               label: '操作',
-              width: 240,
+              width: 160,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
+                  // <div class='btn-text' onClick={() => this.handlerType(0, row)}>详情</div>
                   <div class='flex-table-cell'>
                     <div
                       class='delete-text'
@@ -100,20 +101,6 @@ export default {
                       <i class='el-icon-edit'></i>
                       编辑
                     </div>
-                    <el-dropdown
-                      trigger='click'
-                      onCommand={(e, v) => this.handlerClickDropdown(e, v, row)}
-                    >
-                      <span class='btn-text' style='font-size: 12px;'>
-                        更多操作
-                        <i class='el-icon-arrow-down el-icon--right'></i>
-                      </span>
-                      <el-dropdown-menu slot='dropdown'>
-                        <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
-                        <el-dropdown-item type='2'> 补充参观资料 </el-dropdown-item>
-                        <el-dropdown-item type='3'> 补充持续跟踪 </el-dropdown-item>
-                      </el-dropdown-menu>
-                    </el-dropdown>
                   </div>
                 )
               }
@@ -128,38 +115,6 @@ export default {
     refresh() {
       this.$refs['CubeTableList'] && this.$refs['CubeTableList'].fetchList()
     },
-    handlerClickDropdown(e, v, row) {
-      const { id } = row
-      const { type } = v.$attrs
-      const title = {
-        1: '补充展厅预约人员登记',
-        2: '补充展厅预约参观资料',
-        3: '补充展厅预约持续跟踪'
-      }
-      this.$openLayer({
-        props: {
-          id,
-          type: (type * 1),
-          showType: (type * 1)
-        },
-        // 弹窗内嵌套组件
-        content: () => import('./addMore.vue'),
-        // 弹窗属性设置
-        modalProps: {
-          width: '80%',
-          title: title[type],
-          maskClosable: false,
-          fullscreen: true
-        },
-        // 事件回调
-        methods: {
-          refresh: () => {
-            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
-            this.refresh()
-          }
-        }
-      })
-    },
     openLayer(row = {}) {
       const { type, id } = row
       // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
@@ -172,8 +127,8 @@ export default {
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '45%',
-          title: type ? '编辑展厅预约' : '新增展厅预约',
+          width: '640px',
+          title: type ? '编辑仪器' : '新增仪器',
           maskClosable: false,
           fullscreen: false
         },
@@ -195,7 +150,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/APPOINTMENT/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPARATUS/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

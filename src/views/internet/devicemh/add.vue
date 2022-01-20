@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-19 11:58:12
+ * @LastEditTime: 2022-01-20 15:55:47
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -161,8 +161,8 @@ export default {
         'run_time': 0, // 设备运行时间
         'manufacturer': '', // 厂商
         'purchase_time': null, // 采购时间
-        'state': '1', // 状态
-        'statename': '在线'
+        'state': '1' // 状态
+        // 'statename': ''
       }
     }
   },
