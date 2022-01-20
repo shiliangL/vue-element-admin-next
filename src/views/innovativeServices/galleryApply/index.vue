@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-20 14:31:38
+ * @LastEditTime: 2022-01-20 18:48:15
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -132,9 +132,9 @@ export default {
       const { id } = row
       const { type } = v.$attrs
       const title = {
-        1: '补充展厅预约人员登记',
-        2: '补充展厅预约参观资料',
-        3: '补充展厅预约持续跟踪'
+        1: '补充人员登记',
+        2: '补充参观资料',
+        3: '补充持续跟踪'
       }
       this.$openLayer({
         props: {

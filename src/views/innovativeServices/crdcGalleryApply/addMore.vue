@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-20 19:53:25
+ * @LastEditTime: 2022-01-20 19:54:29
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -55,15 +55,15 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="code" label="身份证号码" align="center">
+          <el-table-column prop="org" label="所属单位" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'peopleTable.' + scope.$index + '.code' + scope.row.id ||
+                  'peopleTable.' + scope.$index + '.org' + scope.row.id ||
                     scope.row.webid
                 "
                 label=""
-                :prop="'peopleTable.' + scope.$index + '.code'"
+                :prop="'peopleTable.' + scope.$index + '.org'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -71,97 +71,24 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.code"
+                  v-model.trim="scope.row.org"
                   placeholder="请输入内容"
                 />
               </el-form-item>
             </template>
           </el-table-column>
 
-          <el-table-column prop="phone_number" label="电话号码" align="center">
+          <el-table-column prop="start_time" label="到访时间" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
                   'peopleTable.' +
                     scope.$index +
-                    '.phone_number' +
+                    '.start_time' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'peopleTable.' + scope.$index + '.phone_number'"
-                :rules="{
-                  required: true,
-                  message: '请输入',
-                  trigger: 'change'
-                }"
-              >
-                <el-input
-                  v-model.trim="scope.row.phone_number"
-                  placeholder="请输入内容"
-                />
-              </el-form-item>
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="work_unit" label="公司名称" align="center">
-            <template slot-scope="scope">
-              <el-form-item
-                :key="
-                  'peopleTable.' + scope.$index + '.work_unit' + scope.row.id ||
-                    scope.row.webid
-                "
-                label=""
-                :prop="'peopleTable.' + scope.$index + '.work_unit'"
-                :rules="{
-                  required: true,
-                  message: '请输入',
-                  trigger: 'change'
-                }"
-              >
-                <el-input
-                  v-model.trim="scope.row.work_unit"
-                  placeholder="请输入内容"
-                />
-              </el-form-item>
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="work_address" label="工作地址" align="center">
-            <template slot-scope="scope">
-              <el-form-item
-                :key="
-                  'peopleTable.' +
-                    scope.$index +
-                    '.work_address' +
-                    scope.row.id || scope.row.webid
-                "
-                label=""
-                :prop="'peopleTable.' + scope.$index + '.work_address'"
-                :rules="{
-                  required: true,
-                  message: '请输入',
-                  trigger: 'change'
-                }"
-              >
-                <el-input
-                  v-model.trim="scope.row.work_address"
-                  placeholder="请输入内容"
-                />
-              </el-form-item>
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="create_time" label="入场时间" align="center">
-            <template slot-scope="scope">
-              <el-form-item
-                :key="
-                  'peopleTable.' +
-                    scope.$index +
-                    '.create_time' +
-                    scope.row.id || scope.row.webid
-                "
-                label=""
-                :prop="'peopleTable.' + scope.$index + '.create_time'"
+                :prop="'peopleTable.' + scope.$index + '.start_time'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -169,7 +96,7 @@
                 }"
               >
                 <el-date-picker
-                  v-model="scope.row.create_time"
+                  v-model.trim="scope.row.start_time"
                   type="datetime"
                   class="w100p"
                   value-format="yyyy-MM-dd HH:mm:ss"
@@ -179,44 +106,45 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="operating_post" label="职位" align="center">
+          <el-table-column prop="end_time" label="离开时间" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'peopleTable.' +
-                    scope.$index +
-                    '.operating_post' +
-                    scope.row.id || scope.row.webid
+                  'peopleTable.' + scope.$index + '.end_time' + scope.row.id ||
+                    scope.row.webid
                 "
                 label=""
-                :prop="'peopleTable.' + scope.$index + '.operating_post'"
+                :prop="'peopleTable.' + scope.$index + '.end_time'"
                 :rules="{
                   required: true,
                   message: '请输入',
                   trigger: 'change'
                 }"
               >
-                <el-input
-                  v-model.trim="scope.row.operating_post"
-                  placeholder="请输入内容"
+                <el-date-picker
+                  v-model.trim="scope.row.end_time"
+                  type="datetime"
+                  class="w100p"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="请输入"
                 />
               </el-form-item>
             </template>
           </el-table-column>
 
           <el-table-column
-            prop="movement"
-            label="14天内行动轨迹"
+            prop="operate_content"
+            label="操作内容"
             align="center"
           >
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'peopleTable.' + scope.$index + '.movement' + scope.row.id ||
+                  'peopleTable.' + scope.$index + '.operate_content' + scope.row.id ||
                     scope.row.webid
                 "
                 label=""
-                :prop="'peopleTable.' + scope.$index + '.movement'"
+                :prop="'peopleTable.' + scope.$index + '.operate_content'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -224,7 +152,7 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.movement"
+                  v-model.trim="scope.row.operate_content"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -426,9 +354,9 @@ export default {
     this.showTypeParams = {
       1: {
         key: 'peopleTable',
-        add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_JOIN_PEOPLE`,
-        update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_JOIN_PEOPLE/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_JOIN_PEOPLE/${this.id}`
+        add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_APPOINTMENT_PEOPLE`,
+        update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_APPOINTMENT_PEOPLE/${this.id}`,
+        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_APPOINTMENT_PEOPLE/${this.id}`
       },
       2: {
         key: 'filesTable',
@@ -455,13 +383,13 @@ export default {
           this.addPeopleTableRow('peopleTable')
           break
         case '导入人员登记':
-          this.openImportTable({ tplUrl: 'template/展厅预约人员登记模板.xls', tplName: '展厅预约人员登记模板' })
+          this.openImportTable({ tplUrl: 'template/展厅预约人员登记模板.xls' })
           break
         case '添加持续跟踪':
           this.addPeopleTableRow('followTable')
           break
         case '导入持续跟踪':
-          this.openImportTable({ tplUrl: 'template/展厅预约持续跟踪.xls', tplName: '展厅预约持续跟踪' })
+          this.openImportTable({ tplUrl: 'template/展厅预约持续跟踪.xls' })
           break
         default:
           break
@@ -540,15 +468,15 @@ export default {
           const params = JSON.parse(JSON.stringify(list))
           const paramsList = {
             1: {
-              exhibition_hall_id: this.id,
+              appointment_id: this.id,
               join_people_list: params
             },
             2: {
-              exhibition_hall_id: this.id,
+              appointment_id: this.id,
               resource_path_list: params.map(item => item.url)
             },
             3: {
-              exhibition_hall_id: this.id,
+              appointment_id: this.id,
               return_visit_list: params
             }
           }
@@ -584,13 +512,10 @@ export default {
           this.form.peopleTable.push({
             webid: this.guid(),
             name: '',
-            code: '',
-            phone_number: '',
-            work_unit: '',
-            work_address: '',
-            operating_post: '',
-            movement: '',
-            create_time: ''
+            org: '',
+            start_time: '',
+            end_time: '',
+            operate_content: ''
           })
           break
         case 'followTable':
@@ -605,12 +530,11 @@ export default {
           break
       }
     },
-    openImportTable({ tplUrl, tplName }) {
+    openImportTable({ tplUrl }) {
       if (!tplUrl) return
       this.$openLayer({
         props: {
-          tplUrl,
-          tplName
+          tplUrl: tplUrl
         },
         content: () => import('@/components/cube-xlsx2json/index.vue'),
         // 弹窗属性设置
@@ -625,44 +549,6 @@ export default {
           callBack: table => {
             // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
             console.log(table)
-            const { showType } = this
-            const request = this.showTypeParams[showType]
-            const list = this.form[request.key]
-            switch (showType) {
-              case 1:
-                if (Array.isArray(table) && table.length) {
-                  for (const item of table) {
-                    const create_time = this.$dayjs(item.create_time).isValid() ? this.$dayjs(item.create_time).format('yyyy-MM-dd HH:mm:ss') : null
-                    list.push({
-                      webid: this.guid(),
-                      name: item.name,
-                      code: item.code,
-                      phone_number: item.phone_number,
-                      work_unit: item.work_unit,
-                      work_address: item.work_address,
-                      operating_post: item.operating_post,
-                      movement: item.movement,
-                      create_time: create_time
-                    })
-                  }
-                }
-                break
-              case 3:
-                if (Array.isArray(table) && table.length) {
-                  for (const item of table) {
-                    const return_visit_time = this.$dayjs(item.return_visit_time).isValid() ? this.$dayjs(item.return_visit_time).format('yyyy-MM-dd HH:mm:ss') : null
-                    list.push({
-                      webid: this.guid(),
-                      return_visit_time: return_visit_time,
-                      return_visit_type: item.return_visit_type,
-                      feedback: item.feedback
-                    })
-                  }
-                }
-                break
-              default:
-                break
-            }
           }
         }
       })

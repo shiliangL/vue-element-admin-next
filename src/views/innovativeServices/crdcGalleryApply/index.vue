@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-17 15:01:53
+ * @LastEditTime: 2022-01-20 19:06:45
  * @LastEditors: Do not edit
  * @Description: 研发服务-实验室预约
 -->
@@ -20,7 +20,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT`,
         search: {
           data: [
             [
@@ -52,9 +52,7 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
-            { label: '预约单位', key: 'department' },
-            { label: '所属行业', key: 'xxxxxx' },
-            { label: '所在区域', key: 'xxxxxx' },
+            { label: '预约单位', key: 'enterprise_name' },
             {
               label: '预约时间',
               key: 'start_time',
@@ -70,12 +68,23 @@ export default {
                 )
               }
             },
-            // { label: '开始时间', key: 'start_time' },
-            // { label: '结束时间', key: 'end_time' },
-            { label: '预约内容', key: 'detail' },
-            { label: '预约人数', key: 'people' },
+            { label: '是否是合作伙伴', key: 'is_cooperative',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return (
+                  <span>
+                    { row.is_cooperative ? '是' : '否' }
+                  </span>
+                )
+              }
+            },
+            { label: '所属行业', key: 'domain_name' },
+            { label: '所在区域', key: 'city_area_name' },
+            { label: '预约内容', key: 'content' },
+            { label: '预约人数', key: 'number' },
             {
               label: '操作',
+              width: 240,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -94,7 +103,20 @@ export default {
                       <i class='el-icon-edit'></i>
                       编辑
                     </div>
+                    <el-dropdown
+                      trigger='click'
+                      onCommand={(e, v) => this.handlerClickDropdown(e, v, row)}
+                    >
+                      <span class='btn-text' style='font-size: 12px;'>
+                        更多操作
+                        <i class='el-icon-arrow-down el-icon--right'></i>
+                      </span>
+                      <el-dropdown-menu slot='dropdown'>
+                        <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
                   </div>
+                // <el-dropdown-item type='2'> 补充测试报告 </el-dropdown-item>
                 )
               }
             }
@@ -143,7 +165,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIX}/LAB_APPOINTMENT/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {
@@ -156,6 +178,37 @@ export default {
           })
         })
         .catch(() => {})
+    },
+    handlerClickDropdown(e, v, row) {
+      const { id } = row
+      const { type } = v.$attrs
+      const title = {
+        1: '补充人员登记',
+        2: '补充测试报告'
+      }
+      this.$openLayer({
+        props: {
+          id,
+          type: (type * 1),
+          showType: (type * 1)
+        },
+        // 弹窗内嵌套组件
+        content: () => import('./addMore.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          width: '80%',
+          title: title[type],
+          maskClosable: false,
+          fullscreen: true
+        },
+        // 事件回调
+        methods: {
+          refresh: () => {
+            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
+          }
+        }
+      })
     }
   }
 }
