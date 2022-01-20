@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-14 11:15:01
+ * @LastEditTime: 2022-01-20 11:48:07
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -23,7 +23,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     if (store.getters.token) {
       config.headers['X-Token'] = getToken()
     }

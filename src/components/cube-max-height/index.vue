@@ -1,29 +1,22 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 15:46:51
- * @LastEditTime: 2021-12-27 17:59:30
+ * @LastEditTime: 2022-01-20 09:59:11
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
   <div class="cubeMaxHeight">
-    <slot
-      ref="main"
-      name="main"
-    >
-      <div> main </div>
+    <slot ref="main" name="main">
+      <div>main</div>
     </slot>
-    <slot
-      ref="foot"
-      name="foot"
-    >
-      <div> foot </div>
+    <slot ref="foot" name="foot">
+      <div>foot</div>
     </slot>
   </div>
 </template>
 
 <script>
-
 import { debounce } from 'throttle-debounce'
 
 export default {
@@ -31,6 +24,10 @@ export default {
   props: {
     prefix: {
       // 余量fix一些场景一下需要减掉部分的高度
+      type: Number,
+      default: () => 40
+    },
+    height: {
       type: Number,
       default: () => 40
     }
@@ -56,11 +53,11 @@ export default {
       let maxHeight = Math.abs(innerHieght - mainTop - this.prefix)
       if (foot) {
         const footHeight = foot.elm.offsetHeight
-        maxHeight = Math.abs(innerHieght - footHeight - mainTop - this.prefix) || 0
+        maxHeight =
+          Math.abs(innerHieght - footHeight - mainTop - this.prefix) || 0
       }
       this.$emit('update:height', maxHeight)
     }
   }
 }
 </script>
-
