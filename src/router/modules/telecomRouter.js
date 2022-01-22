@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-22 14:31:52
+ * @LastEditTime: 2022-01-22 14:41:42
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -72,16 +72,16 @@ const chartsRouter = [
         meta: { title: '数据字典配置', noCache: false }
       },
       {
-        path: 'laboratoryBoot',
-        component: () => import('@/views/basicData/laboratoryBoot'),
-        name: 'laboratoryBoot',
-        meta: { title: '实验室仪器管理', noCache: false }
-      },
-      {
         path: 'solutionCalss',
         component: () => import('@/views/basicData/solutionCalss'),
         name: 'solutionCalss',
         meta: { title: '解决方案分类', noCache: false }
+      },
+      {
+        path: 'laboratoryBoot',
+        component: () => import('@/views/basicData/laboratoryBoot'),
+        name: 'laboratoryBoot',
+        meta: { title: '实验室仪器管理', noCache: false }
       }
     ]
   },
