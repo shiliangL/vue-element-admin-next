@@ -1,112 +1,21 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-20 14:49:22
+ * @LastEditTime: 2022-01-22 10:35:52
  * @LastEditors: Do not edit
- * @Description: 解决方案分类
+ * @Description: 数据字典配置
 -->
 
 <template>
   <el-form ref="form" :model="form" class="form" label-width="96px">
     <div class="base-info">
       <el-row>
-        <el-col :span="12">
-          <el-form-item
-            label="设备名称"
-            prop="equipment_id"
-            :rules="rules.input"
-          >
-            <CuebSelectList
-              v-model="form.equipment_id"
-              :config="{
-                keyCode: 'id',
-                keyName: 'name',
-                url: '/EQUIPMENT_MANAGEMENT/EQUIPMENT'
-              }"
-            >
-              <template slot-scope="{ row }">
-                <div class="flex-box">
-                  <div class="flex-box-item">
-                    名称：{{ row.name }}
-                  </div>
-                  <div class="flex-box-item">
-                    编码：{{ row.code }}
-                  </div>
-                </div>
-              </template>
-            </CuebSelectList>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="维修状态" prop="maintain_state">
-            <el-radio-group v-model="form.maintain_state">
-              <el-radio :label="2">未修复</el-radio>
-              <el-radio :label="1">已修复</el-radio>
-            </el-radio-group>
+        <el-col :span="24">
+          <el-form-item label="名称" prop="dict_name" :rules="rules.input">
+            <el-input v-model.trim="form.dict_name" placeholder="请输入" />
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="故障时间" prop="fault_time">
-            <el-date-picker
-              v-model="form.fault_time"
-              class="w100p"
-              value-format="yyyy-MM-dd"
-              placeholder="请输入"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="维修工程师" prop="maintain_engineer_name">
-            <el-input v-model="form.maintain_engineer_name" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="维修时间" prop="maintain_time">
-            <el-date-picker
-              v-model="form.maintain_time"
-              class="w100p"
-              value-format="yyyy-MM-dd"
-              placeholder="请输入"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="配件更换" prop="mounting_change">
-            <el-input v-model="form.mounting_change" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="故障原因" prop="fault_cause">
-            <el-input
-              v-model="form.fault_cause"
-              placeholder="请输入"
-              maxlength="150"
-              type="textarea"
-              :autosize="{ minRows: 3, maxRows: 10 }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="维修结论" prop="maintain_report">
-            <el-input
-              v-model="form.maintain_report"
-              placeholder="请输入"
-              maxlength="150"
-              type="textarea"
-              :autosize="{ minRows: 3, maxRows: 10 }"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
       <div slot="footer" class="dialog-footer">
         <el-button @click="close">取 消</el-button>
         <el-button
@@ -121,12 +30,9 @@
 
 <script>
 import rules from '@/mixProps/rules.js'
-import CuebSelectList from '@/components/cueb-select-list'
 
 export default {
-  components: {
-    CuebSelectList
-  },
+  components: {},
   mixins: [rules],
   props: {
     id: {
@@ -136,6 +42,10 @@ export default {
     type: {
       type: [String, Number],
       default: () => ''
+    },
+    dictType: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
@@ -144,14 +54,9 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        equipment_id: '',
-        fault_time: '', // 故障时间
-        fault_cause: '', // 故障原因
-        maintain_time: '', // 维修时间
-        maintain_state: 2, // 维修状态 1:已修复 2：未修复
-        maintain_report: '', // 维修结论
-        mounting_change: '', // 配件更换
-        maintain_engineer_name: '' // 维修工程师
+        'dict_type': '',
+        'dict_name': '',
+        'dict_value': ''
       }
     }
   },
@@ -164,21 +69,19 @@ export default {
     close() {
       this.$emit('close')
     },
-    cuebSelectChange(row) {
-      console.log(row)
-      // row ? this.form.code = row.code : this.form.code = null
-    },
-    fetchDetail(id) {
+    fetchDetail() {
+      const { dictType, id } = this
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE?id=${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/ShenZhenTelecom/DICT_DATA?dict_type=${dictType}&id=${id}`,
         params: {}
       }).then(res => {
         const { Success, Message } = res
         if (Success) {
           const { Data } = Message || {}
           if (Array.isArray(Data) && Data.length) {
-            Object.assign(this.form, Data[0])
+            const form = Data[0] || {}
+            Object.assign(this.form, form)
           }
         }
       })
@@ -188,26 +91,30 @@ export default {
         if (valid) {
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(this.form))
-          const { type } = this // 如果 type 为true 则为编辑
+          const { type, dictType } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE/${this.id}`
-              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE`,
+              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/ShenZhenTelecom/DICT_DATA?dict_type=${dictType}&id=${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/ShenZhenTelecom/DICT_DATA?dict_type=${dictType}&id=${this.id}`,
             data: stringify({ ...params })
-          }).then(res => {
-            const { Success } = res
-            if (Success) {
-              this.submitLoading = false
-              this.$emit('refresh')
-              this.$emit('close')
-              this.$message.success('操作成功')
-            } else {
-              this.$message.error('操作失败')
-              this.submitLoading = false
-            }
           })
+            .then(res => {
+              const { Success } = res
+              if (Success) {
+                this.submitLoading = false
+                this.$emit('refresh')
+                this.$emit('close')
+                this.$message.success('操作成功')
+              } else {
+                this.$message.error('操作失败')
+                this.submitLoading = false
+              }
+            })
+            .catch(() => {
+              this.submitLoading = false
+            })
         } else {
           this.$message({ message: '请核实表单', type: 'warning' })
         }
@@ -218,14 +125,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.flex-box {
+.base-info {
+  min-height: 120px;
   display: flex;
-  align-items: center;
-  .flex-box-item {
+  flex-direction: column;
+  .el-row {
     flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 }
 </style>

@@ -1,7 +1,10 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2022-01-06 21:00:38
+ * @LastEditTime: 2022-01-22 14:26:02
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <template>
-  <div style="padding:30px;">
-    <el-alert :closable="false" title="menu 1">
-      <router-view />
-    </el-alert>
-  </div>
+  <router-view />
 </template>

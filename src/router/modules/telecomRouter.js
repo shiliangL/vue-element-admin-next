@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-21 14:37:51
+ * @LastEditTime: 2022-01-22 14:31:52
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -108,12 +108,6 @@ const chartsRouter = [
         name: 'devicemhfix',
         meta: { title: '设备维修', noCache: false }
       },
-      // {
-      //   path: 'deviceOperation',
-      //   component: () => import('@/views/internet/deviceOperation'),
-      //   name: 'deviceOperation',
-      //   meta: { title: ' 设备运行状态', noCache: false }
-      // },
       {
         path: 'peoplemh',
         component: () => import('@/views/internet/peoplemh'),
@@ -146,17 +140,57 @@ const chartsRouter = [
     },
     children: [
       {
-        path: 'galleryApply',
-        component: () => import('@/views/innovativeServices/galleryApply'),
-        name: 'GalleryApply',
-        meta: { title: '展厅服务', noCache: false }
+        path: 'exhibition',
+        name: 'exhibition',
+        meta: { title: '展厅管理', noCache: false },
+        component: () => import('@/views/nested/menu1/index'),
+        children: [
+          {
+            path: 'galleryApply',
+            component: () => import('@/views/innovativeServices/galleryApply'),
+            name: 'GalleryApply',
+            meta: { title: '展厅预约', noCache: false }
+          },
+          {
+            path: 'partners',
+            component: () => import('@/views/ecologicalResources/partners'),
+            name: 'Partners',
+            meta: { title: '合作伙伴', noCache: false }
+          }
+        ]
       },
       {
-        path: 'crdcGalleryApply',
-        component: () => import('@/views/innovativeServices/crdcGalleryApply'),
-        name: 'CrdcGalleryApply',
-        meta: { title: '研发服务', noCache: false }
+        path: 'laboratory',
+        name: 'laboratory',
+        meta: { title: '实验室管理', noCache: false },
+        component: () => import('@/views/nested/menu1/index'),
+        children: [
+          {
+            path: 'crdcGalleryApply',
+            component: () => import('@/views/innovativeServices/crdcGalleryApply'),
+            name: 'CrdcGalleryApply',
+            meta: { title: '实验室预约', noCache: false }
+          },
+          {
+            path: 'laboratoryBoot',
+            component: () => import('@/views/basicData/laboratoryBoot'),
+            name: 'laboratoryBoot',
+            meta: { title: '实验室仪器管理', noCache: false }
+          }
+        ]
       },
+      // {
+      //   path: 'galleryApply',
+      //   component: () => import('@/views/innovativeServices/galleryApply'),
+      //   name: 'GalleryApply',
+      //   meta: { title: '展厅服务', noCache: false }
+      // },
+      // {
+      //   path: 'crdcGalleryApply',
+      //   component: () => import('@/views/innovativeServices/crdcGalleryApply'),
+      //   name: 'CrdcGalleryApply',
+      //   meta: { title: '研发服务', noCache: false }
+      // },
       {
         path: 'trainingServices',
         component: () => import('@/views/innovativeServices/trainingServices'),
