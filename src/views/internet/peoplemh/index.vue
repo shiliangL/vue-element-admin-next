@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-19 15:29:38
+ * @LastEditTime: 2022-01-22 14:51:19
  * @LastEditors: Do not edit
  * @Description: 人员管理
 -->
@@ -51,24 +51,29 @@ export default {
             { label: '人员名称', key: 'name' },
             // { label: '照片', key: 'photo_path' },
             { label: '身份证', key: 'code' },
-            { label: '性别', key: 'gender' },
+            { label: '性别', key: 'gender_name' },
             { label: '出生日期', key: 'birthday' },
             { label: '手机号码', key: 'phone_number' },
-            { label: '组织机构', key: 'org' },
+            { label: '组织机构', key: 'org_name' },
             { label: '国籍', key: 'country' },
             { label: '民族', key: 'nationality' },
             { label: '籍贯', key: 'native_place' },
-            { label: '本地户籍', key: 'is_local_register' },
-            { label: '户籍类型', key: 'register_type' },
+            { label: '本地户籍', key: 'is_local_register',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return <span> {row.is_local_register ? '是' : '否'} </span>
+              }
+            },
+            { label: '户籍类型', key: 'register_name' },
             { label: '户籍地址', key: 'register_address' },
-            { label: '政治面貌', key: 'politics_status' },
-            { label: '婚姻状况', key: 'marital_status' },
-            { label: '文化程度', key: 'standard_culture' },
+            { label: '政治面貌', key: 'politics_name' },
+            { label: '婚姻状况', key: 'marital_name' },
+            { label: '文化程度', key: 'standard_culture_name' },
             { label: '毕业时间', key: 'graduate_time' },
             { label: '毕业院校', key: 'graduate_school' },
             { label: '从事行业', key: 'work_industry' },
             { label: '工作单位 ', key: 'work_unit' },
-            { label: '工作岗位', key: 'operating_post' },
+            { label: '工作岗位', key: 'operating_name' },
             { label: '工作地址', key: 'work_address' },
             { label: '职称', key: 'technical_post' },
             { label: '居住地址', key: 'residential_address' },
