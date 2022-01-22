@@ -26,8 +26,8 @@
               v-model="item.value"
               :class="item.class?item.class:'w90'"
               :size="size"
-              clearable
               filterable
+              :clearable="item.clearable"
               :placeholder="item.placeholder|| '请选择'"
               :multiple="item.multiple"
               collapse-tags

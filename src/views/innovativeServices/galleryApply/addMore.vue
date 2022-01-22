@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-20 19:53:25
+ * @LastEditTime: 2022-01-21 11:43:02
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -428,19 +428,19 @@ export default {
         key: 'peopleTable',
         add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_JOIN_PEOPLE`,
         update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_JOIN_PEOPLE/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_JOIN_PEOPLE/${this.id}`
+        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/EXHIBITION_HALL_PEOPLE?exhibition_hall_id=${this.id}`
       },
       2: {
         key: 'filesTable',
         add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RESOURCE_PATH`,
         update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RESOURCE_PATH/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RESOURCE_PATH/${this.id}`
+        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/RESOURCE_PATH?exhibition_hall_id=${this.id}`
       },
       3: {
         key: 'followTable',
         add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RETURN_VISIT`,
         update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RETURN_VISIT/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RETURN_VISIT/${this.id}`
+        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/KEEP_TRACKING?exhibition_hall_id=${this.id}`
       }
     }
     this.fetchDetail()

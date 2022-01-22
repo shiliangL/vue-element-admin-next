@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-20 19:54:29
+ * @LastEditTime: 2022-01-22 14:12:59
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -30,31 +30,8 @@
           :data="form.peopleTable"
           border
           style="width: 100%"
-          :height="tableMaxHight"
+          :max-height="tableMaxHight"
         >
-          <el-table-column prop="name" label="名称" align="center">
-            <template slot-scope="scope">
-              <el-form-item
-                :key="
-                  'peopleTable.' + scope.$index + '.name' + scope.row.id ||
-                    scope.row.webid
-                "
-                label=""
-                :prop="'peopleTable.' + scope.$index + '.name'"
-                :rules="{
-                  required: true,
-                  message: '请输入',
-                  trigger: 'change'
-                }"
-              >
-                <el-input
-                  v-model.trim="scope.row.name"
-                  placeholder="请输入内容"
-                />
-              </el-form-item>
-            </template>
-          </el-table-column>
-
           <el-table-column prop="org" label="所属单位" align="center">
             <template slot-scope="scope">
               <el-form-item
@@ -72,6 +49,29 @@
               >
                 <el-input
                   v-model.trim="scope.row.org"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="name" label="名称" align="center">
+            <template slot-scope="scope">
+              <el-form-item
+                :key="
+                  'peopleTable.' + scope.$index + '.name' + scope.row.id ||
+                    scope.row.webid
+                "
+                label=""
+                :prop="'peopleTable.' + scope.$index + '.name'"
+                :rules="{
+                  required: true,
+                  message: '请输入',
+                  trigger: 'change'
+                }"
+              >
+                <el-input
+                  v-model.trim="scope.row.name"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -140,8 +140,10 @@
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'peopleTable.' + scope.$index + '.operate_content' + scope.row.id ||
-                    scope.row.webid
+                  'peopleTable.' +
+                    scope.$index +
+                    '.operate_content' +
+                    scope.row.id || scope.row.webid
                 "
                 label=""
                 :prop="'peopleTable.' + scope.$index + '.operate_content'"
@@ -162,7 +164,7 @@
           <el-table-column prop="time" label="操作" align="center" width="90">
             <template slot-scope="scope">
               <el-button
-                v-if="form.peopleTable.length !==1"
+                v-if="form.peopleTable.length !== 1"
                 size="mini"
                 style="margin-bottom: 18px;"
                 type="danger"
@@ -174,37 +176,26 @@
           </el-table-column>
         </el-table>
       </div>
-
+      <!-- 附件+测试仪器 -->
       <div v-if="showType === 2" class="content-text-bock">
-        <CubeUploadFile accept=".jpg, .jpeg, .png" :file-list.sync="form.filesTable" />
-      </div>
-
-      <div v-if="showType === 3" class="content-text-bock">
+        <div class="label-title">
+          <div class="el-form-item__label">仪器测试情况</div>
+        </div>
         <div class="flex-bar-right">
-          <el-dropdown @command="command">
-            <el-button type="primary">
-              更多菜单<i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                command="添加持续跟踪"
-              >添加数据</el-dropdown-item>
-              <el-dropdown-item
-                command="导入持续跟踪"
-              >数据导入</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <el-button type="primary" @click="addFollowTable">
+            添加数据
+          </el-button>
         </div>
 
         <el-table
           :data="form.followTable"
           border
           style="width: 100%"
-          :height="tableMaxHight"
+          :max-height="tableMaxHight"
         >
           <el-table-column
             prop="return_visit_time"
-            label="回访时间"
+            label="仪器名称"
             align="center"
           >
             <template slot-scope="scope">
@@ -212,31 +203,46 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_time' +
+                    '.return_visit_type' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_time'"
+                :prop="'followTable.' + scope.$index + '.return_visit_type'"
                 :rules="{
                   required: true,
                   message: '请输入',
                   trigger: 'change'
                 }"
               >
-                <el-date-picker
-                  v-model="scope.row.return_visit_time"
-                  type="datetime"
-                  class="w100p"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  placeholder="请输入"
-                />
+                <el-select
+                  v-model="scope.row.return_visit_type"
+                  placeholder="请选择"
+                  @change="selectRowChange($event, scope.row)"
+                >
+                  <el-option
+                    v-for="(item, index) in equipmentOption"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  />
+                </el-select>
               </el-form-item>
             </template>
           </el-table-column>
 
           <el-table-column
+            prop="return_visit_time"
+            label="仪器型号"
+            align="center"
+          />
+          <el-table-column
+            prop="return_visit_time"
+            label="厂家"
+            align="center"
+          />
+          <el-table-column
             prop="return_visit_type"
-            label="回访形式"
+            label="测试用例"
             align="center"
           >
             <template slot-scope="scope">
@@ -263,15 +269,21 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="feedback" label="回访反馈" align="center">
+          <el-table-column
+            prop="return_visit_type"
+            label="通用性能"
+            align="center"
+          >
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'followTable.' + scope.$index + '.feedback' + scope.row.id ||
-                    scope.row.webid
+                  'followTable.' +
+                    scope.$index +
+                    '.return_visit_type' +
+                    scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.feedback'"
+                :prop="'followTable.' + scope.$index + '.return_visit_type'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -279,8 +291,123 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.feedback"
-                  type="textarea"
+                  v-model.trim="scope.row.return_visit_type"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="return_visit_type"
+            label="射频性能"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-form-item
+                :key="
+                  'followTable.' +
+                    scope.$index +
+                    '.return_visit_type' +
+                    scope.row.id || scope.row.webid
+                "
+                label=""
+                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :rules="{
+                  required: true,
+                  message: '请输入',
+                  trigger: 'change'
+                }"
+              >
+                <el-input
+                  v-model.trim="scope.row.return_visit_type"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="return_visit_type"
+            label="功耗性能"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-form-item
+                :key="
+                  'followTable.' +
+                    scope.$index +
+                    '.return_visit_type' +
+                    scope.row.id || scope.row.webid
+                "
+                label=""
+                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :rules="{
+                  required: true,
+                  message: '请输入',
+                  trigger: 'change'
+                }"
+              >
+                <el-input
+                  v-model.trim="scope.row.return_visit_type"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="return_visit_type"
+            label="一致性"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-form-item
+                :key="
+                  'followTable.' +
+                    scope.$index +
+                    '.return_visit_type' +
+                    scope.row.id || scope.row.webid
+                "
+                label=""
+                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :rules="{
+                  required: true,
+                  message: '请输入',
+                  trigger: 'change'
+                }"
+              >
+                <el-input
+                  v-model.trim="scope.row.return_visit_type"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="return_visit_type"
+            label="测试结果"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-form-item
+                :key="
+                  'followTable.' +
+                    scope.$index +
+                    '.return_visit_type' +
+                    scope.row.id || scope.row.webid
+                "
+                label=""
+                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :rules="{
+                  required: true,
+                  message: '请输入',
+                  trigger: 'change'
+                }"
+              >
+                <el-input
+                  v-model.trim="scope.row.return_visit_type"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -290,7 +417,7 @@
           <el-table-column prop="time" label="操作" align="center" width="90">
             <template slot-scope="scope">
               <el-button
-                v-if="form.followTable.length !==1"
+                v-if="form.followTable.length !== 1"
                 size="mini"
                 style="margin-bottom: 18px;"
                 type="danger"
@@ -301,6 +428,14 @@
             </template>
           </el-table-column>
         </el-table>
+
+        <div class="label-title">
+          <div class="el-form-item__label">测试报告</div>
+        </div>
+        <CubeUploadFile
+          accept=".jpg, .jpeg, .png"
+          :file-list.sync="form.filesTable"
+        />
       </div>
 
       <div slot="footer" class="dialog-footer">
@@ -342,6 +477,7 @@ export default {
       fetchLoading: false,
       submitLoading: false,
       visible: false,
+      equipmentOption: [],
       form: {
         peopleTable: [],
         filesTable: [],
@@ -356,7 +492,7 @@ export default {
         key: 'peopleTable',
         add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_APPOINTMENT_PEOPLE`,
         update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_APPOINTMENT_PEOPLE/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_APPOINTMENT_PEOPLE/${this.id}`
+        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT_PEOPLE?appointment_id=${this.id}`
       },
       2: {
         key: 'filesTable',
@@ -372,6 +508,8 @@ export default {
       }
     }
     this.fetchDetail()
+    // 获取预约相关仪器
+    this.fetchDetai2evice()
   },
   methods: {
     close() {
@@ -394,6 +532,9 @@ export default {
         default:
           break
       }
+    },
+    addFollowTable() {
+      this.addPeopleTableRow('followTable')
     },
     guid() {
       function s4() {
@@ -450,6 +591,29 @@ export default {
           }
         }
       })
+    },
+    fetchDetai2evice() {
+      const { id } = this
+      if (!id) return
+      this.$request({
+        method: 'get',
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPARATUE_BY_APPOINTMENT_ID?appointment_id=${id}`,
+        params: {}
+      })
+        .then(res => {
+          const { Success, Message } = res
+          if (Success) {
+            const { Data } = Message || {}
+            if (Array.isArray(Data) && Data.length) {
+              this.equipmentOption = Data
+            }
+          }
+        })
+        .catch(() => {})
+    },
+    // 选择仪器改变的时候带出其他相关信息
+    selectRowChange(value, row) {
+      console.log(value, row, '选择仪器改变的时候带出其他相关信息')
     },
     removeTableList(index, row, table) {
       table.splice(index, 1)

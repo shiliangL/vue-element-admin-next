@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-20 14:57:52
+ * @LastEditTime: 2022-01-21 14:37:51
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -65,6 +65,12 @@ const chartsRouter = [
       icon: 'chart'
     },
     children: [
+      {
+        path: 'dictionaryConfig',
+        component: () => import('@/views/basicData/dictionaryConfig'),
+        name: 'dictionaryConfig',
+        meta: { title: '数据字典配置', noCache: false }
+      },
       {
         path: 'laboratoryBoot',
         component: () => import('@/views/basicData/laboratoryBoot'),

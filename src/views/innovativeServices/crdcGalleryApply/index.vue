@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-20 19:06:45
+ * @LastEditTime: 2022-01-22 10:51:11
  * @LastEditors: Do not edit
  * @Description: 研发服务-实验室预约
 -->
@@ -113,6 +113,7 @@ export default {
                       </span>
                       <el-dropdown-menu slot='dropdown'>
                         <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
+                        <el-dropdown-item type='2'> 补充测试报告 </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
