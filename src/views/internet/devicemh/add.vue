@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-20 15:55:47
+ * @LastEditTime: 2022-01-24 13:38:22
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -70,7 +70,15 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="使用区域" prop="area" :rules="rules.input">
-            <el-input v-model="form.area" placeholder="请输入" />
+            <!-- <el-input v-model="form.area" placeholder="请输入" /> -->
+            <CuebSelectList
+              v-model="form.area"
+              :config="{
+                keyCode: 'id',
+                keyName: 'name',
+                url: '/EQUIPMENT_MANAGEMENT/EQUIPMENT_AREA'
+              }"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">

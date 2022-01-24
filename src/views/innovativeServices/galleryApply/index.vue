@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-20 18:48:15
+ * @LastEditTime: 2022-01-24 11:51:50
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -81,7 +81,7 @@ export default {
             { label: '备注', key: 'remark' },
             {
               label: '操作',
-              width: 240,
+              width: 320,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -100,6 +100,10 @@ export default {
                       <i class='el-icon-edit'></i>
                       编辑
                     </div>
+                    <div class='btn-text'>
+                      <i class='el-icon-view'></i>
+                      查看详情
+                    </div>
                     <el-dropdown
                       trigger='click'
                       onCommand={(e, v) => this.handlerClickDropdown(e, v, row)}
@@ -109,9 +113,18 @@ export default {
                         <i class='el-icon-arrow-down el-icon--right'></i>
                       </span>
                       <el-dropdown-menu slot='dropdown'>
-                        <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
-                        <el-dropdown-item type='2'> 补充参观资料 </el-dropdown-item>
-                        <el-dropdown-item type='3'> 补充持续跟踪 </el-dropdown-item>
+                        <el-dropdown-item type='1'>
+                          {' '}
+                          补充人员登记{' '}
+                        </el-dropdown-item>
+                        <el-dropdown-item type='2'>
+                          {' '}
+                          补充参观资料{' '}
+                        </el-dropdown-item>
+                        <el-dropdown-item type='3'>
+                          {' '}
+                          补充持续跟踪{' '}
+                        </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
@@ -139,8 +152,8 @@ export default {
       this.$openLayer({
         props: {
           id,
-          type: (type * 1),
-          showType: (type * 1)
+          type: type * 1,
+          showType: type * 1
         },
         // 弹窗内嵌套组件
         content: () => import('./addMore.vue'),

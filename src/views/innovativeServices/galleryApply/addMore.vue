@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-21 11:43:02
+ * @LastEditTime: 2022-01-24 10:34:05
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -422,7 +422,6 @@ export default {
     }
   },
   created() {
-    console.log(this)
     this.showTypeParams = {
       1: {
         key: 'peopleTable',

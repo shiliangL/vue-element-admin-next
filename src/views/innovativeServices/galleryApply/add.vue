@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-19 17:42:42
+ * @LastEditTime: 2022-01-24 10:13:42
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -87,6 +87,7 @@
                 keyName: 'name',
                 url: '/COOPERATIVE_PARTNER/COOPERATIVE'
               }"
+              @select="cuebSelectChange"
             />
           </el-form-item>
         </el-col>
@@ -284,7 +285,13 @@ export default {
     close() {
       this.$emit('close')
     },
-
+    cuebSelectChange(row) {
+      if (row) {
+        this.form.enterprise_name = row.name
+      } else {
+        this.form.enterprise_name = ''
+      }
+    },
     fetchDetail(id) {
       this.fetchLoading = true
       this.$request({

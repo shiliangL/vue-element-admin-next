@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-22 14:12:59
+ * @LastEditTime: 2022-01-24 13:57:50
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -194,7 +194,7 @@
           :max-height="tableMaxHight"
         >
           <el-table-column
-            prop="return_visit_time"
+            prop="apparatus_id"
             label="仪器名称"
             align="center"
           >
@@ -203,11 +203,11 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.apparatus_id' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.apparatus_id'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -215,7 +215,7 @@
                 }"
               >
                 <el-select
-                  v-model="scope.row.return_visit_type"
+                  v-model="scope.row.apparatus_id"
                   placeholder="请选择"
                   @change="selectRowChange($event, scope.row)"
                 >
@@ -230,7 +230,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
+          <!-- <el-table-column
             prop="return_visit_time"
             label="仪器型号"
             align="center"
@@ -239,9 +239,9 @@
             prop="return_visit_time"
             label="厂家"
             align="center"
-          />
+          /> -->
           <el-table-column
-            prop="return_visit_type"
+            prop="test_case"
             label="测试用例"
             align="center"
           >
@@ -250,11 +250,11 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.test_case' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.test_case'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -262,7 +262,7 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.return_visit_type"
+                  v-model.trim="scope.row.test_case"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -270,7 +270,7 @@
           </el-table-column>
 
           <el-table-column
-            prop="return_visit_type"
+            prop="general_performance"
             label="通用性能"
             align="center"
           >
@@ -279,11 +279,11 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.general_performance' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.general_performance'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -291,7 +291,7 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.return_visit_type"
+                  v-model.trim="scope.row.general_performance"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -299,7 +299,7 @@
           </el-table-column>
 
           <el-table-column
-            prop="return_visit_type"
+            prop="shooting_performance"
             label="射频性能"
             align="center"
           >
@@ -308,11 +308,11 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.shooting_performance' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.shooting_performance'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -320,7 +320,7 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.return_visit_type"
+                  v-model.trim="scope.row.shooting_performance"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -328,7 +328,7 @@
           </el-table-column>
 
           <el-table-column
-            prop="return_visit_type"
+            prop="consumption_function"
             label="功耗性能"
             align="center"
           >
@@ -337,11 +337,11 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.consumption_function' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.consumption_function'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -349,7 +349,7 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.return_visit_type"
+                  v-model.trim="scope.row.consumption_function"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -357,7 +357,7 @@
           </el-table-column>
 
           <el-table-column
-            prop="return_visit_type"
+            prop="consistency"
             label="一致性"
             align="center"
           >
@@ -366,11 +366,11 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.consistency' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.consistency'"
                 :rules="{
                   required: true,
                   message: '请输入',
@@ -378,7 +378,7 @@
                 }"
               >
                 <el-input
-                  v-model.trim="scope.row.return_visit_type"
+                  v-model.trim="scope.row.consistency"
                   placeholder="请输入内容"
                 />
               </el-form-item>
@@ -386,7 +386,7 @@
           </el-table-column>
 
           <el-table-column
-            prop="return_visit_type"
+            prop="result"
             label="测试结果"
             align="center"
           >
@@ -395,20 +395,21 @@
                 :key="
                   'followTable.' +
                     scope.$index +
-                    '.return_visit_type' +
+                    '.result' +
                     scope.row.id || scope.row.webid
                 "
                 label=""
-                :prop="'followTable.' + scope.$index + '.return_visit_type'"
+                :prop="'followTable.' + scope.$index + '.result'"
                 :rules="{
                   required: true,
                   message: '请输入',
                   trigger: 'change'
                 }"
               >
-                <el-input
-                  v-model.trim="scope.row.return_visit_type"
-                  placeholder="请输入内容"
+                <el-switch
+                  v-model.trim="scope.row.result"
+                  active-text="通过"
+                  inactive-text="不通过"
                 />
               </el-form-item>
             </template>
@@ -486,7 +487,6 @@ export default {
     }
   },
   created() {
-    console.log(this)
     this.showTypeParams = {
       1: {
         key: 'peopleTable',
@@ -496,20 +496,23 @@ export default {
       },
       2: {
         key: 'filesTable',
-        add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RESOURCE_PATH`,
-        update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RESOURCE_PATH/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RESOURCE_PATH/${this.id}`
-      },
-      3: {
-        key: 'followTable',
-        add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RETURN_VISIT`,
-        update: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RETURN_VISIT/${this.id}`,
-        detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/BATCH_ADD_RETURN_VISIT/${this.id}`
+        add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_ADD_TEST`,
+        update: ``,
+        detail: ``
       }
     }
-    this.fetchDetail()
-    // 获取预约相关仪器
-    this.fetchDetai2evice()
+    switch (this.showType) {
+      case 1:
+        this.fetchDetail()
+        break
+      case 2:
+        // 获取预约相关仪器
+        this.fetchDetai2evice()
+        this.fetchTestData2FilesDetail()
+        break
+      default:
+        break
+    }
   },
   methods: {
     close() {
@@ -611,6 +614,40 @@ export default {
         })
         .catch(() => {})
     },
+    // 获取实验室测试数据 + 附件情况
+    fetchTestData2FilesDetail() {
+      this.$request({
+        method: 'get',
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/ATTACHMENT_PATH?appointment_id=${this.id}`,
+        params: {}
+      }).then(res => {
+        const { Success, Message } = res
+        if (Success) {
+          const { Data } = Message || {}
+          console.log(Data, '--附件情况--')
+          if (Array.isArray(Data) && Data.length) {
+            const files = []
+            for (const item of Data) {
+              files.push({ url: item, name: '测试报告.png' })
+            }
+            this.form.filesTable = files
+          }
+        }
+      })
+      this.$request({
+        method: 'get',
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/TEST_REPORT?appointment_id=${this.id}`,
+        params: {}
+      }).then(res => {
+        const { Success, Message } = res
+        if (Success) {
+          const { Data } = Message || {}
+          if (Array.isArray(Data)) {
+            this.form.followTable = Data
+          }
+        }
+      })
+    },
     // 选择仪器改变的时候带出其他相关信息
     selectRowChange(value, row) {
       console.log(value, row, '选择仪器改变的时候带出其他相关信息')
@@ -630,6 +667,8 @@ export default {
         if (valid) {
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(list))
+          const filesTable = JSON.parse(JSON.stringify(this.form.filesTable))
+          const followTable = JSON.parse(JSON.stringify(this.form.followTable))
           const paramsList = {
             1: {
               appointment_id: this.id,
@@ -637,11 +676,8 @@ export default {
             },
             2: {
               appointment_id: this.id,
-              resource_path_list: params.map(item => item.url)
-            },
-            3: {
-              appointment_id: this.id,
-              return_visit_list: params
+              test_list: followTable,
+              resource_path_list: filesTable.map(item => item.url)
             }
           }
           // const { stringify } = this.$qs
@@ -685,9 +721,13 @@ export default {
         case 'followTable':
           this.form.followTable.push({
             webid: this.guid(),
-            return_visit_time: '',
-            return_visit_type: '',
-            feedback: ''
+            'apparatus_id': '', //  仪器id,
+            'test_case': '',
+            'general_performance': '',
+            'shooting_performance': '',
+            'consumption_function': '',
+            'consistency': '',
+            'result': false
           })
           break
         default:

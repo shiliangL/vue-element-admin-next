@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-22 10:51:11
+ * @LastEditTime: 2022-01-24 14:04:07
  * @LastEditors: Do not edit
  * @Description: 研发服务-实验室预约
 -->
@@ -84,7 +84,7 @@ export default {
             { label: '预约人数', key: 'number' },
             {
               label: '操作',
-              width: 240,
+              width: 340,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -95,6 +95,10 @@ export default {
                     >
                       <i class='el-icon-delete'></i>
                       删除
+                    </div>
+                    <div class='btn-text'>
+                      <i class='el-icon-view'></i>
+                      查看详情
                     </div>
                     <div
                       class='btn-text'
