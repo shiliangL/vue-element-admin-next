@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-18 20:08:45
+ * @LastEditTime: 2022-01-24 16:33:06
  * @LastEditors: Do not edit
  * @Description: 解决方案
 -->
@@ -40,6 +40,11 @@ export default {
                 name: '新增',
                 action: () => this.openLayer({ type: 0 })
               }
+              // {
+              //   type: 'add',
+              //   name: 'PDF查看',
+              //   action: () => this.openLayer2x({ type: 0 })
+              // }
             ]
           ]
         },
@@ -53,6 +58,18 @@ export default {
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
             { label: '名称', key: 'name' },
+            {
+              label: '附件',
+              key: 'name',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return row.accessory_path ? (
+                  <a href={row.accessory_path} target='_blank'>
+                   附件
+                  </a>
+                ) : null
+              }
+            },
             {
               label: '类型',
               key: 'type'
@@ -113,10 +130,32 @@ export default {
         // 弹窗属性设置
         modalProps: {
           width: '640px',
-          customClass: 'fullscreen-flex',
           title: type ? '编辑解决方案' : '新增解决方案',
           maskClosable: false,
           fullscreen: false
+        },
+        // 事件回调
+        methods: {
+          refresh: () => {
+            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
+          }
+        }
+      })
+    },
+    openLayer2x(row = {}) {
+      // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
+      this.$openLayer({
+        props: {
+          url: '/f/upload/Tenant/SMARTCITY/Users/test/APPOINTMENFOLDER/电信大屏原型设计2021122-20220118200243.pdf'
+        },
+        // 弹窗内嵌套组件
+        content: () => import('@/components/cueb-pdf-preview/index.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          title: '预览',
+          maskClosable: false,
+          fullscreen: true
         },
         // 事件回调
         methods: {
