@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-22 10:32:40
+ * @LastEditTime: 2022-01-24 14:51:33
  * @LastEditors: Do not edit
  * @Description: 数据字典配置
 -->
@@ -163,7 +163,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPARATUS/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/ShenZhenTelecom/DICT_DATA/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

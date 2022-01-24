@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-22 10:35:52
+ * @LastEditTime: 2022-01-24 15:16:36
  * @LastEditors: Do not edit
  * @Description: 数据字典配置
 -->
@@ -54,20 +54,42 @@ export default {
       submitLoading: false,
       visible: false,
       form: {
-        'dict_type': '',
-        'dict_name': '',
-        'dict_value': ''
+        dict_type: '',
+        dict_name: '',
+        dict_value: ''
       }
     }
   },
   created() {
     const { id, type } = this
     // 传递类型为 1 的时候标记为加载详情-编辑
-    if (type) this.fetchDetail(id)
+    if (type) {
+      this.fetchDetail(id)
+    } else {
+      this.fetchTargetMax()
+    }
   },
   methods: {
     close() {
       this.$emit('close')
+    },
+    fetchTargetMax() {
+      // 获取这个字段类型最大的值然后新增的时候 + 1
+      const { dictType } = this
+      this.$request({
+        method: 'get',
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/ShenZhenTelecom/VALUE_MAX?dict_type=${dictType}`,
+        params: {}
+      }).then(res => {
+        const { Success, Message } = res
+        if (Success) {
+          const { Data } = Message || {}
+          if (Array.isArray(Data) && Data.length) {
+            const result = Data[0] || {}
+            this.dict_value_max = result.dict_value + 1
+          }
+        }
+      })
     },
     fetchDetail() {
       const { dictType, id } = this
@@ -91,7 +113,11 @@ export default {
         if (valid) {
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(this.form))
-          const { type, dictType } = this // 如果 type 为true 则为编辑
+          const { type, dictType, dict_value_max } = this // 如果 type 为true 则为编辑
+          if (!type) {
+            params.dict_type = dictType
+            params.dict_value = dict_value_max
+          }
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',

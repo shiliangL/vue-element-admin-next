@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-22 14:38:15
+ * @LastEditTime: 2022-01-24 15:23:13
  * @LastEditors: Do not edit
  * @Description: 解决方案分类
 -->
@@ -124,7 +124,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPARATUS/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/ShenZhenTelecom/DICT_DATA/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

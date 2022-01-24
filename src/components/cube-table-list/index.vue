@@ -12,6 +12,7 @@
       <slot name="topBar" />
     </div>
     <CubeMaxHeight
+      v-loading="loading"
       :height.sync="height"
       element-loading-text="拼命加载中"
       element-loading-spinner="el-icon-loading"
@@ -96,7 +97,7 @@ export default {
     return {
       name: 'CubeTable',
       height: 0,
-      loading: true,
+      loading: false,
       initConfig: {
         method: 'POST',
         url: '',
@@ -185,14 +186,14 @@ export default {
       const { currentPage, size } = this.initConfig.pagination
       const params = { Ex_CurrentPage: currentPage, Ex_PageSize: size, ...searchParams, ...this.extraParam, Ex_ReturnDataAndCount: true }
       // this.createLoadingFn()
+      this.loading = true
       if (loadType === 'page') this.initConfig.table.data = []
       if (!page && loadType === 'list') {
         this.initConfig.table.data = []
       }
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data'
       request({ url, method: method, [paramsKey]: params }).then((response) => {
-        console.log(response, 'sbsbsbs')
-
+        this.loading = false
         if (response['Success']) {
           // 判断标识 数据结构是否是分页数据结构
           if (!['list', 'page'].includes(tableDataType)) {
@@ -228,6 +229,7 @@ export default {
           }
         }
       }).catch(e => {
+        this.loading = false
         // if (this.createLoading) {
         //   this.createLoading.close()
         // }

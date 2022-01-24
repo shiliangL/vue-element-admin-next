@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-24 11:51:50
+ * @LastEditTime: 2022-01-24 15:53:19
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -54,6 +54,7 @@ export default {
             { label: '序号', type: 'index' },
             {
               label: '预约时间',
+              width: 180,
               key: 'appointment_time',
               render: (h, parmas) => {
                 const { row } = parmas

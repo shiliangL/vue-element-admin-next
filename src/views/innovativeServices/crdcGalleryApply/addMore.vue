@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-24 13:57:50
+ * @LastEditTime: 2022-01-24 15:18:12
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -193,11 +193,7 @@
           style="width: 100%"
           :max-height="tableMaxHight"
         >
-          <el-table-column
-            prop="apparatus_id"
-            label="仪器名称"
-            align="center"
-          >
+          <el-table-column prop="apparatus_id" label="仪器名称" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
@@ -240,18 +236,12 @@
             label="厂家"
             align="center"
           /> -->
-          <el-table-column
-            prop="test_case"
-            label="测试用例"
-            align="center"
-          >
+          <el-table-column prop="test_case" label="测试用例" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'followTable.' +
-                    scope.$index +
-                    '.test_case' +
-                    scope.row.id || scope.row.webid
+                  'followTable.' + scope.$index + '.test_case' + scope.row.id ||
+                    scope.row.webid
                 "
                 label=""
                 :prop="'followTable.' + scope.$index + '.test_case'"
@@ -356,11 +346,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            prop="consistency"
-            label="一致性"
-            align="center"
-          >
+          <el-table-column prop="consistency" label="一致性" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
@@ -385,18 +371,12 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            prop="result"
-            label="测试结果"
-            align="center"
-          >
+          <el-table-column prop="result" label="测试结果" align="center">
             <template slot-scope="scope">
               <el-form-item
                 :key="
-                  'followTable.' +
-                    scope.$index +
-                    '.result' +
-                    scope.row.id || scope.row.webid
+                  'followTable.' + scope.$index + '.result' + scope.row.id ||
+                    scope.row.webid
                 "
                 label=""
                 :prop="'followTable.' + scope.$index + '.result'"
@@ -495,7 +475,7 @@ export default {
         detail: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT_PEOPLE?appointment_id=${this.id}`
       },
       2: {
-        key: 'filesTable',
+        key: 'followTable',
         add: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/BATCH_ADD_TEST`,
         update: ``,
         detail: ``
@@ -624,11 +604,10 @@ export default {
         const { Success, Message } = res
         if (Success) {
           const { Data } = Message || {}
-          console.log(Data, '--附件情况--')
           if (Array.isArray(Data) && Data.length) {
             const files = []
             for (const item of Data) {
-              files.push({ url: item, name: '测试报告.png' })
+              files.push({ url: item.resource_path, name: '测试报告.png' })
             }
             this.form.filesTable = files
           }
@@ -643,6 +622,9 @@ export default {
         if (Success) {
           const { Data } = Message || {}
           if (Array.isArray(Data)) {
+            for (const item of Data) {
+              item.result = item.result === '通过'
+            }
             this.form.followTable = Data
           }
         }
@@ -669,6 +651,9 @@ export default {
           const params = JSON.parse(JSON.stringify(list))
           const filesTable = JSON.parse(JSON.stringify(this.form.filesTable))
           const followTable = JSON.parse(JSON.stringify(this.form.followTable))
+          for (const item of followTable) {
+            item.result = item.result ? '通过' : '不通过'
+          }
           const paramsList = {
             1: {
               appointment_id: this.id,
@@ -721,13 +706,13 @@ export default {
         case 'followTable':
           this.form.followTable.push({
             webid: this.guid(),
-            'apparatus_id': '', //  仪器id,
-            'test_case': '',
-            'general_performance': '',
-            'shooting_performance': '',
-            'consumption_function': '',
-            'consistency': '',
-            'result': false
+            apparatus_id: '', //  仪器id,
+            test_case: '',
+            general_performance: '',
+            shooting_performance: '',
+            consumption_function: '',
+            consistency: '',
+            result: false
           })
           break
         default:

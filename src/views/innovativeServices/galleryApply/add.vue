@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-24 10:13:42
+ * @LastEditTime: 2022-01-24 15:52:23
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -15,6 +15,40 @@
     label-width="120px"
   >
     <div class="base-info">
+
+      <el-row style="height: 64px;">
+        <el-col :span="12">
+          <el-form-item label="" :rules="rules.input" prop="is_cooperative">
+            <el-checkbox v-model="form.is_cooperative">
+              是否是合作伙伴
+            </el-checkbox>
+          </el-form-item>
+        </el-col>
+        <el-col v-if="form.is_cooperative" :span="12">
+          <el-form-item label="企业名称" prop="enterprise_id" :rules="rules.select">
+            <CuebSelectList
+              v-model="form.enterprise_id"
+              class="w100p"
+              :config="{
+                keyCode: 'id',
+                keyName: 'name',
+                url: '/COOPERATIVE_PARTNER/COOPERATIVE'
+              }"
+              @select="cuebSelectChange"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col v-else :span="12">
+          <el-form-item label="企业名称" prop="enterprise_name" :rules="rules.input">
+            <el-input
+              v-model="form.enterprise_name"
+              placeholder="请输入"
+              maxlength="550"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-row>
         <el-col :span="12">
           <el-form-item
@@ -62,39 +96,6 @@
           <el-form-item label="邮箱" prop="email">
             <el-input
               v-model="form.email"
-              placeholder="请输入"
-              maxlength="550"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row style="height: 64px;">
-        <el-col :span="12">
-          <el-form-item label="" :rules="rules.input" prop="is_cooperative">
-            <el-checkbox v-model="form.is_cooperative">
-              是否是合作伙伴
-            </el-checkbox>
-          </el-form-item>
-        </el-col>
-        <el-col v-if="form.is_cooperative" :span="12">
-          <el-form-item label="企业名称" prop="enterprise_id" :rules="rules.select">
-            <CuebSelectList
-              v-model="form.enterprise_id"
-              class="w100p"
-              :config="{
-                keyCode: 'id',
-                keyName: 'name',
-                url: '/COOPERATIVE_PARTNER/COOPERATIVE'
-              }"
-              @select="cuebSelectChange"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col v-else :span="12">
-          <el-form-item label="企业名称" prop="enterprise_name" :rules="rules.input">
-            <el-input
-              v-model="form.enterprise_name"
               placeholder="请输入"
               maxlength="550"
             />
@@ -324,7 +325,7 @@ export default {
           params.is_visit_cim = params.is_visit_cim ? 1 : 0
           params.is_cooperative = params.is_cooperative ? 1 : 0
           params.enterprise_id = !params.is_cooperative
-            ? ''
+            ? null
             : params.enterprise_id
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
@@ -333,7 +334,7 @@ export default {
             url: type
               ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/APPOINTMENT/${this.id}`
               : `${process.env.VUE_APP_BASE_API_PREFIXV2}/EXHIBITION_HALL/APPOINTMENT`,
-            data: stringify({ ...params })
+            data: params || stringify({ ...params })
           })
             .then(res => {
               const { Success } = res
