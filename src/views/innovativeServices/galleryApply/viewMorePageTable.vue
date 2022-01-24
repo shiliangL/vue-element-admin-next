@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-24 18:10:20
+ * @LastEditTime: 2022-01-24 18:47:47
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -469,4 +469,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-form-item{
+  margin: 0;
+  padding: 0;
+}
+</style>

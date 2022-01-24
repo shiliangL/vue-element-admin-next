@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-24 16:44:23
+ * @LastEditTime: 2022-01-24 18:16:24
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -201,6 +201,8 @@ export default {
       })
     },
     openPreviewLayer(row) {
+      const appointment = this.$dayjs(row.appointment_time).format('YYYY-MM-DD HH:mm:ss')
+      const mesg = `${row.enterprise_name} - ${appointment}`
       const { id } = row
       this.$openLayer({
         props: {
@@ -210,7 +212,7 @@ export default {
         content: () => import('./preview.vue'),
         // 弹窗属性设置
         modalProps: {
-          title: '查看详情',
+          title: `${mesg}  展厅预约详情`,
           customClass: 'fullscreen-flex',
           maskClosable: false,
           fullscreen: true
