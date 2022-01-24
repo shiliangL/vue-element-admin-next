@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-24 10:34:05
+ * @LastEditTime: 2022-01-24 16:57:45
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -375,7 +375,7 @@
         </el-table>
       </div>
 
-      <div slot="footer" class="dialog-footer">
+      <div v-if="!isPreview" slot="footer" class="dialog-footer">
         <el-button @click="close">取 消</el-button>
         <el-button
           :loading="submitLoading"
@@ -405,6 +405,10 @@ export default {
     showType: {
       type: Number,
       default: () => ''
+    },
+    isPreview: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {

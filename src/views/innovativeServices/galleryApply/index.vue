@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-24 15:53:19
+ * @LastEditTime: 2022-01-24 16:44:23
  * @LastEditors: Do not edit
  * @Description: 展厅服务-展厅预约
 -->
@@ -101,7 +101,7 @@ export default {
                       <i class='el-icon-edit'></i>
                       编辑
                     </div>
-                    <div class='btn-text'>
+                    <div class='btn-text' onClick={() => this.openPreviewLayer(row)}>
                       <i class='el-icon-view'></i>
                       查看详情
                     </div>
@@ -197,6 +197,23 @@ export default {
             // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
             this.refresh()
           }
+        }
+      })
+    },
+    openPreviewLayer(row) {
+      const { id } = row
+      this.$openLayer({
+        props: {
+          id
+        },
+        // 弹窗内嵌套组件
+        content: () => import('./preview.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          title: '查看详情',
+          customClass: 'fullscreen-flex',
+          maskClosable: false,
+          fullscreen: true
         }
       })
     },

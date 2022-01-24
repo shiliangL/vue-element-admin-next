@@ -268,11 +268,11 @@ aside {
   }
 }
 
-.content-text-bock{
+.content-text-bock {
   margin: 10px 0;
 }
 
-.flex-bar-right{
+.flex-bar-right {
   display: flex;
   justify-content: right;
   padding: 4px 0;
@@ -281,14 +281,50 @@ aside {
 .title-bar {
   position: relative;
   color: $theme !important;
+
   // background-color: rgba(0,122,255,0.5) !important;;
-  &::after{
+  &::after {
     content: '';
     left: 0;
     top: 0;
     width: 2px;
     height: 100%;
     position: absolute;
-    background-color:  $theme ;
+    background-color: $theme;
+  }
+}
+
+
+
+.fullscreen-flex {
+  display: flex;
+  flex-direction: column;
+
+  .el-dialog__body {
+    flex: 1;
+    .fullscreen-flex-form {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .dialog-main {
+        flex: 1;
+        align-items: stretch;
+        display: flex;
+
+        .dialog-main-left {
+          flex: 1;
+
+          &.mapbox {
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .dialog-footer {
+        margin-top: 8px;
+      }
+    }
   }
 }

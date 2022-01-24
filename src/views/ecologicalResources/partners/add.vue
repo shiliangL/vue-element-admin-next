@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-18 20:00:35
+ * @LastEditTime: 2022-01-24 16:44:39
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -359,31 +359,4 @@ export default {
 </script>
 
 <style lang="scss">
-.fullscreen-flex {
-  display: flex;
-  flex-direction: column;
-  .el-dialog__body {
-    flex: 1;
-    .fullscreen-flex-form {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      .dialog-main {
-        flex: 1;
-        align-items: stretch;
-        display: flex;
-        .dialog-main-left {
-          flex: 1;
-          &.mapbox {
-            margin-left: 10px;
-          }
-        }
-      }
-      .dialog-footer {
-        margin-top: 8px;
-      }
-    }
-  }
-}
 </style>
