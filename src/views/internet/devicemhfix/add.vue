@@ -1,13 +1,13 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-19 11:51:22
+ * @LastEditTime: 2022-02-15 09:48:30
  * @LastEditors: Do not edit
  * @Description:
 -->
 
 <template>
-  <el-form ref="form" :model="form" class="form" label-width="96px">
+  <el-form ref="form" v-loading="fetchLoading" :model="form" class="form" label-width="96px">
     <div class="base-info">
       <el-row>
         <el-col :span="12">
@@ -169,18 +169,22 @@ export default {
       // row ? this.form.code = row.code : this.form.code = null
     },
     fetchDetail(id) {
+      this.fetchLoading = true
       this.$request({
         method: 'get',
         url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT_MAINTENANCE?id=${id}`,
         params: {}
       }).then(res => {
         const { Success, Message } = res
+        this.fetchLoading = false
         if (Success) {
           const { Data } = Message || {}
           if (Array.isArray(Data) && Data.length) {
             Object.assign(this.form, Data[0])
           }
         }
+      }).catch(() => {
+        this.fetchLoading = false
       })
     },
     submit(formName) {

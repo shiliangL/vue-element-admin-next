@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-24 13:38:22
+ * @LastEditTime: 2022-02-15 09:45:39
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -10,6 +10,7 @@
 
   <el-form
     ref="form"
+    v-loading="fetchLoading"
     :model="form"
     class="form"
     label-width="110px"
@@ -184,12 +185,14 @@ export default {
       this.$emit('close')
     },
     fetchDetail(id) {
+      this.fetchLoading = true
       this.$request({
         method: 'get',
         url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT?id=${id}`,
         params: {
         }
       }).then((res) => {
+        this.fetchLoading = false
         const { Success, Message } = res
         if (Success) {
           const { Data } = Message || {}
@@ -200,6 +203,8 @@ export default {
             Object.assign(this.form, form)
           }
         }
+      }).catch(() => {
+        this.fetchLoading = false
       })
     },
     submit(formName) {

@@ -1,12 +1,15 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-24 16:33:06
+ * @LastEditTime: 2022-02-15 10:13:38
  * @LastEditors: Do not edit
  * @Description: 解决方案
 -->
 <template>
-  <cube-table-list ref="CubeTableList" :config="config" />
+  <cube-table-list
+    ref="CubeTableList"
+    :config="config"
+  />
 </template>
 
 <script>
@@ -20,7 +23,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/FIND_SOLUTION`,
         search: {
           data: [
             [
@@ -65,25 +68,18 @@ export default {
                 const { row } = parmas
                 return row.accessory_path ? (
                   <a href={row.accessory_path} target='_blank'>
-                   附件
+                    附件
                   </a>
                 ) : null
               }
             },
             {
               label: '类型',
-              key: 'type'
-              // render: (h, parmas) => {
-              //   const { row } = parmas
-              //   return row.website ? (
-              //     <el-link href={row.website} target='_blank'>
-              //       {row.website}
-              //     </el-link>
-              //   ) : null
-              // }
+              key: 'typename'
             },
-            { label: '简介', key: 'brief_introduction' },
+            { label: '简介', key: 'brief_introduction', width: 450 },
             {
+              width: 180,
               label: '操作',
               render: (h, parmas) => {
                 const { row } = parmas
@@ -112,7 +108,7 @@ export default {
       }
     }
   },
-  created() {},
+  created() { },
   methods: {
     refresh() {
       this.$refs['CubeTableList'] && this.$refs['CubeTableList'].fetchList()
@@ -187,7 +183,7 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => { })
     }
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-01-19 11:56:14
+ * @LastEditTime: 2022-02-14 10:19:53
  * @LastEditors: Do not edit
  * @Description: 设备管理
 -->
@@ -20,7 +20,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/EQUIPMENT`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/EQUIPMENT_MANAGEMENT/FIND_EQUIPMENT`,
         search: {
           data: [
             [
@@ -53,12 +53,12 @@ export default {
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
             { label: '设备名称', key: 'name' },
-            { label: '设备类型', key: 'type' },
+            { label: '设备编号', key: 'code' },
+            { label: '设备类型', key: 'typename' },
             { label: '模型编码', key: 'c_code' },
             { label: '模型ID', key: 'model_id' },
-            { label: '设备编号', key: 'model_id' },
-            { label: '使用区域', key: 'region' },
-            { label: '采购时间', key: 'order_time' },
+            { label: '使用区域', key: 'area' },
+            { label: '采购时间', key: 'purchase_time' },
             {
               label: '运行状态',
               key: 'state',
@@ -102,12 +102,12 @@ export default {
             { label: '生产商', key: 'manufacturer' },
             {
               label: '设备参数',
-              key: 'parameter',
-              width: 450
-              // render: (h, parmas) => {
-              //   const { row } = parmas
-              //   return <vclamp autoresize max-lines={3}>{row.parameter}</vclamp>
-              // }
+              key: 'param',
+              width: 450,
+              render: (h, parmas) => {
+                const { row } = parmas
+                return <span autoresize max-lines={3}>{row.param}</span>
+              }
             },
             {
               label: '操作',

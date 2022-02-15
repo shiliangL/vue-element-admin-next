@@ -1,31 +1,60 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-19 17:26:55
+ * @LastEditTime: 2022-02-15 09:43:22
  * @LastEditors: Do not edit
  * @Description:
 -->
 
 <template>
-  <el-form ref="form" :model="form" class="form" label-width="96px">
+  <el-form
+    ref="form"
+    v-loading="fetchLoading"
+    :model="form"
+    class="form"
+    label-width="96px"
+  >
     <div class="base-info">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="人员名称" prop="name" :rules="rules.input">
-            <el-input v-model.trim="form.name" placeholder="请输入" />
+          <el-form-item
+            label="人员名称"
+            prop="name"
+            :rules="rules.input"
+          >
+            <el-input
+              v-model.trim="form.name"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="身份证" prop="code" :rules="rules.input">
-            <el-input v-model.trim="form.code" placeholder="请输入" :maxlength="18" />
+          <el-form-item
+            label="身份证"
+            prop="code"
+            :rules="rules.input"
+          >
+            <el-input
+              v-model.trim="form.code"
+              placeholder="请输入"
+              :maxlength="18"
+            />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="性别" prop="gender" :rules="rules.input">
-            <el-select v-model.trim="form.gender" placeholder="请选择" class="w100p">
+          <el-form-item
+            label="性别"
+            prop="gender"
+            :rules="rules.input"
+          >
+            <el-select
+              v-model.trim="form.gender"
+              placeholder="请选择"
+              class="w100p"
+            >
               <el-option
                 v-for="item in options.gender"
                 :key="item.dict_value"
@@ -36,7 +65,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="出生日期" prop="birthday" :rules="rules.select">
+          <el-form-item
+            label="出生日期"
+            prop="birthday"
+            :rules="rules.select"
+          >
             <el-date-picker
               v-model.trim="form.birthday"
               class="w100p"
@@ -49,12 +82,23 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="手机号码" prop="phone_number">
-            <el-input v-model.trim="form.phone_number" placeholder="请输入" :maxlength="11" />
+          <el-form-item
+            label="手机号码"
+            prop="phone_number"
+          >
+            <el-input
+              v-model.trim="form.phone_number"
+              placeholder="请输入"
+              :maxlength="11"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="组织机构" prop="org" :rules="rules.select">
+          <el-form-item
+            label="组织机构"
+            prop="org"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.org"
               class="w100p"
@@ -70,26 +114,51 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="国籍" prop="country">
-            <el-input v-model.trim="form.country" placeholder="请输入" />
+          <el-form-item
+            label="国籍"
+            prop="country"
+          >
+            <el-input
+              v-model.trim="form.country"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="民族" prop="nationality">
-            <el-input v-model.trim="form.nationality" placeholder="请输入" />
+          <el-form-item
+            label="民族"
+            prop="nationality"
+          >
+            <el-input
+              v-model.trim="form.nationality"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="籍贯" prop="native_place">
-            <el-input v-model.trim="form.native_place" placeholder="请输入" />
+          <el-form-item
+            label="籍贯"
+            prop="native_place"
+          >
+            <el-input
+              v-model.trim="form.native_place"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="本地户籍" prop="is_local_register">
-            <el-select v-model.trim="form.is_local_register" placeholder="请选择" class="w100p">
+          <el-form-item
+            label="本地户籍"
+            prop="is_local_register"
+          >
+            <el-select
+              v-model.trim="form.is_local_register"
+              placeholder="请选择"
+              class="w100p"
+            >
               <el-option
                 v-for="item in options.localRegister"
                 :key="item.dict_value"
@@ -103,7 +172,11 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="户籍类型" prop="register_type" :rules="rules.select">
+          <el-form-item
+            label="户籍类型"
+            prop="register_type"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.register_type"
               class="w100p"
@@ -116,15 +189,25 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="户籍地址" prop="register_address">
-            <el-input v-model.trim="form.register_address" placeholder="请输入" />
+          <el-form-item
+            label="户籍地址"
+            prop="register_address"
+          >
+            <el-input
+              v-model.trim="form.register_address"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="政治面貌" prop="politics_status" :rules="rules.select">
+          <el-form-item
+            label="政治面貌"
+            prop="politics_status"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.politics_status"
               class="w100p"
@@ -137,7 +220,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="婚姻状况" prop="marital_status" :rules="rules.select">
+          <el-form-item
+            label="婚姻状况"
+            prop="marital_status"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.marital_status"
               class="w100p"
@@ -153,7 +240,11 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="文化程度" prop="standard_culture" :rules="rules.select">
+          <el-form-item
+            label="文化程度"
+            prop="standard_culture"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.standard_culture"
               class="w100p"
@@ -166,7 +257,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="毕业时间" prop="graduate_time" :rules="rules.select">
+          <el-form-item
+            label="毕业时间"
+            prop="graduate_time"
+            :rules="rules.select"
+          >
             <el-date-picker
               v-model.trim="form.graduate_time"
               class="w100p"
@@ -179,25 +274,47 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="毕业院校" prop="graduate_school">
-            <el-input v-model.trim="form.graduate_school" placeholder="请输入" />
+          <el-form-item
+            label="毕业院校"
+            prop="graduate_school"
+          >
+            <el-input
+              v-model.trim="form.graduate_school"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="从事行业" prop="work_industry">
-            <el-input v-model.trim="form.work_industry" placeholder="请输入" />
+          <el-form-item
+            label="从事行业"
+            prop="work_industry"
+          >
+            <el-input
+              v-model.trim="form.work_industry"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="工作单位" prop="work_unit">
-            <el-input v-model.trim="form.work_unit" placeholder="请输入" />
+          <el-form-item
+            label="工作单位"
+            prop="work_unit"
+          >
+            <el-input
+              v-model.trim="form.work_unit"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="工作岗位" prop="operating_post" :rules="rules.select">
+          <el-form-item
+            label="工作岗位"
+            prop="operating_post"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.operating_post"
               class="w100p"
@@ -213,12 +330,22 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="工作地址" prop="work_address">
-            <el-input v-model.trim="form.work_address" placeholder="请输入" />
+          <el-form-item
+            label="工作地址"
+            prop="work_address"
+          >
+            <el-input
+              v-model.trim="form.work_address"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="职称" prop="technical_post" :rules="rules.select">
+          <el-form-item
+            label="职称"
+            prop="technical_post"
+            :rules="rules.select"
+          >
             <CuebSelectList
               v-model="form.technical_post"
               class="w100p"
@@ -234,12 +361,21 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="居住地址" prop="residential_address">
-            <el-input v-model.trim="form.residential_address" placeholder="请输入" />
+          <el-form-item
+            label="居住地址"
+            prop="residential_address"
+          >
+            <el-input
+              v-model.trim="form.residential_address"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="居住建筑" prop="residential_building">
+          <el-form-item
+            label="居住建筑"
+            prop="residential_building"
+          >
             <el-input
               v-model.trim="form.residential_building"
               placeholder="请输入"
@@ -250,18 +386,33 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="家庭成员" prop="family_member">
-            <el-input v-model.trim="form.family_member" placeholder="请输入" />
+          <el-form-item
+            label="家庭成员"
+            prop="family_member"
+          >
+            <el-input
+              v-model.trim="form.family_member"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="车辆信息" prop="vehicle_info">
-            <el-input v-model.trim="form.vehicle_info" placeholder="请输入" />
+          <el-form-item
+            label="车辆信息"
+            prop="vehicle_info"
+          >
+            <el-input
+              v-model.trim="form.vehicle_info"
+              placeholder="请输入"
+            />
           </el-form-item>
         </el-col>
       </el-row>
 
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="close">取 消</el-button>
         <el-button
           :loading="submitLoading"
@@ -360,18 +511,24 @@ export default {
       this.$emit('close')
     },
     fetchDetail(id) {
+      this.fetchLoading = true
       this.$request({
         method: 'get',
         url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/PERSONNEL/${id}`,
         params: {}
       }).then(res => {
         const { Success, Message } = res
+        this.fetchLoading = false
         if (Success) {
           const { Data } = Message || {}
           if (Array.isArray(Data) && Data.length) {
-            Object.assign(this.form, Data[0])
+            const form = Data[0]
+            form.is_local_register = form.is_local_register * 1
+            Object.assign(this.form, form)
           }
         }
+      }).catch(() => {
+        this.fetchLoading = false
       })
     },
     submit(formName) {
@@ -379,7 +536,7 @@ export default {
         if (valid) {
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(this.form))
-          // params.is_local_register = params.is_local_register * 1
+          params.is_local_register = params.is_local_register * 1
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
@@ -387,7 +544,7 @@ export default {
             url: type
               ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/PERSONNEL/${this.id}`
               : `${process.env.VUE_APP_BASE_API_PREFIXV2}/STAFF_MANAGEMENT/PERSONNEL`,
-            data: stringify({ ...params })
+            data: params || stringify({ ...params })
           }).then(res => {
             const { Success } = res
             if (Success) {

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-01-18 20:35:15
+ * @LastEditTime: 2022-02-15 10:07:59
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -18,8 +18,15 @@
       <div class="dialog-main-left">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="解决方案名称" prop="name" :rules="rules.input">
-              <el-input v-model="form.name" placeholder="请输入" />
+            <el-form-item
+              label="解决方案名称"
+              prop="name"
+              :rules="rules.input"
+            >
+              <el-input
+                v-model="form.name"
+                placeholder="请输入"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -41,7 +48,10 @@
         </el-row>
         <el-row v-if="0">
           <el-col :span="24">
-            <el-form-item label="方法提供方" prop="regi_capital">
+            <el-form-item
+              label="方法提供方"
+              prop="regi_capital"
+            >
               <CuebSelectList
                 v-model="form.regi_capital"
                 :config="{
@@ -54,7 +64,10 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="方案资料" prop="regis_No">
+            <el-form-item
+              label="方案资料"
+              prop="regis_No"
+            >
               <cubeUploadFile
                 :limit="1"
                 accept=".pdf"
@@ -65,7 +78,10 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="简介" prop="brief_introduction">
+            <el-form-item
+              label="简介"
+              prop="brief_introduction"
+            >
               <el-input
                 v-model="form.brief_introduction"
                 placeholder="请输入"
@@ -150,7 +166,7 @@ export default {
             const { Data } = Message || {}
             if (Array.isArray(Data) && Data.length) {
               const form = Data[0] || {}
-              form.type = form.type ? form.type.toString() : ''
+              // form.type = form.type ? form.type.toString() : ''
               Object.assign(this.form, form)
               if (this.form.accessory_path) {
                 this.fileList = [{ url: this.form.accessory_path, name: '附件.pdf' }]
@@ -181,7 +197,7 @@ export default {
             url: type
               ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION/${this.id}`
               : `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION`,
-            data: stringify({ ...params })
+            data: params || stringify({ ...params })
           }).then(res => {
             const { Success } = res
             if (Success) {
