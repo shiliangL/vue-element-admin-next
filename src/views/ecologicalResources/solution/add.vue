@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-02-16 17:01:05
+ * @LastEditTime: 2022-02-16 17:19:24
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -169,43 +169,42 @@ export default {
         method: 'get',
         url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/SOLUTION/${id}`,
         params: {}
-      })
-        .then(res => {
-          this.fetchLoading = false
-          const { Success, Message } = res
-          if (Success) {
-            const { Data } = Message || {}
-            if (Array.isArray(Data) && Data.length) {
-              const form = Data[0] || {}
-              // form.type = form.type ? form.type.toString() : ''
-              Object.assign(this.form, form)
-              if (this.form.accessory_path) {
-                this.fileList = [{ url: this.form.accessory_path, name: '附件.pdf' }]
-              }
+      }).then(res => {
+        const { Success, Message } = res
+        if (Success) {
+          const { Data } = Message || {}
+          if (Array.isArray(Data) && Data.length) {
+            const form = Data[0] || {}
+            // form.type = form.type ? form.type.toString() : ''
+            Object.assign(this.form, form)
+            if (this.form.accessory_path) {
+              this.fileList = [{ url: this.form.accessory_path, name: '附件.pdf' }]
             }
           }
-        })
-        .catch(() => {
-          this.fetchLoading = false
-        })
+        }
+      }).catch(() => {
+        this.fetchLoading = false
+      })
 
       this.$request({
         method: 'get',
         url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/BATCH_ADD_SOLUTION_COOPERATIVE?solution_id=${this.id}`
       }).then(res => {
+        this.fetchLoading = false
         const { Success, Message } = res
         if (Success) {
           const people = Message.Data || []
           this.form.personnel_ids = people.map(item => item.id)
         }
       }).catch(() => {
+        this.fetchLoading = false
       })
     },
     linkPeople2Project() {
       const { id, personnel_ids } = this.form
       const params = {
         'solution_id': id,
-        'cooperative_id': personnel_ids
+        'cooperative_list': personnel_ids
       }
       this.$request({
         method: 'POST',
