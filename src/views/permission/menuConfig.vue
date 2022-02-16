@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-30 12:37:07
- * @LastEditTime: 2022-01-07 16:28:23
+ * @LastEditTime: 2022-02-15 14:11:22
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -9,7 +9,7 @@
   <div clas="iframe">
     <!-- :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/App.AppConfigManager.html?GroupCatalog=PROJECT`" -->
     <iframe
-      :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/App.MenuManager.html`"
+      :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/App.MenuManager.html?SYSTEMCODE=SZDXDP`"
       class="iframe"
       frameborder="0"
     />

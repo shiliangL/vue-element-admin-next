@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-02-16 15:12:16
+ * @LastEditTime: 2022-02-15 16:06:56
  * @LastEditors: Do not edit
  * @Description: 培训赋能
 -->
@@ -92,6 +92,20 @@ export default {
                       编辑
                     </div>
                   </div>
+                  // <el-dropdown
+                  //   trigger='click'
+                  //   onCommand={(e, v) => this.handlerClickDropdown(e, v, row)}
+                  // >
+                  //   <span class='btn-text' style='font-size: 12px;'>
+                  //     更多操作
+                  //     <i class='el-icon-arrow-down el-icon--right'></i>
+                  //   </span>
+                  //   <el-dropdown-menu slot='dropdown'>
+                  //     <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
+                  //     <el-dropdown-item type='2'> 补充测试报告 </el-dropdown-item>
+                  //   </el-dropdown-menu>
+                  // </el-dropdown>
+                  // <el-dropdown-item type='2'> 补充测试报告 </el-dropdown-item>
                 )
               }
             }
@@ -118,7 +132,7 @@ export default {
         // 弹窗属性设置
         modalProps: {
           width: '45%',
-          title: type ? '编辑授权项' : '新增授权项',
+          title: type ? '编辑培训' : '新增培训',
           maskClosable: false,
           fullscreen: false
         },
@@ -153,6 +167,37 @@ export default {
           })
         })
         .catch(() => { })
+    },
+    handlerClickDropdown(e, v, row) {
+      const { id } = row
+      const { type } = v.$attrs
+      const title = {
+        1: '补充人员登记',
+        2: '补充测试报告'
+      }
+      this.$openLayer({
+        props: {
+          id,
+          type: (type * 1),
+          showType: (type * 1)
+        },
+        // 弹窗内嵌套组件
+        content: () => import('./addMore.vue'),
+        // 弹窗属性设置
+        modalProps: {
+          width: '80%',
+          title: title[type],
+          maskClosable: false,
+          fullscreen: true
+        },
+        // 事件回调
+        methods: {
+          refresh: () => {
+            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
+            this.refresh()
+          }
+        }
+      })
     }
   }
 }

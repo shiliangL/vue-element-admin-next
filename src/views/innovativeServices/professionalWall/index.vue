@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-02-16 15:12:16
+ * @LastEditTime: 2022-02-16 15:11:53
  * @LastEditors: Do not edit
  * @Description: 培训赋能
 -->
@@ -23,7 +23,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/EXPERT_DATABAE`,
         search: {
           data: [
             [
@@ -118,7 +118,7 @@ export default {
         // 弹窗属性设置
         modalProps: {
           width: '45%',
-          title: type ? '编辑授权项' : '新增授权项',
+          title: type ? '编辑专家' : '新增专家',
           maskClosable: false,
           fullscreen: false
         },
@@ -140,7 +140,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/EXPERT_DATABAE/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {

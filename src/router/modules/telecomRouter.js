@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-29 08:18:38
- * @LastEditTime: 2022-01-22 14:59:47
+ * @LastEditTime: 2022-02-16 14:50:09
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -173,18 +173,6 @@ const chartsRouter = [
           }
         ]
       },
-      // {
-      //   path: 'galleryApply',
-      //   component: () => import('@/views/innovativeServices/galleryApply'),
-      //   name: 'GalleryApply',
-      //   meta: { title: '展厅服务', noCache: false }
-      // },
-      // {
-      //   path: 'crdcGalleryApply',
-      //   component: () => import('@/views/innovativeServices/crdcGalleryApply'),
-      //   name: 'CrdcGalleryApply',
-      //   meta: { title: '研发服务', noCache: false }
-      // },
       {
         path: 'trainingServices',
         component: () => import('@/views/innovativeServices/trainingServices'),
@@ -196,6 +184,19 @@ const chartsRouter = [
         component: () => import('@/views/innovativeServices/productServices'),
         name: 'ProductServices',
         meta: { title: '项目支撑', noCache: false }
+      },
+
+      {
+        path: 'professionalWall',
+        component: () => import('@/views/innovativeServices/professionalWall'),
+        name: 'professionalWall',
+        meta: { title: '专家墙管理', noCache: false }
+      },
+      {
+        path: 'authorizationWall',
+        component: () => import('@/views/innovativeServices/authorizationWall'),
+        name: 'authorizationWall',
+        meta: { title: '授权墙管理', noCache: false }
       }
     ]
   },

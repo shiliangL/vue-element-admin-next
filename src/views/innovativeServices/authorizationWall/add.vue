@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-02-16 11:09:29
+ * @LastEditTime: 2022-02-15 16:05:37
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -15,82 +15,16 @@
     label-width="120px"
   >
     <div class="base-info">
-      <el-row style="height: 64px;">
-        <el-col :span="12">
-          <el-form-item label="" :rules="rules.input" prop="is_cooperative">
-            <el-checkbox v-model="form.is_cooperative">
-              是否是合作伙伴
-            </el-checkbox>
-          </el-form-item>
-        </el-col>
-        <el-col v-if="form.is_cooperative" :span="12">
-          <el-form-item
-            label="企业名称"
-            prop="enterprise_id"
-            :rules="rules.select"
-          >
-            <CuebSelectList
-              v-model="form.enterprise_id"
-              class="w100p"
-              :config="{
-                keyCode: 'id',
-                keyName: 'name',
-                url: '/COOPERATIVE_PARTNER/COOPERATIVE'
-              }"
-              @select="selectCuebSelect"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col v-else :span="12">
-          <el-form-item
-            label="企业名称"
-            prop="enterprise_name"
-            :rules="rules.input"
-          >
-            <el-input
-              v-model="form.enterprise_name"
-              placeholder="请输入"
-              maxlength="550"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
 
       <el-row>
         <el-col :span="12">
           <el-form-item
-            label="预约时间"
-            prop="appointment_time"
-            :rules="rules.select"
+            label="培训名称"
+            prop="name"
+            :rules="rules.input"
           >
-            <el-date-picker
-              v-model="form.appointment_time"
-              type="daterange"
-              class="w100p"
-              value-format="yyyy-MM-dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            />
-            <!-- value-format="yyyy-MM-dd HH:mm:ss" -->
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="所属区划" prop="city_area" :rules="rules.input">
-            <CuebSelectList
-              v-model="form.city_area"
-              class="w100p"
-              :config="{
-                keyCode: 'dict_value',
-                keyName: 'dict_name',
-                url: '/ShenZhenTelecom/ENUM?id=17'
-              }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="预约人数" prop="number" :rules="rules.input">
-            <el-input-number
-              v-model="form.number"
+            <el-input
+              v-model="form.name"
               class="w100p"
               placeholder="请输入"
             />
@@ -98,54 +32,134 @@
         </el-col>
         <el-col :span="12">
           <el-form-item
-            label="预约仪器"
-            prop="apparatu_ids"
+            label="主讲人"
+            prop="lecturer"
             :rules="rules.input"
           >
-            <CuebSelectList
-              v-model="form.apparatu_ids"
-              class="w100p"
-              :config="{
-                multiple: true,
-                keyCode: 'id',
-                keyName: 'name',
-                url: '/RD_SERVER/APPARATUS'
-              }"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="24">
-          <el-form-item label="行业/领域" prop="domain" :rules="rules.input">
-            <CuebSelectList
-              v-model="form.domain"
-              class="w100p"
-              :config="{
-                keyCode: 'dict_value',
-                keyName: 'dict_name',
-                url: '/ShenZhenTelecom/ENUM?id=16'
-              }"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="24">
-          <el-form-item label="预约内容" prop="content">
             <el-input
-              v-model="form.content"
+              v-model="form.lecturer"
+              class="w100p"
+              placeholder="请输入"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item
+            label="主讲人简介"
+            prop="lecturer_info"
+            :rules="rules.input"
+          >
+            <el-input
+              v-model="form.lecturer_info"
               placeholder="请输入"
               type="textarea"
               :autosize="{ minRows: 3, maxRows: 10 }"
             />
           </el-form-item>
         </el-col>
+        <el-col :span="24">
+          <el-form-item
+            label="培训简介"
+            prop="cultivate_synopsis"
+            :rules="rules.input"
+          >
+            <el-input
+              v-model="form.cultivate_synopsis"
+              placeholder="请输入"
+              type="textarea"
+              :autosize="{ minRows: 3, maxRows: 10 }"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="培训类型"
+            prop="type"
+            :rules="rules.select"
+          >
+            <CuebSelectList
+              v-model="form.type"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=18'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="培训时间"
+            prop="time"
+            :rules="rules.select"
+          >
+            <el-date-picker
+              v-model="form.time"
+              type="datetime"
+              class="w100p"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              placeholder="请选择"
+            />
+          </el-form-item>
+        </el-col>
+
       </el-row>
 
-      <div slot="footer" class="dialog-footer">
+      <el-row>
+        <el-col :span="12">
+          <el-form-item
+            label="培训状态"
+            prop="state"
+            :rules="rules.select"
+          >
+            <CuebSelectList
+              v-model="form.state"
+              class="w100p"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=12'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="累计观看人数"
+            prop="view_number"
+            :rules="rules.select"
+          >
+            <el-input-number
+              v-model="form.view_number"
+              class="w100p"
+              placeholder="请输入"
+              type="textarea"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24">
+          <el-form-item
+            label="培训主图"
+            prop="home_page_path"
+          >
+            <!-- form.home_page_path -->
+            <cubeUploadFile
+              :limit="1"
+              accept=".jpg, .jpeg, .png"
+              :file-list.sync="fileList"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="close">取 消</el-button>
         <el-button
           :loading="submitLoading"
@@ -158,7 +172,7 @@
 </template>
 
 <script>
-import { guid } from '@/utils/index'
+
 import rules from '@/mixProps/rules.js'
 import CuebSelectList from '@/components/cueb-select-list'
 
@@ -182,17 +196,19 @@ export default {
       fetchLoading: false,
       submitLoading: false,
       visible: false,
+      fileList: [],
       form: {
-        id: '',
-        is_cooperative: true,
-        number: 10, // 预约人数
-        content: '', // 预约内容
-        appointment_time: null, // '预约时间'
-        enterprise_name: '', // '企业名称'
-        enterprise_id: '', // '企业code'
-        domain: '', // 行业/领域；对应字典
-        city_area: '', // 区划
-        apparatu_ids: [] // 预约仪器
+        name: '',
+        type: 1,
+        time: null,
+        lecturer: null, // 主讲人
+        lecturer_info: null, // 主讲人信息
+        cultivate_synopsis: null, // 培训简介
+        view_number: 10, // 累计观看人数
+        home_page_path: null, // 主页图片路径
+        resource_path: null, // 资料路径
+        playback_path: null, // 回放路径
+        state: 1 // 培训状态
       }
     }
   },
@@ -215,7 +231,7 @@ export default {
       this.fetchLoading = true
       this.$request({
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT/${id}`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN/${id}`,
         params: {}
       })
         .then(res => {
@@ -225,10 +241,10 @@ export default {
             const { Data } = Message || {}
             if (Array.isArray(Data) && Data.length) {
               const form = Data[0]
-              form.is_cooperative = !!form.is_cooperative
-              if (form.start_time && form.end_time) {
-                form.appointment_time = [form.start_time, form.end_time]
+              if (form.home_page_path) {
+                this.fileList = [{ url: form.home_page_path, name: '培训主图.png' }]
               }
+              if (form.time) form.time = form.time.replace(/T/g, ' ')
               Object.assign(this.form, Data[0])
             }
           }
@@ -261,31 +277,22 @@ export default {
     submit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.submitLoading = true
-          const params = JSON.parse(JSON.stringify(this.form))
-          params.id = !params.id ? guid() : params.id
-          params.is_cooperative = params.is_cooperative ? 1 : 0
-          params.enterprise_id = !params.is_cooperative
-            ? ''
-            : params.enterprise_id
-          if (
-            Array.isArray(params.appointment_time) &&
-            params.appointment_time.length
-          ) {
-            params.start_time = params.appointment_time[0]
-            params.end_time = params.appointment_time[1]
-            delete params.appointment_time
-          } else {
-            this.$message({ message: '预约时间参数处理异常', type: 'warning' })
+          const { fileList } = this
+          if (!fileList.length) {
+            this.$message({ message: '请上传培训主图', type: 'warning' })
             return
           }
+          const file = fileList[0]
+          this.submitLoading = true
+          const params = JSON.parse(JSON.stringify(this.form))
+          params.home_page_path = file.url
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
             method: type ? 'PUT' : 'POST',
             url: type
-              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT/${this.id}`
-              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/APPOINTMENT`,
+              ? `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN/${this.id}`
+              : `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN`,
             data: params || stringify({ ...params })
           })
             .then(res => {

@@ -1,13 +1,13 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-30 12:37:07
- * @LastEditTime: 2022-01-07 16:49:37
+ * @LastEditTime: 2022-02-15 14:18:16
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
   <div clas="iframe">
-    <iframe class="iframe" :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/DepartmentManager.html`" frameborder="0" />
+    <iframe class="iframe" :src="`${VUE_APP_BASE_API}/f/Support/ConfigManager/DepartmentManager.html?DepartmentCode=SZDX`" frameborder="0" />
   </div>
 </template>
 
