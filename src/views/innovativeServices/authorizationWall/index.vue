@@ -1,9 +1,9 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-02-15 16:06:56
+ * @LastEditTime: 2022-02-16 16:03:48
  * @LastEditors: Do not edit
- * @Description: 培训赋能
+ * @Description: 授权墙管理
 -->
 <template>
   <cube-table-list
@@ -23,7 +23,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/AUTHORIZE_THE_WALL`,
         search: {
           data: [
             [
@@ -55,24 +55,17 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
-            { label: '培训名称', key: 'name' },
+            { label: '授权名称', key: 'name' },
             {
-              label: '培训时间', key: 'time',
+              label: '照片', key: 'domainName',
               render: (h, parmas) => {
                 const { row } = parmas
-                const t = row.time ? row.time.replace(/T/g, ' ') : ''
-                return <span> { t } </span>
+                return (row.img_path ? <el-image lazy src={row.img_path} v-viewer style='width: 60px; height: 40px'> </el-image> : null)
               }
             },
-            { label: '培训类型', key: 'type' },
-            { label: '主讲人', key: 'lecturer' },
-            { label: '主讲人简介', key: 'lecturer_info' },
-            { label: '培训简介', key: 'cultivate_synopsis' },
-            { label: '累计观看人数', key: 'view_number' },
-            { label: '培训状态', key: 'state' },
             {
               label: '操作',
-              width: 180,
+              width: 140,
               render: (h, parmas) => {
                 const { row } = parmas
                 return (
@@ -92,20 +85,6 @@ export default {
                       编辑
                     </div>
                   </div>
-                  // <el-dropdown
-                  //   trigger='click'
-                  //   onCommand={(e, v) => this.handlerClickDropdown(e, v, row)}
-                  // >
-                  //   <span class='btn-text' style='font-size: 12px;'>
-                  //     更多操作
-                  //     <i class='el-icon-arrow-down el-icon--right'></i>
-                  //   </span>
-                  //   <el-dropdown-menu slot='dropdown'>
-                  //     <el-dropdown-item type='1'> 补充人员登记 </el-dropdown-item>
-                  //     <el-dropdown-item type='2'> 补充测试报告 </el-dropdown-item>
-                  //   </el-dropdown-menu>
-                  // </el-dropdown>
-                  // <el-dropdown-item type='2'> 补充测试报告 </el-dropdown-item>
                 )
               }
             }
@@ -131,8 +110,8 @@ export default {
         content: () => import('./add.vue'),
         // 弹窗属性设置
         modalProps: {
-          width: '45%',
-          title: type ? '编辑培训' : '新增培训',
+          width: '640px',
+          title: type ? '编辑授权项目' : '新增授权项目',
           maskClosable: false,
           fullscreen: false
         },
@@ -154,7 +133,7 @@ export default {
         .then(() => {
           this.$request({
             method: 'DELETE',
-            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN/${id}`
+            url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/AUTHORIZE_THE_WALL/${id}`
           }).then(res => {
             const { Success } = res
             if (Success) {
@@ -167,37 +146,6 @@ export default {
           })
         })
         .catch(() => { })
-    },
-    handlerClickDropdown(e, v, row) {
-      const { id } = row
-      const { type } = v.$attrs
-      const title = {
-        1: '补充人员登记',
-        2: '补充测试报告'
-      }
-      this.$openLayer({
-        props: {
-          id,
-          type: (type * 1),
-          showType: (type * 1)
-        },
-        // 弹窗内嵌套组件
-        content: () => import('./addMore.vue'),
-        // 弹窗属性设置
-        modalProps: {
-          width: '80%',
-          title: title[type],
-          maskClosable: false,
-          fullscreen: true
-        },
-        // 事件回调
-        methods: {
-          refresh: () => {
-            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
-            this.refresh()
-          }
-        }
-      })
     }
   }
 }

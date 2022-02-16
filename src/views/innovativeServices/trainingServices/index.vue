@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-02-16 15:12:16
+ * @LastEditTime: 2022-02-16 16:18:15
  * @LastEditors: Do not edit
  * @Description: 培训赋能
 -->
@@ -23,7 +23,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/TRAINING_CAN_ASSIGN`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/CULTIVATE_ENERGIZE/FIND_TRAINING_CAN_ASSIGN`,
         search: {
           data: [
             [
@@ -55,6 +55,13 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
+            {
+              label: '培训主图', key: 'domainName',
+              render: (h, parmas) => {
+                const { row } = parmas
+                return (row.home_page_path ? <el-image lazy src={row.home_page_path} v-viewer style='width: 60px; height: 40px'> </el-image> : null)
+              }
+            },
             { label: '培训名称', key: 'name' },
             {
               label: '培训时间', key: 'time',
@@ -64,12 +71,12 @@ export default {
                 return <span> { t } </span>
               }
             },
-            { label: '培训类型', key: 'type' },
+            { label: '培训类型', key: 'type_name' },
             { label: '主讲人', key: 'lecturer' },
             { label: '主讲人简介', key: 'lecturer_info' },
             { label: '培训简介', key: 'cultivate_synopsis' },
             { label: '累计观看人数', key: 'view_number' },
-            { label: '培训状态', key: 'state' },
+            { label: '培训状态', key: 'state_name' },
             {
               label: '操作',
               width: 180,

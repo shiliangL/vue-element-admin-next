@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-02-16 15:11:53
+ * @LastEditTime: 2022-02-16 16:19:16
  * @LastEditors: Do not edit
  * @Description: 培训赋能
 -->
@@ -23,7 +23,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/EXPERT_DATABAE`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/RD_SERVER/FIND_EXPERT_DATABASE`,
         search: {
           data: [
             [
@@ -55,21 +55,17 @@ export default {
           columns: [
             // { label: '选择', type: 'selection' },
             { label: '序号', type: 'index' },
-            { label: '培训名称', key: 'name' },
             {
-              label: '培训时间', key: 'time',
+              label: '专家照片', key: 'domainName',
               render: (h, parmas) => {
                 const { row } = parmas
-                const t = row.time ? row.time.replace(/T/g, ' ') : ''
-                return <span> { t } </span>
+                return (row.img_path ? <el-image lazy src={row.img_path} v-viewer style='width: 60px; height: 40px'> </el-image> : null)
               }
             },
-            { label: '培训类型', key: 'type' },
-            { label: '主讲人', key: 'lecturer' },
-            { label: '主讲人简介', key: 'lecturer_info' },
-            { label: '培训简介', key: 'cultivate_synopsis' },
-            { label: '累计观看人数', key: 'view_number' },
-            { label: '培训状态', key: 'state' },
+            { label: '专家名称', key: 'name' },
+            { label: '行业领域', key: 'domain_name' },
+            { label: '专家简介', key: 'brief_introduction' },
+            // { label: '培训状态', key: 'state' },
             {
               label: '操作',
               width: 180,

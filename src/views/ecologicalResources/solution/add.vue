@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-02-15 10:07:59
+ * @LastEditTime: 2022-02-16 17:01:05
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -46,22 +46,32 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="0">
-          <el-col :span="24">
-            <el-form-item
-              label="方法提供方"
-              prop="regi_capital"
-            >
-              <CuebSelectList
-                v-model="form.regi_capital"
-                :config="{
-                  rowKey: 'credit_code',
-                  url: '/ShenZhenTelecom/ENUM?id=9'
-                }"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
+
+        <el-col :span="24">
+          <el-form-item
+            label="方案提供方"
+            prop="personnel_ids"
+          >
+            <el-alert
+              v-if="!form.id"
+              title="新增完成后可以补充合作伙伴作为方案提供方"
+              type="warning"
+              :closable="false"
+            />
+            <CuebSelectList
+              v-else
+              v-model="form.personnel_ids"
+              class="w100p"
+              :config="{
+                multiple: true,
+                keyCode: 'id',
+                keyName: 'name',
+                url: '/COOPERATIVE_PARTNER/COOPERATIVE'
+              }"
+            />
+          </el-form-item>
+        </el-col>
+
         <el-row>
           <el-col :span="24">
             <el-form-item
@@ -139,7 +149,8 @@ export default {
         type: null,
         accessory_path: null, // 附件路径
         photo_path: null, // 附件路径
-        brief_introduction: '' // 简介
+        brief_introduction: null, // 简介
+        personnel_ids: []
       }
     }
   },
@@ -177,6 +188,45 @@ export default {
         .catch(() => {
           this.fetchLoading = false
         })
+
+      this.$request({
+        method: 'get',
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/BATCH_ADD_SOLUTION_COOPERATIVE?solution_id=${this.id}`
+      }).then(res => {
+        const { Success, Message } = res
+        if (Success) {
+          const people = Message.Data || []
+          this.form.personnel_ids = people.map(item => item.id)
+        }
+      }).catch(() => {
+      })
+    },
+    linkPeople2Project() {
+      const { id, personnel_ids } = this.form
+      const params = {
+        'solution_id': id,
+        'cooperative_id': personnel_ids
+      }
+      this.$request({
+        method: 'POST',
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/SOLUTION/BATCH_ADD_SOLUTION_COOPERATIVE/${this.id}`,
+        data: params
+      })
+        .then(res => {
+          const { Success } = res
+          if (Success) {
+            this.submitLoading = false
+            this.$emit('refresh')
+            this.$emit('close')
+            this.$message.success('操作成功')
+          } else {
+            this.$message.error('操作失败')
+            this.submitLoading = false
+          }
+        })
+        .catch(() => {
+          this.submitLoading = false
+        })
     },
     submit(formName) {
       if (!this.fileList.length) {
@@ -190,6 +240,7 @@ export default {
           const file = fileList[0]
           this.form.accessory_path = file.url
           const params = JSON.parse(JSON.stringify(this.form))
+          delete params.personnel_ids
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
@@ -201,10 +252,14 @@ export default {
           }).then(res => {
             const { Success } = res
             if (Success) {
-              this.submitLoading = false
-              this.$emit('refresh')
-              this.$emit('close')
-              this.$message.success('操作成功')
+              if (params.id) {
+                this.linkPeople2Project()
+              } else {
+                this.submitLoading = false
+                this.$emit('refresh')
+                this.$emit('close')
+                this.$message.success('操作成功')
+              }
             } else {
               this.$message.error('操作失败')
               this.submitLoading = false

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-12-27 16:11:17
- * @LastEditTime: 2022-02-16 14:31:51
+ * @LastEditTime: 2022-02-16 16:28:27
  * @LastEditors: Do not edit
  * @Description: 项目支撑
 -->
@@ -20,7 +20,7 @@ export default {
       centerDialogVisible: false,
       config: {
         method: 'get',
-        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/PROJECT_SUPPORT/PROJECT`,
+        url: `${process.env.VUE_APP_BASE_API_PREFIXV2}/PROJECT_SUPPORT/SCREEN_FIND_PROJECT`,
         search: {
           data: [
             [
@@ -58,8 +58,9 @@ export default {
             { label: '所在区域', key: 'area' },
             { label: '项目概况', key: 'project_overview' },
             { label: '申请支持部门', key: 'support_department' },
-            { label: '项目状态', key: 'project_state' },
+            { label: '项目状态', key: 'project_state_name' },
             { label: '项目简介', key: 'project_brief' },
+            { label: '参与人员', key: 'join_personnel_name' },
             {
               label: '操作',
               width: 220,
@@ -126,28 +127,19 @@ export default {
       })
     },
     openPreviewLayer(row = {}) {
-      const { type, id } = row
+      const { id } = row
       // type 1 b编辑  0 增加 这里标记有row就是编辑 没有就是新增
       this.$openLayer({
         props: {
-          type,
+          type: 1,
           id
         },
-        // 弹窗内嵌套组件
         content: () => import('./preview.vue'),
-        // 弹窗属性设置
         modalProps: {
           width: '45%',
-          title: type ? '编辑项目' : '新增项目',
+          title: '查看项目详情',
           maskClosable: false,
           fullscreen: false
-        },
-        // 事件回调
-        methods: {
-          refresh: () => {
-            // row 这里标记有row就是编辑刷新当前 没有就是新增刷新到首页
-            this.refresh()
-          }
         }
       })
     },

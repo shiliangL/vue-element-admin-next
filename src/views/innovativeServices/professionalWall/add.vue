@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-02-25 09:06:05
- * @LastEditTime: 2022-02-16 15:03:57
+ * @LastEditTime: 2022-02-16 16:19:39
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -19,7 +19,7 @@
       <el-row>
         <el-col :span="12">
           <el-form-item
-            label="培训名称"
+            label="专家名称"
             prop="name"
             :rules="rules.input"
           >
@@ -32,109 +32,31 @@
         </el-col>
         <el-col :span="12">
           <el-form-item
-            label="主讲人"
-            prop="lecturer"
-            :rules="rules.input"
+            label="行业领域"
+            prop="domain"
           >
-            <el-input
-              v-model="form.lecturer"
+            <CuebSelectList
+              v-model="form.domain"
               class="w100p"
-              placeholder="请输入"
+              :config="{
+                keyCode: 'dict_value',
+                keyName: 'dict_name',
+                url: '/ShenZhenTelecom/ENUM?id=16'
+              }"
             />
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item
-            label="主讲人简介"
-            prop="lecturer_info"
+            label="专家简介"
+            prop="brief_introduction"
             :rules="rules.input"
           >
             <el-input
-              v-model="form.lecturer_info"
+              v-model="form.brief_introduction"
               placeholder="请输入"
               type="textarea"
               :autosize="{ minRows: 3, maxRows: 10 }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="24">
-          <el-form-item
-            label="培训简介"
-            prop="cultivate_synopsis"
-            :rules="rules.input"
-          >
-            <el-input
-              v-model="form.cultivate_synopsis"
-              placeholder="请输入"
-              type="textarea"
-              :autosize="{ minRows: 3, maxRows: 10 }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="培训类型"
-            prop="type"
-            :rules="rules.select"
-          >
-            <CuebSelectList
-              v-model="form.type"
-              class="w100p"
-              :config="{
-                keyCode: 'dict_value',
-                keyName: 'dict_name',
-                url: '/ShenZhenTelecom/ENUM?id=18'
-              }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="培训时间"
-            prop="time"
-            :rules="rules.select"
-          >
-            <el-date-picker
-              v-model="form.time"
-              type="datetime"
-              class="w100p"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              placeholder="请选择"
-            />
-          </el-form-item>
-        </el-col>
-
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item
-            label="培训状态"
-            prop="state"
-            :rules="rules.select"
-          >
-            <CuebSelectList
-              v-model="form.state"
-              class="w100p"
-              :config="{
-                keyCode: 'dict_value',
-                keyName: 'dict_name',
-                url: '/ShenZhenTelecom/ENUM?id=12'
-              }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            label="累计观看人数"
-            prop="view_number"
-            :rules="rules.select"
-          >
-            <el-input-number
-              v-model="form.view_number"
-              class="w100p"
-              placeholder="请输入"
-              type="textarea"
             />
           </el-form-item>
         </el-col>
@@ -143,10 +65,9 @@
       <el-row>
         <el-col :span="24">
           <el-form-item
-            label="培训主图"
-            prop="home_page_path"
+            label="专家照片"
+            prop="img_path"
           >
-            <!-- form.home_page_path -->
             <cubeUploadFile
               :limit="1"
               accept=".jpg, .jpeg, .png"
@@ -199,16 +120,9 @@ export default {
       fileList: [],
       form: {
         name: '',
-        type: 1,
-        time: null,
-        lecturer: null, // 主讲人
-        lecturer_info: null, // 主讲人信息
-        cultivate_synopsis: null, // 培训简介
-        view_number: 10, // 累计观看人数
-        home_page_path: null, // 主页图片路径
-        resource_path: null, // 资料路径
-        playback_path: null, // 回放路径
-        state: 1 // 培训状态
+        domain: null,
+        brief_introduction: null, // 简介
+        img_path: null // 专家照片路径
       }
     }
   },
@@ -241,8 +155,8 @@ export default {
             const { Data } = Message || {}
             if (Array.isArray(Data) && Data.length) {
               const form = Data[0]
-              if (form.home_page_path) {
-                this.fileList = [{ url: form.home_page_path, name: '培训主图.png' }]
+              if (form.img_path) {
+                this.fileList = [{ url: form.img_path, name: '培训主图.png' }]
               }
               if (form.time) form.time = form.time.replace(/T/g, ' ')
               Object.assign(this.form, Data[0])
@@ -285,7 +199,7 @@ export default {
           const file = fileList[0]
           this.submitLoading = true
           const params = JSON.parse(JSON.stringify(this.form))
-          params.home_page_path = file.url
+          params.img_path = file.url
           const { type } = this // 如果 type 为true 则为编辑
           const { stringify } = this.$qs
           this.$request({
