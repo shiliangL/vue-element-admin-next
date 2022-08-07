@@ -1,5 +1,11 @@
 <template>
   <div class="login-container">
+
+    <div class="description">
+      <h1> 智慧营销管理系统 </h1>
+      <h3> 幸福驿站 致爱一生, 科技让每个数字都极具活力 </h3>
+    </div>
+
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -10,7 +16,7 @@
     >
 
       <div class="title-container">
-        <h3 class="title">  欢迎登录  </h3>
+        <h3 class="title"> 欢迎登录 </h3>
       </div>
 
       <el-form-item prop="username">
@@ -130,11 +136,36 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+
+    this.$nextTick().then(() => {
+      this.initEffectsBg()
+    })
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    initEffectsBg() {
+      const { VANTA } = window
+      const el = document.querySelector('.login-container')
+      if (!el) return
+      this._effect = VANTA.WAVES({
+        el: el,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        zoom: 0.65,
+        scaleMobile: 1.70
+      })
+
+      setTimeout(() => {
+        console.log('onUpdate')
+        this._effect.setOptions({ zoom: 1 })
+      }, 5000)
+    },
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
@@ -240,6 +271,7 @@ $light_gray: #eee;
   background-position: 50%;
   justify-content: flex-end;
   background-image: url("~@/assets/layout/login_bg.jpg");
+
   .login-form {
     margin-right: 10%;
     padding: 20px;
@@ -248,7 +280,20 @@ $light_gray: #eee;
     max-width: 100%;
     overflow: hidden;
     border-radius: 4px;
+    box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+      6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+      12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+      22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+      41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+      100px 100px 80px rgba(0, 0, 0, 0.07);
+
     border: 1px solid rgba(255, 255, 255, 0.66);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    color: rgba(255, 255, 255, 0.75);
   }
   .svg-container {
     padding: 6px 5px 6px 15px;
@@ -284,6 +329,27 @@ $light_gray: #eee;
 
   .login-button {
     padding: 14px;
+  }
+
+  .description {
+    left: 50%;
+    width: 70%;
+    z-index: 1;
+    color: #fff;
+    position: fixed;
+    user-select: none;
+    transform: translate(-50%, -70%);
+    h1 {
+      font-weight: 400;
+      font-size: 72px;
+      margin-bottom: 15px;
+      letter-spacing: -2px;
+    }
+    h3 {
+      font-weight: 400;
+      font-size: 1.5em;
+      line-height: 1.25;
+    }
   }
 
   @media only screen and (max-width: 470px) {

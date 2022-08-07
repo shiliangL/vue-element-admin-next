@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-08-02 10:24:07
+ * @LastEditTime: 2022-08-07 15:02:39
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -17,25 +17,14 @@
         class="sidebar-logo-link"
         to="/"
       >
-        <span
-          v-if="logo"
-          class="el-icon-menu"
-        />
-        <h1
-          v-else
-          class="sidebar-title"
-        >{{ title }} </h1>
+        <span class="el-icon-menu" />
       </router-link>
       <router-link
         v-else
         key="expand"
-        class="sidebar-logo-link"
+        class="sidebar-logo-link expand"
         to="/"
       >
-        <div
-          v-if="logo"
-          class="el-icon-menu"
-        />
         <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
     </transition>
@@ -43,6 +32,8 @@
 </template>
 
 <script>
+
+import { title } from '@/settings'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -53,8 +44,7 @@ export default {
   },
   data() {
     return {
-      title: 'Element Next',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title
     }
   }
 }
@@ -74,10 +64,16 @@ export default {
   color: #fff;
   align-items: center;
   display: flex !important;
-  padding-left: 18px;
+  padding-left: 12px;
   .el-icon-menu {
     font-size: 30px;
     padding-right: 4px;
+  }
+  &.expand {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    justify-content: center;
   }
 }
 

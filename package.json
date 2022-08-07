@@ -1,7 +1,7 @@
 {
   "name": "vue-element-admin-next",
   "version": "4.4.0",
-  "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
+  "description": "web development stack of vue. awesome admin",
   "author": "shiliangl <1462999406@qq.com>",
   "scripts": {
     "rem": "rimraf node_modules",

@@ -1,12 +1,12 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-04 13:50:23
- * @LastEditTime: 2021-07-28 14:27:54
+ * @LastEditTime: 2022-08-07 15:01:09
  * @LastEditors: Do not edit
  * @Description:
  */
 module.exports = {
-  title: 'Vue Element Admin Next',
+  title: '智慧营促销',
   showSettings: true,
   tagsView: true,
   fixedHeader: true,
